@@ -1,0 +1,37 @@
+.landing-background {
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: -1000;
+
+  .overlay {
+    z-index: -999;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+  }
+  .main-title,
+  .sub-title {
+    text-align: center;
+    width: 75%;
+    margin: 0 auto;
+    color: white;
+    h1 {
+      font-size: 5em;
+      letter-spacing: -2px;
+      line-height: 100px;
+    }
+    h4 {
+      letter-spacing: -1px;
+    }
+    .highlighted {
+      padding: 0px 6px;
+    }
+  }
+  
+}

@@ -1,0 +1,24 @@
+.avatar-large {
+  width: 100px;
+  height: 100px;
+  object-fit: cover !important;
+}
+.create-profile {
+  width: 90%;
+  @media screen and (min-width: map-get($break-points, 'medium')) {
+    width: 80%;
+  }
+  @media screen and (min-width: map-get($break-points, 'large')) {
+    width: 70%;
+  }
+  @media screen and (min-width: map-get($break-points, 'extra-large')) {
+    width: 60%;
+  }
+}
+
+.wizard-item {
+  .wizard-item-form {
+    width: 400px;
+    margin: 0 auto;
+  }
+}

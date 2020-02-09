@@ -1,0 +1,13 @@
+module.exports = {
+  mongoURI: 'mongodb+srv://[example_username]:[example_password]@[cluster].mongodb.net/test?retryWrites=true&w=majority',
+  secretKey: '',
+  cookie: '',
+  facebookClientId: '',
+  facebookClientSecret: '',
+  twitterClientId: '',
+  twitterClientSecret: '',
+  googleClientId: '',
+  googleClientSecret: '',
+  emailUser: "",
+  emailPass: ""
+}

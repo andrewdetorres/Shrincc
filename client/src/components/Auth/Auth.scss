@@ -1,0 +1,29 @@
+#login,
+#register,
+#passwordreset,
+#passwordResetConfirm {
+  .container-fluid {
+    height: 100vh;
+  }
+  input {
+    height: 46px;
+    border: none;
+    border-radius: 5px;
+    background-color: #eeeeee;
+  }
+  .togglePassword,
+  .forgotPassword {
+    cursor: pointer;
+    text-decoration: none;
+    &:hover {
+      color: map-get($theme-colors, "primary");
+    }
+  }
+  .login-button {
+    text-decoration: none;
+  }
+}
+
+.logo {
+  max-width: 200px;
+}
