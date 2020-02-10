@@ -35,7 +35,7 @@ class MainNavigation extends Component {
             </ul>
             <ul className="navbar-nav navbar-right mr-2">
               <li className="nav-item my-auto mx-3">
-                <a className="nav-link text-dark" href="/login">New Link</a>
+                <a className="nav-link text-dark" href="/new">New Link</a>
               </li>
               <li className="nav-item my-auto mx-3">
                 <a className="nav-link text-dark" href="/login">Dashboard</a>

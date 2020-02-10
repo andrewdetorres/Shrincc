@@ -45,8 +45,8 @@ class AuthUser extends Component {
       if (this.props.profile.userProfile && this.props.profile.loading === false) {
         User = (
           <Fragment>
-              {/* <Route path="/:shortLink" component={NewLink} /> */}
-              {/* <AuthNavigation /> */}
+            <AuthNavigation />
+              <Route path="/new" component={NewLink} />
               <Route path="/user/:userId" component={UserProfile} />
               <Route path="/settings" component={Settings} />
           </Fragment>

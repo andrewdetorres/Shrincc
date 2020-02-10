@@ -24,7 +24,8 @@ export const USERNAME_FAILED = 'USERNAME_FAILED';
 export const PROFILE_CREATION_FAILED = 'PROFILE_CREATION_FAILED';
 
 // Link types;
-// export const GET_LINK = 'GET_LINK';
+export const GET_NEW_LINK = 'GET_NEW_LINK';
+export const GET_NEW_LINK_FAILED = 'GET_NEW_LINK_FAILED';
 
 // Errors types
 export const GET_ERRORS = 'GET_ERRORS';

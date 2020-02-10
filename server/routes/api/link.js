@@ -5,6 +5,10 @@ const auth = require("../../services/auth");
 const User = require("../../model/User");
 const Link = require("../../model/Link");
 
+// Get IP Address
+var ip = require("ip");
+// console.dir ( ip.address() );
+
 module.exports = app => {
 
   //--------------------------------------------------------
@@ -26,6 +30,7 @@ module.exports = app => {
   //--------------------------------------------------------
   app.post("/api/link/new", auth, (req, res) => {
 
+    console.log(req.body);
     // Create new link object
     const newLink = {
       longLink: req.body.longLink,
@@ -37,6 +42,7 @@ module.exports = app => {
     new Link(newLink)
       .save()
       .then(link => {
+        console.log(link);
         res.send(link);
       })
       .catch(error => {
@@ -47,22 +53,37 @@ module.exports = app => {
 
   //--------------------------------------------------------
   //@request  : GET
-  //@route    : /api/link/:shortLink
+  //@route    : /shrincc/:shortLink
   //@access   : Public
   //@desc     : Get link details
   //--------------------------------------------------------
-  app.get("/api/link/:shortLink", (req, res) => {
-
-    console.log(req.params.shortLink);
+  app.get("/shrincc/:shortLink", (req, res) => {
 
     Link
       .findOne({shortLink: req.params.shortLink})
       .then(link => {
-        return res.redirect(link.longLink);
+        link.clicks.unshift({
+          ip: ip.address(),
+          referrer: req.get('Referrer'),
+          date: Date.now()
+        });
+
+        // Update link by saving
+        link
+          .save()
+          .then(link => {
+            return res.redirect(link.longLink);
+          })
+          .catch(error => {
+            // Handle error if logged in user not found
+            res.status(500).send('Server error!');
+          });
+
       })
       .catch(error => {
-        // Handle error if looged in user not found
-        res.status(500).send('Server error');
+        console.log(error);
+        // Handle error if logged in user not found
+        res.redirect('/');
       });
   })
 
