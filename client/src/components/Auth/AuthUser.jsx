@@ -13,6 +13,7 @@ import Settings from '../Settings/Settings'
 import UserProfile from "../UserProfile/UserProfile";
 import CreateProfilePrompt from "../UserProfile/CreateProfilePrompt";
 import Landing from "../Landing/Landing";
+import NewLink from "../Link/NewLink";
 
 class AuthUser extends Component {
 
@@ -44,7 +45,8 @@ class AuthUser extends Component {
       if (this.props.profile.userProfile && this.props.profile.loading === false) {
         User = (
           <Fragment>
-            <AuthNavigation />
+              {/* <Route path="/:shortLink" component={NewLink} /> */}
+              {/* <AuthNavigation /> */}
               <Route path="/user/:userId" component={UserProfile} />
               <Route path="/settings" component={Settings} />
           </Fragment>

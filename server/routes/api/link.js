@@ -52,10 +52,13 @@ module.exports = app => {
   //@desc     : Get link details
   //--------------------------------------------------------
   app.get("/api/link/:shortLink", (req, res) => {
+
+    console.log(req.params.shortLink);
+
     Link
       .findOne({shortLink: req.params.shortLink})
       .then(link => {
-        res.send(link);
+        return res.redirect(link.longLink);
       })
       .catch(error => {
         // Handle error if looged in user not found

@@ -23,5 +23,8 @@ export const USERNAME_LOADED = 'USERNAME_LOADED';
 export const USERNAME_FAILED = 'USERNAME_FAILED';
 export const PROFILE_CREATION_FAILED = 'PROFILE_CREATION_FAILED';
 
+// Link types;
+// export const GET_LINK = 'GET_LINK';
+
 // Errors types
 export const GET_ERRORS = 'GET_ERRORS';
