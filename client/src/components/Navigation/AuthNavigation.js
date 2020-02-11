@@ -35,17 +35,21 @@ class MainNavigation extends Component {
             </ul>
             <ul className="navbar-nav navbar-right mr-2">
               <li className="nav-item my-auto mx-3">
-                <a className="nav-link text-dark" href="/new">New Link</a>
+                <a className="nav-link text-dark" href="/">Dashboard</a>
               </li>
-              <li className="nav-item my-auto mx-3">
-                <a className="nav-link text-dark" href="/login">Dashboard</a>
+              <li className="nav-item my-auto mx-2 my-auto">
+                <a className="nav-link text-dark px-4" href="/new">
+                  <button className="btn btn-primary">
+                    New Link
+                  </button>
+                </a>
               </li>
               <li className="nav-item my-auto mx-lg-2 py-2 py-lg-0 px-3 px-md-0">
                 <a className="nav-link dropdown-toggle" href="/profile"id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img src={ProfilePictureURL ? ProfilePictureURL : require("../../assets/img/default_profile_23456781349501.png")} alt="Avatar" className="avatar rounded-circle"/>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item" href="/profile">Dashboard</a>
+                  <a className="dropdown-item" href="/">Dashboard</a>
                   <a className="dropdown-item" href="/saved">Saved Jobs</a>
                   <a className="dropdown-item" href="/track">Track Jobs</a>
                   <div className="dropdown-divider"></div>

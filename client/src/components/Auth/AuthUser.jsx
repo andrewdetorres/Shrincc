@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
-import { Route, withRouter } from "react-router-dom";
+import { Route, withRouter, Redirect } from "react-router-dom";
 
 // Import Actions
 import { getCurrentUserProfile } from './../../actions/profile';
@@ -14,6 +14,7 @@ import UserProfile from "../UserProfile/UserProfile";
 import CreateProfilePrompt from "../UserProfile/CreateProfilePrompt";
 import Landing from "../Landing/Landing";
 import NewLink from "../Link/NewLink";
+import Dashboard from "../Dashboard/Dashboard";
 
 class AuthUser extends Component {
 
@@ -46,9 +47,10 @@ class AuthUser extends Component {
         User = (
           <Fragment>
             <AuthNavigation />
-              <Route path="/new" component={NewLink} />
-              <Route path="/user/:userId" component={UserProfile} />
-              <Route path="/settings" component={Settings} />
+              <Route exact path="/" component={Dashboard} />
+              <Route exact path="/new" component={NewLink} />
+              <Route exact path="/user/:userId" component={UserProfile} />
+              <Route exact path="/settings" component={Settings} />
           </Fragment>
         )
       }
