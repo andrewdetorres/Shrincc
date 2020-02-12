@@ -140,7 +140,7 @@ class Login extends Component {
                     </button>
                   </a>
                   <a href="/auth/google" className="social mx-2">
-                    <button className="btn btn-google my-2">
+                    <button className="btn btn-danger my-2">
                       <FontAwesomeIcon icon={['fab', 'google']} height="20px" className="mr-2"/>
                       Log in with Google
                     </button>

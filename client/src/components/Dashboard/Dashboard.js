@@ -89,51 +89,41 @@ class Dashboard extends Component {
         {/* First row of cards */}
         <div className="px-md-5 px-1 my-5">
           <div className="card-group mb-4">
-            <div className="card">
-              <div className="card-body">
+          <div className="card border-0">
+              <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">87.500</div><small className="text-muted text-uppercase font-weight-bold">Visitors</small>
-                <div className="progress progress-xs mt-3 mb-0">
-                  <div className="progress-bar bg-info w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-            </div>
-            <div className="card">
-              <div className="card-body">
-                <div className="text-muted text-right mb-4">
-                </div>
-                <div className="text-value-lg">385</div><small className="text-muted text-uppercase font-weight-bold">New Clients</small>
-                <div className="progress progress-xs mt-3 mb-0">
-                  <div className="progress-bar bg-success w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-            </div>
-            <div className="card">
-              <div className="card-body">
-                <div className="text-muted text-right mb-4">
-                </div>
-                <div className="text-value-lg">1238</div><small className="text-muted text-uppercase font-weight-bold">Products sold</small>
+                <div className="text-value-lg">1238</div><small className="text-muted text-uppercase font-weight-bold">Links Created</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-warning w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
-            <div className="card">
-              <div className="card-body">
+            <div className="card border-0">
+              <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">28%</div><small className="text-muted text-uppercase font-weight-bold">Returning Visitors</small>
+                <div className="text-value-lg">8,835</div><small className="text-muted text-uppercase font-weight-bold">Visitors</small>
                 <div className="progress progress-xs mt-3 mb-0">
-                  <div className="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div className="progress-bar bg-info w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
-            <div className="card">
-              <div className="card-body">
+            <div className="card border-0">
+              <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">5:34:11</div><small className="text-muted text-uppercase font-weight-bold">Avg. Time</small>
+                <div className="text-value-lg">7,508</div><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
+                <div className="progress progress-xs mt-3 mb-0">
+                  <div className="progress-bar bg-success w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+            <div className="card border-0">
+              <div className="card-body py-4">
+                <div className="text-muted text-right mb-4">
+                </div>
+                <div className="text-value-lg">8.34</div><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-danger w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
