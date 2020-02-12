@@ -74,20 +74,68 @@ class Dashboard extends Component {
     }
 
     return (
-      <div className="row mx-3" id="dashboard">
-        <div class="col-md-4 col-lg-3 mx-auto mb-4">
-          <div class="card border-0 shadow">
-            <div class="card-body p-0">
-              <div class="d-flex flex-column">
-                <div class="my-auto p-3">
-                  <h2 class="m-0">+ 1287</h2>
-                  <p class="m-0 text-muted"><small>Monthly Click Rate</small>
-                  </p>
+      <div className="c-wrapper">
+        {/* Sub header with breadcrumbs */}
+        <header className="c-header c-header-light">
+          <div className="c-subheader px-3">
+            <ol className="breadcrumb border-0 m-0">
+              <li className="breadcrumb-item">Home</li>
+              <li className="breadcrumb-item"><a href="#">Admin</a></li>
+              <li className="breadcrumb-item active">Dashboard</li>
+            </ol>
+          </div>
+        </header>
+
+        {/* First row of cards */}
+        <div className="px-md-5 px-1 my-5">
+          <div className="card-group mb-4">
+            <div className="card">
+              <div className="card-body">
+                <div className="text-muted text-right mb-4">
                 </div>
-                <div class="my-auto text-center">
-                  <div style={{"height":"150px", "width":"100%"}}>
-                    <Line data={data} options={options} id="chart"/>
-                  </div>
+                <div className="text-value-lg">87.500</div><small className="text-muted text-uppercase font-weight-bold">Visitors</small>
+                <div className="progress progress-xs mt-3 mb-0">
+                  <div className="progress-bar bg-info w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <div className="text-muted text-right mb-4">
+                </div>
+                <div className="text-value-lg">385</div><small className="text-muted text-uppercase font-weight-bold">New Clients</small>
+                <div className="progress progress-xs mt-3 mb-0">
+                  <div className="progress-bar bg-success w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <div className="text-muted text-right mb-4">
+                </div>
+                <div className="text-value-lg">1238</div><small className="text-muted text-uppercase font-weight-bold">Products sold</small>
+                <div className="progress progress-xs mt-3 mb-0">
+                  <div className="progress-bar bg-warning w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <div className="text-muted text-right mb-4">
+                </div>
+                <div className="text-value-lg">28%</div><small className="text-muted text-uppercase font-weight-bold">Returning Visitors</small>
+                <div className="progress progress-xs mt-3 mb-0">
+                  <div className="progress-bar w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <div className="text-muted text-right mb-4">
+                </div>
+                <div className="text-value-lg">5:34:11</div><small className="text-muted text-uppercase font-weight-bold">Avg. Time</small>
+                <div className="progress progress-xs mt-3 mb-0">
+                  <div className="progress-bar bg-danger w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
