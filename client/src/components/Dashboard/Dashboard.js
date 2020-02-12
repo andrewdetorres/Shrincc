@@ -1,79 +1,19 @@
 import React, { Component } from 'react';
-import {Line} from 'react-chartjs-2';
-// import {
-//   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
-// } from 'recharts';
 
-// const scale = scaleLog().base(Math.E);
-
+import CalendarHeatmap from 'react-calendar-heatmap';
+import 'react-calendar-heatmap/dist/styles.css';
 class Dashboard extends Component {
   
   render() {
-
-    const data = {
-      labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J'],
-      datasets: [
-        {
-          fill: true,
-          lineTension: 0.1,
-          backgroundColor: 'rgba(230, 0, 35, 0.2)',
-          borderColor: 'rgba(230, 0, 35, 0.5)',
-          borderCapStyle: 'butt',
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: 'miter',
-          pointBorderColor: 'rgba(75,192,192,1)',
-          pointBackgroundColor: '#fff',
-          pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-          pointHoverBorderColor: 'rgba(220,220,220,1)',
-          pointHoverBorderWidth: 2,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          gridLines: {
-              color: "rgba(0, 0, 0, 0)",
-          },
-          data: [65, 59, 80, 81, 56, 55, 40]
-        }
-      ]
-    };
-
-    const options = {
-      maintainAspectRatio: false,
-      responsive: true,
-      legend: {
-        display: false,
-      },
-      scales: {
-        yAxes: [
-          {
-            display: false,
-            gridLines: {
-              display: true,
-              drawOnChartArea: false,
-            },
-            ticks: {
-              autoSkip: true,
-              maxTicksLimit: 4,
-              beginAtZero: true
-            }
-          }
-        ],
-        xAxes: [
-          {
-            display: false,
-            autoSkip: true,
-            gridLines: {
-              display: true,
-              drawOnChartArea: false,
-            }
-          },
-        ],
-      },
-    }
+    var heatData = [
+      { date: '2020-01-01', count: 1 },
+      { date: '2020-01-03', count: 4 },
+      { date: '2020-01-06', count: 6 },
+    ];
 
     return (
+
+      
       <div className="c-wrapper">
         {/* Sub header with breadcrumbs */}
         <header className="c-header c-header-light">
@@ -130,6 +70,25 @@ class Dashboard extends Component {
               </div>
             </div>
           </div>
+        </div>
+        <div className="px-5">
+          <h3>Daily Click Heatmap</h3>
+            <div className="px-5">
+              <CalendarHeatmap
+              startDate={new Date('2020-01-01')}
+              endDate={new Date('2020-12-31')}
+              showOutOfRangeDays={true}
+              values={heatData}
+              classForValue={(value) => {
+                if (!value) {
+                  return 'color-empty';
+                }
+                if (value.count < 5) {
+                  return `color-scale-${value.count}`;
+                }
+                return `color-scale-large`;
+              }}
+            /></div>
         </div>
       </div>
     )

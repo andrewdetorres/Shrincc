@@ -5,3 +5,23 @@
     border-radius: 3px;
   }
 }
+
+
+.react-calendar-heatmap {
+  .color-empty { fill: rgb(209, 209, 209) !important }
+  .color-scale-1 { fill: #d6e685; }
+  .color-scale-2 { fill: #8cc665; }
+  .color-scale-3 { fill: #44a340; }
+  .color-scale-4 { fill: #1e6823; }
+  .color-scale-large { fill: #103312; }
+
+  .color-empty,
+  .color-scale-1,
+  .color-scale-2,
+  .color-scale-3,
+  .color-scale-4,
+  .color-scale-large {
+    rx: 10;
+    ry: 10;
+  }
+}

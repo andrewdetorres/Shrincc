@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 
 // Import Actions
 import { loginUser } from '../../actions/auth';
+import HeatmapCalendar from 'heatmap-calendar-react';
+import 'heatmap-calendar-react/build/style.css';
 
 class Login extends Component {
   constructor(props) {
