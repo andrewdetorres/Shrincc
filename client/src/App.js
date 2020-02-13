@@ -14,8 +14,7 @@ import { fetchUser } from "./actions/auth";
 import './assets/sass/vendor/main.scss';
 import setAuthToken from "./utilities/setAuthToken";
 // Import CoreUI
-import '@coreui/coreui/dist/css/coreui.min.css';
-// import '@coreui/coreui/dist/js/coreui.bundle.min.js';
+// import '@coreui/coreui/dist/css/coreui.min.css';
 
 // Component Import
 import Login from "./components/Auth/Login";
