@@ -26,6 +26,8 @@ export const PROFILE_CREATION_FAILED = 'PROFILE_CREATION_FAILED';
 // Link types;
 export const GET_NEW_LINK = 'GET_NEW_LINK';
 export const GET_NEW_LINK_FAILED = 'GET_NEW_LINK_FAILED';
+export const GET_ALL_LINKS = 'GET_ALL_LINKS';
+export const GET_ALL_LINKS_FAILED = 'GET_ALL_LINKS_FAILED';
 
 // Errors types
 export const GET_ERRORS = 'GET_ERRORS';

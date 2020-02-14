@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import CalendarHeatmap from 'react-calendar-heatmap';
 import { Line, Doughnut } from 'react-chartjs-2';
 import 'react-calendar-heatmap/dist/styles.css';
-import { nominalTypeHack } from 'prop-types';
+
+import { GroupBy } from 'react-lodash'
+import _ from 'lodash';
+
+// Import Components
+import LinkTableRow from './LinkTableRow';
+
+// Import Actions
+import { getAllLinks } from '../../actions/link';
 
 class Dashboard extends Component {
+
+  componentDidMount() {
+    this.props.getAllLinks();
+  }
 
   render() {
     // React-Chart.js Dummy Data
@@ -56,110 +71,6 @@ class Dashboard extends Component {
       }
     }
 
-
-    // React-Chart.js Dummy Data
-    const data1 = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          fill: false,
-          lineTension: 0.2,
-          borderColor: '#E60023',
-          pointRadius: 0,
-          data: [65, 59, 80, 81, 56, 55, 40]
-        }
-      ]
-    };
-    const data2 = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          fill: false,
-          lineTension: 0.2,
-          borderColor: '#E60023',
-          pointRadius: 0,
-          data: [65, 59, 80, 81, 56, 55, 40]
-        }
-      ]
-    };
-    const data3 = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          fill: false,
-          lineTension: 0.2,
-          borderColor: '#E60023',
-          pointRadius: 0,
-          data: [65, 59, 40, 80, 81, 56, 55,]
-        }
-      ]
-    };
-    const data4 = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          fill: false,
-          lineTension: 0.2,
-          borderColor: '#E60023',
-          pointRadius: 0,
-          data: [65, 59, 55, 80, 81, 56, 40]
-        }
-      ]
-    };
-    const data5 = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          fill: false,
-          lineTension: 0.2,
-          borderColor: '#E60023',
-          pointRadius: 0,
-          data: [65, 59, 82, 81, 36, 55, 40]
-        }
-      ]
-    };
-    const data6 = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          fill: false,
-          lineTension: 0.2,
-          borderColor: '#E60023',
-          pointRadius: 0,
-          data: [ 56, 55, 40, 65, 59, 80, 81,]
-        }
-      ]
-    };
-
-    const options1 = {
-      responsive: true,
-      maintainAspectRatio: true,
-      legend: {
-         display: false
-      },
-      tooltips: {
-           enabled: false
-      },
-      scales: {
-        xAxes: [{
-            gridLines: {
-              display: false
-            },
-            ticks: {
-              display: false
-            }
-        }],
-        yAxes: [{
-            gridLines: {
-              display: false
-            },
-            ticks: {
-              display: false
-            }
-        }]
-      }
-    }
-
     const doughnutData = {
       labels: [
         'Mobile',
@@ -187,12 +98,62 @@ class Dashboard extends Component {
       }
     }
 
-    // HEatmap Dummy Data
-    var heatData = [
-      { date: '2020-01-01', count: 1 },
-      { date: '2020-01-03', count: 4 },
-      { date: '2020-01-06', count: 6 },
-    ];
+    // Heatmap data
+    var heatData = [];
+
+    // Create Table
+    let HeatMap;
+    let rows = null;
+    let totalLinks = 0;
+    let totalClicks = 0;
+    let heatDataFinal = [];
+    let higgestClickCount = 0;
+    let obj;
+
+    if (this.props.link.AllLinks && this.props.link.loading === false) {
+      rows = this.props.link.AllLinks.map((link, index) => {
+       return (
+        <LinkTableRow
+          shortLink={"https://shrin.cc/" + link.shortLink}
+          data={[23,45,36,17,24]}
+          linkType="Social Media"
+          date={link.date}
+          clickCount={link.clicks.length}
+          active={false}
+          key={index}
+          />
+       )
+      });
+
+      totalLinks = this.props.link.AllLinks.length;
+
+      this.props.link.AllLinks.forEach(link => {
+        totalClicks = totalClicks + link.clicks.length;
+      });
+
+      // Push the date of each link click to array
+      this.props.link.AllLinks.forEach(link => {
+        link.clicks.forEach(click => {
+          heatData.push({date: click.date.substring(0, 10)})
+        });
+      });
+
+      // Group results by date
+      let nextHeatData = _.groupBy(heatData, "date");
+
+      // Iterate through array and build data structure for heatmap
+      Object.keys(nextHeatData).forEach(click => {
+        obj = {
+          "date": click, "count": nextHeatData[click].length
+        }
+        if(nextHeatData[click].length > higgestClickCount) {
+          higgestClickCount = nextHeatData[click].length
+        }
+        heatDataFinal.push(obj);
+      });
+
+
+    }
 
     return (
 
@@ -217,7 +178,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">1238</div><small className="text-muted text-uppercase font-weight-bold">Links Created</small>
+                <div className="text-value-lg">{totalLinks}</div><small className="text-muted text-uppercase font-weight-bold">Links Created</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-warning w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -228,7 +189,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">8,835</div><small className="text-muted text-uppercase font-weight-bold">Visitors</small>
+                <div className="text-value-lg">{totalClicks}</div><small className="text-muted text-uppercase font-weight-bold">Visitors</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -239,7 +200,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">7,508</div><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
+                <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -250,7 +211,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">8.34</div><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
+                <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-danger w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -260,7 +221,7 @@ class Dashboard extends Component {
         </div>
 
         <div className="px-md-5 px-1 mt-3">
-          <div className="card border-0 shadow">
+          <div className="card border-0 shadow" id="dashboard-table">
             <div className="card-body py-4">
               <div className="text-muted text-right mb-4">
                 <table className="table table-responsive-sm table-hover table-outline mb-0">
@@ -275,151 +236,14 @@ class Dashboard extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="text-center">
-                        <div><img className="avatar rounded-circle" src={require("../../assets/img/avatar.png")} alt="user@email.com" /><span className="-status bg-success"></span></div>
-                      </td>
-                      <td>
-                        <div>[SHORT LINK]</div>
-                        <div className="small text-muted"><span>[LINK TYPE]</span> | Registered: Jan 1, 2015</div>
-                      </td>
-                      <td className="text-center">
-                        <FontAwesomeIcon icon={['far', 'check-circle']} height="20px" className="mr-2 text-success"/>
-                      </td>
-                      <td style={{"width":"100px"}}>
-                        <div>
-                          <Line data={data1} options={options1} height={50}/>
-                        </div>
-                      </td>
-                      <td className="text-center">
-                        <strong>5.67</strong>
-                      </td>
-                      <td>
-                        <div className="small text-muted">Click Count</div><strong>15143</strong>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-center">
-                        <div><img className="avatar rounded-circle" src={require("../../assets/img/avatar.png")} alt="user@email.com" /><span className="-status bg-danger"></span></div>
-                      </td>
-                      <td>
-                        <div>[SHORT LINK]</div>
-                        <div className="small text-muted"><span>Recurring</span> | Registered: Jan 1, 2015</div>
-                      </td>
-                      <td className="text-center">
-                        <FontAwesomeIcon icon={['far', 'check-circle']} height="20px" className="mr-2 text-success"/>
-                      </td>
-                      <td style={{"width":"100px"}}>
-                        <div>
-                          <Line data={data2} options={options1} height={50}/>
-                        </div>
-                      </td>
-                      <td className="text-center">
-                        <strong>5.67</strong>
-                      </td>
-                      <td>
-                        <div className="small text-muted">Click Count</div><strong>4123</strong>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-center">
-                        <div><img className="avatar rounded-circle" src={require("../../assets/img/avatar.png")} alt="user@email.com" /><span className="-status bg-warning"></span></div>
-                      </td>
-                      <td>
-                        <div>[SHORT LINK]</div>
-                        <div className="small text-muted"><span>[LINK TYPE]</span> | Registered: Jan 1, 2015</div>
-                      </td>
-                      <td className="text-center">
-                        <FontAwesomeIcon icon={['far', 'check-circle']} height="20px" className="mr-2 text-success"/>
-                      </td>
-                      <td style={{"width":"100px"}}>
-                        <div>
-                          <Line data={data3} options={options1} height={50}/>
-                        </div>
-                      </td>
-                      <td className="text-center">
-                        <strong>5.67</strong>
-                      </td>
-                      <td>
-                        <div className="small text-muted">Click Count</div><strong>213</strong>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-center">
-                        <div><img className="avatar rounded-circle" src={require("../../assets/img/avatar.png")} alt="user@email.com" /><span className="-status bg-secondary"></span></div>
-                      </td>
-                      <td>
-                        <div>[SHORT LINK]</div>
-                        <div className="small text-muted"><span>[LINK TYPE]</span> | Registered: Jan 1, 2015</div>
-                      </td>
-                      <td className="text-center">
-                        <FontAwesomeIcon icon={['far', 'check-circle']} height="20px" className="mr-2 text-success"/>
-                      </td>
-                      <td style={{"width":"100px"}}>
-                        <div>
-                          <Line data={data4} options={options1} height={50}/>
-                        </div>
-                      </td>
-                      <td className="text-center">
-                        <strong>5.67</strong>
-                      </td>
-                      <td>
-                        <div className="small text-muted">Click Count</div><strong>8743</strong>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-center">
-                        <div><img className="avatar rounded-circle" src={require("../../assets/img/avatar.png")} alt="user@email.com" /><span className="-status bg-success"></span></div>
-                      </td>
-                      <td>
-                        <div>[SHORT LINK]</div>
-                        <div className="small text-muted"><span>[LINK TYPE]</span> | Registered: Jan 1, 2015</div>
-                      </td>
-                      <td className="text-center">
-                        <FontAwesomeIcon icon={['far', 'times-circle']} height="20px" className="mr-2 text-danger"/>
-                      </td>
-                      <td style={{"width":"100px"}}>
-                        <div>
-                          <Line data={data5} options={options1} height={50}/>
-                        </div>
-                      </td>
-                      <td className="text-center">
-                        <strong>5.67</strong>
-                      </td>
-                      <td>
-                        <div className="small text-muted">Click Count</div><strong>2186</strong>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-center">
-                        <div><img className="avatar rounded-circle" src={require("../../assets/img/avatar.png")} alt="user@email.com" /><span className="-status bg-danger"></span></div>
-                      </td>
-                      <td>
-                        <div>[SHORT LINK]</div>
-                        <div className="small text-muted"><span>[LINK TYPE]</span> | Registered: Jan 1, 2015</div>
-                      </td>
-                      <td className="text-center">
-                        <FontAwesomeIcon icon={['far', 'check-circle']} height="20px" className="mr-2 text-success"/>
-                      </td>
-                      <td style={{"width":"100px"}}>
-                        <div>
-                          <Line data={data6} options={options1} height={50}/>
-                        </div>
-                      </td>
-                      <td className="text-center">
-                        <strong>5.67</strong>
-                      </td>
-                      <td>
-                        <div className="small text-muted">Click Count</div><strong>1772</strong>
-                      </td>
-                    </tr>
+                    {rows}
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
-        
+
         {/* Daily Heatmap */}
         <div className="px-5 mt-3">
           <div className="card border-0 shadow">
@@ -428,26 +252,27 @@ class Dashboard extends Component {
                 <h3>Daily Click Heatmap</h3>
                 <div className="px-5">
                   <CalendarHeatmap
-                  startDate={new Date('2020-01-01')}
-                  endDate={new Date('2020-12-31')}
-                  showOutOfRangeDays={true}
-                  values={heatData}
-                  classForValue={(value) => {
-                    if (!value) {
-                      return 'color-empty';
-                    }
-                    if (value.count < 5) {
-                      return `color-scale-${value.count}`;
-                    }
-                    return `color-scale-large`;
-                  }}
-                />
+                    startDate={new Date('2020-01-01')}
+                    endDate={new Date('2020-12-31')}
+                    showOutOfRangeDays={true}
+                    values={heatDataFinal}
+                    classForValue={(value) => {
+                      console.log(higgestClickCount);
+                      if (!value) {
+                        return 'color-empty';
+                      }
+                      if (value.count < 5) {
+                        return `color-scale-${value.count}`;
+                      }
+                      return `color-scale-large`;
+                    }}
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-between px-5 mt-3">
+        {/* <div className="d-flex justify-content-between px-5 mt-3">
           <div className="card border-0 w-50 mr-4 shadow">
             <div className="card-body">
               <div className="c-chart-wrapper">
@@ -464,10 +289,24 @@ class Dashboard extends Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     )
   }
 }
 
-export default Dashboard;
+Dashboard.propTypes = {
+  getAllLinks: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  link: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  link: state.link,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { getAllLinks })(withRouter(Dashboard));
+
