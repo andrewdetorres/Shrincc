@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import CalendarHeatmap from 'react-calendar-heatmap';
-import { Line, Doughnut } from 'react-chartjs-2';
 import 'react-calendar-heatmap/dist/styles.css';
 
-import { GroupBy } from 'react-lodash'
 import _ from 'lodash';
 
 // Import Components
@@ -23,86 +20,11 @@ class Dashboard extends Component {
   }
 
   render() {
-    // React-Chart.js Dummy Data
-    const data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'My First dataset',
-          fill: false,
-          lineTension: 0.1,
-          backgroundColor: '#321fdb',
-          borderColor: 'rgba(75,192,192,1)',
-          borderCapStyle: 'butt',
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: 'miter',
-          pointBorderColor: 'rgba(75,192,192,1)',
-          pointBackgroundColor: '#fff',
-          pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-          pointHoverBorderColor: 'rgba(220,220,220,1)',
-          pointHoverBorderWidth: 2,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          data: [65, 59, 80, 81, 56, 55, 40]
-        }
-      ]
-    };
-
-    const options = {
-      responsive: true,
-      maintainAspectRatio: false,
-      legend: {
-         display: false
-      },
-      scales: {
-        xAxes: [{
-            gridLines: {
-                drawOnChartArea: false
-            }
-        }],
-        yAxes: [{
-            gridLines: {
-                // drawOnChartArea: false
-            }
-        }]
-      }
-    }
-
-    const doughnutData = {
-      labels: [
-        'Mobile',
-        'Tablet',
-        'Desktop'
-      ],
-      datasets: [{
-        data: [300, 50, 100],
-        backgroundColor: [
-        '#e55353',
-        '#2eb85c',
-        '#2f92f6'
-        ],
-        hoverBackgroundColor: [
-        '#e52727',
-        '#09a53d',
-        '#007fff'
-        ]
-      }]
-    };
-
-    const doughnutOptions = {
-      legend: {
-         display: false
-      }
-    }
 
     // Heatmap data
     var heatData = [];
 
     // Create Table
-    let HeatMap;
     let rows = null;
     let totalLinks = 0;
     let totalClicks = 0;
@@ -114,9 +36,9 @@ class Dashboard extends Component {
       rows = this.props.link.AllLinks.map((link, index) => {
        return (
         <LinkTableRow
-          shortLink={"https://shrin.cc/" + link.shortLink}
+          shortLink={"http://localhost:3000/shrincc/" + link.shortLink}
+          longLink={link.longLink}
           data={[23,45,36,17,24]}
-          linkType="Social Media"
           date={link.date}
           clickCount={link.clicks.length}
           active={false}
@@ -124,6 +46,17 @@ class Dashboard extends Component {
           />
        )
       });
+
+      if (rows.length < 1) {
+        rows = (
+          <tr>
+            <td colSpan="6" className="text-center">
+              <p>No Data</p>
+              <p>Create a new link <a href="/new">here</a></p>
+            </td>
+          </tr>
+        )
+      }
 
       totalLinks = this.props.link.AllLinks.length;
 
@@ -147,7 +80,7 @@ class Dashboard extends Component {
           "date": click, "count": nextHeatData[click].length
         }
         if(nextHeatData[click].length > higgestClickCount) {
-          higgestClickCount = nextHeatData[click].length
+          higgestClickCount = nextHeatData[click].length;
         }
         heatDataFinal.push(obj);
       });
@@ -164,7 +97,6 @@ class Dashboard extends Component {
           <div className="c-subheader px-3">
             <ol className="breadcrumb border-0 m-0">
               <li className="breadcrumb-item">Home</li>
-              <li className="breadcrumb-item"><a href="#">Admin</a></li>
               <li className="breadcrumb-item active">Dashboard</li>
             </ol>
           </div>
@@ -261,10 +193,24 @@ class Dashboard extends Component {
                       if (!value) {
                         return 'color-empty';
                       }
-                      if (value.count < 5) {
-                        return `color-scale-${value.count}`;
+                      if (value.count <= ((higgestClickCount / 100) * 20)) {
+                        return `color-scale-1`;
                       }
-                      return `color-scale-large`;
+                      else if (value.count <= ((higgestClickCount / 100) * 40)) {
+                        return `color-scale-2`;
+                      }
+                      else if (value.count <= ((higgestClickCount / 100) * 60)) {
+                        return `color-scale-3`;
+                      }
+                      else if (value.count <= ((higgestClickCount / 100) * 80)) {
+                        return `color-scale-4`;
+                      }
+                      else if (value.count <= ((higgestClickCount / 100) * 100)) {
+                        return `color-scale-large`;
+                      }
+                    }}
+                    onClick={(value) => {
+                      console.log(value);
                     }}
                   />
                 </div>

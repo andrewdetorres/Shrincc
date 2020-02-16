@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Line, Doughnut } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
+import GetDate from '../Common/GetDate';
 
 export default class LinkTableRow extends Component {
 
-  render() {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      copied: false,
+    };
+  }
+
+  CopyText = () => {
+    // Copy text to clipboard
+    navigator.clipboard.writeText(this.props.shortLink)
+
+    // Change copied text
+    this.setState({
+      copied: true
+    })
+  }
+  render() {
     const data = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
@@ -52,11 +69,21 @@ export default class LinkTableRow extends Component {
 
       <tr>
         <td className="text-center">
-          <div><img className="avatar rounded-circle" src={require("../../assets/img/avatar.png")} alt="user@email.com" /><span className="-status bg-success"></span></div>
+          <div>
+            <img className="avatar rounded-circle" src={require("../../assets/img/avatar.png")} alt="user@email.com" />
+            <span className="-status bg-success"></span>
+          </div>
         </td>
         <td>
-          <div>{this.props.shortLink}</div>
-          <div className="small text-muted"><span>{this.props.linkType}</span> | Registered: {this.props.date}</div>
+          <div>
+            <a href={this.props.shortLink}>{this.props.shortLink}</a> 
+            &nbsp;|&nbsp;
+            <span className="pointer" onClick={this.CopyText}>
+              {this.state.copied ? "Copied" : "Copy"}
+            </span>
+          </div>
+          <div className="small text-muted"> Created: <GetDate date={this.props.date}></GetDate></div>
+          <div className="small text-muted"><a href={this.props.longLink} className="text-dark">{this.props.longLink}</a></div>
         </td>
         <td className="text-center">
           {this.props.active ? <FontAwesomeIcon icon={['far', 'check-circle']} height="20px" className="mr-2 text-success"/> : <FontAwesomeIcon icon={['far', 'times-circle']} height="20px" className="mr-2 text-danger"/>}
