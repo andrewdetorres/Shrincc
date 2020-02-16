@@ -4,6 +4,8 @@ import axios from "axios";
 import {
   GET_NEW_LINK,
   GET_NEW_LINK_FAILED,
+  GET_ALL_LINKS,
+  GET_ALL_LINKS_FAILED,
   GET_ERRORS
 } from "./types";
 
@@ -19,6 +21,26 @@ export const createLink = (longLink) => dispatch => {
     .catch(errors => {
       dispatch({
         type: GET_NEW_LINK_FAILED
+      });
+      dispatch({
+        type: GET_ERRORS,
+        payload: errors.response.data
+      });
+    })
+}
+
+export const getAllLinks = () => dispatch => {
+  axios
+    .get('/api/click/all')
+    .then(res => {
+      dispatch({
+        type: GET_ALL_LINKS,
+        payload: res.data
+      });
+    })
+    .catch(errors => {
+      dispatch({
+        type: GET_ALL_LINKS_FAILED
       });
       dispatch({
         type: GET_ERRORS,

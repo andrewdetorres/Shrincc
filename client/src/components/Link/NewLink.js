@@ -16,6 +16,15 @@ class NewLink extends Component {
     };
   }
 
+  CopyText = () => {
+    // Copy text to clipboard
+    navigator.clipboard.writeText("http://localhost:3000/shrincc/" + this.props.link.shortLink)
+
+    // Change copied text
+    this.setState({
+      copied: true
+    })
+  }
   onSubmit = (event) => {
     event.preventDefault();
 
@@ -46,15 +55,7 @@ class NewLink extends Component {
             disabled/> 
             <p 
               className="btn btn-dark m-0"
-              onClick={() => {
-                // Copy text to clipboard
-                navigator.clipboard.writeText("http://localhost:3000/shrincc/" + this.props.link.shortLink)
-
-                // Change copied text
-                this.setState({
-                  copied: true
-                })
-              }}
+              onClick={() => this.CopyText}
             >
               {!this.state.copied ? 'Copy' : 'Copied'}
             </p> 

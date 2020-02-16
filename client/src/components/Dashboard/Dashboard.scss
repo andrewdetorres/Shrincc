@@ -6,6 +6,23 @@
   }
 }
 
+#dashboard-table {
+  height: 500px;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.longlink-overflow {
+  width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  float: right;
+}
 
 .react-calendar-heatmap {
   .color-empty { fill: rgb(209, 209, 209) !important }

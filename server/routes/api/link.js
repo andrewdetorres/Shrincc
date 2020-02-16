@@ -51,11 +51,29 @@ module.exports = app => {
       });
   })
 
+
+  //--------------------------------------------------------
+  //@request  : POST
+  //@route    : /api/click/all/
+  //@access   : Private
+  //@desc     : Get all clicks from a link
+  //--------------------------------------------------------
+  app.get("/api/click/all", auth, (req, res) => {
+    Link
+      .find({user : req.user.id})
+      .then(link => {
+        res.send(link);
+      })
+      .catch(error => {
+        res.status(500).send('Server error!');
+      })
+  })
+
   //--------------------------------------------------------
   //@request  : GET
   //@route    : /shrincc/:shortLink
   //@access   : Public
-  //@desc     : Get link details
+  //@desc     : Redirect Link
   //--------------------------------------------------------
   app.get("/shrincc/:shortLink", (req, res) => {
 
