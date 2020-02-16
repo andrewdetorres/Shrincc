@@ -28,6 +28,7 @@ class Dashboard extends Component {
     let rows = null;
     let totalLinks = 0;
     let totalClicks = 0;
+    let averageLinkClick = 0;
     let heatDataFinal = [];
     let higgestClickCount = 0;
     let obj;
@@ -85,7 +86,8 @@ class Dashboard extends Component {
         heatDataFinal.push(obj);
       });
 
-
+      // Average clicks calculation
+      averageLinkClick = totalClicks / totalLinks;
     }
 
     return (
@@ -143,7 +145,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
+                <div className="text-value-lg">{averageLinkClick}</div><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-danger w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>

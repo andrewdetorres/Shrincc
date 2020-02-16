@@ -78,12 +78,16 @@ export default class LinkTableRow extends Component {
           <div>
             <a href={this.props.shortLink}>{this.props.shortLink}</a> 
             &nbsp;|&nbsp;
-            <span className="pointer" onClick={this.CopyText}>
+            <span className="cursor-pointer" onClick={this.CopyText}>
               {this.state.copied ? "Copied" : "Copy"}
             </span>
           </div>
-          <div className="small text-muted"> Created: <GetDate date={this.props.date}></GetDate></div>
-          <div className="small text-muted"><a href={this.props.longLink} className="text-dark">{this.props.longLink}</a></div>
+          <div className="small text-muted"> 
+            Created: <GetDate date={this.props.date}></GetDate>
+          </div>
+          <div className="small text-muted">
+            <a href={this.props.longLink} className="text-dark longlink-overflow">{this.props.longLink}</a>
+          </div>
         </td>
         <td className="text-center">
           {this.props.active ? <FontAwesomeIcon icon={['far', 'check-circle']} height="20px" className="mr-2 text-success"/> : <FontAwesomeIcon icon={['far', 'times-circle']} height="20px" className="mr-2 text-danger"/>}
