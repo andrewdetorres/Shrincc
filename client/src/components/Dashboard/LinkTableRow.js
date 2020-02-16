@@ -3,6 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Line } from 'react-chartjs-2';
 import GetDate from '../Common/GetDate';
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const swal = withReactContent(Swal);
+
 export default class LinkTableRow extends Component {
 
 
@@ -20,6 +25,18 @@ export default class LinkTableRow extends Component {
     // Change copied text
     this.setState({
       copied: true
+    })
+
+    swal.fire({
+      title: 'Link Copied!',
+      icon: 'success',
+      showConfirmButton: false,
+      html: (
+        <>
+          <p>The link <span className="text-primary">{this.props.shortLink}</span> has been copied to your clipboard'</p>
+          <Okay />
+        </>
+      )
     })
   }
   render() {
@@ -98,7 +115,7 @@ export default class LinkTableRow extends Component {
           </div>
         </td>
         <td className="text-center">
-          <strong>5.67</strong>
+          <strong>[INT]</strong>
         </td>
         <td>
           <div className="small text-muted">Click Count</div><strong>{this.props.clickCount}</strong>
@@ -107,3 +124,13 @@ export default class LinkTableRow extends Component {
     )
   }
 }
+
+export const Okay = () => (
+  <button
+    className="btn btn-success my-2"
+    onClick={() => swal.close()}
+  >
+    Okay
+  </button>
+)
+

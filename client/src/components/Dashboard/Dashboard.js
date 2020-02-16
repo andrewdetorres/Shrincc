@@ -42,7 +42,7 @@ class Dashboard extends Component {
           data={[23,45,36,17,24]}
           date={link.date}
           clickCount={link.clicks.length}
-          active={false}
+          active={true}
           key={index}
           />
        )
@@ -145,7 +145,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{averageLinkClick}</div><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
+                <div className="text-value-lg">{averageLinkClick.toFixed(2)}</div><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-danger w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>

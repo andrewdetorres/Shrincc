@@ -3,8 +3,13 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 // import Actions
 import { createLink } from '../../actions/link';
+
+const swal = withReactContent(Swal);
 
 class NewLink extends Component {
   constructor(props) {
@@ -23,6 +28,16 @@ class NewLink extends Component {
     // Change copied text
     this.setState({
       copied: true
+    })
+
+    swal.fire({
+      title: 'Link Copied!',
+      text: 'The link http://localhost:3000/shrincc/' + this.props.link.shortLink + ' has been copied to your clipboard',
+      icon: 'success',
+      showConfirmButton: false,
+      html: (
+        <Okay />
+      )
     })
   }
   onSubmit = (event) => {
@@ -91,6 +106,15 @@ class NewLink extends Component {
     )
   }
 }
+
+export const Okay = () => (
+  <button
+    className="btn btn-success my-2"
+    onClick={() => swal.close()}
+  >
+    Okay
+  </button>
+)
 
 NewLink.propTypes = {
   auth: PropTypes.object.isRequired,
