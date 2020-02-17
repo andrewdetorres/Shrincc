@@ -9,8 +9,6 @@ import withReactContent from 'sweetalert2-react-content'
 const swal = withReactContent(Swal);
 
 export default class LinkTableRow extends Component {
-
-
   constructor(props) {
     super(props);
     this.state = {

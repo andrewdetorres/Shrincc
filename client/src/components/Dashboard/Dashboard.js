@@ -241,7 +241,7 @@ class Dashboard extends Component {
           <div className="card border-0 shadow">
             <div className="card-body">
               <div className="c-chart-wrapper">
-                <h3>Daily Click Heatmap</h3>
+                <h4>Daily Click Heatmap</h4>
                 <div className="px-5">
                   <CalendarHeatmap
                     startDate={new Date('2020-01-01')}

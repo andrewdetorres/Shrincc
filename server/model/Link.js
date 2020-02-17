@@ -23,6 +23,18 @@ const LinkSchema = new Schema({
         type: String
         // document.referrer
       },
+      os: {
+        type: String
+      },
+      clientType: {
+        type: String
+      },
+      clientName: {
+        type: String
+      },
+      deviceType: {
+        type: String
+      },
       date: {
         type: Date,
         required: true,
