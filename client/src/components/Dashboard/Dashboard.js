@@ -36,7 +36,7 @@ class Dashboard extends Component {
 
     // Get the date from 7 days ago.
     let d = new Date();
-    let sevenDays = d.setDate(d.getDate() - 6);
+    let sevenDays = d.setDate(d.getDate() - 7);
     var oneWeekAgo = new Date(sevenDays).toISOString();
 
     if (this.props.link.AllLinks && this.props.link.loading === false) {
@@ -55,6 +55,7 @@ class Dashboard extends Component {
 
       // Create graph data for each row
       let graphData = _.groupBy(clickThisWeek, "date");
+      console.log(graphData);
       let dataToSend = [];
       for (let i = 6; i >= 0; i--) {
         let date = new Date();
@@ -69,6 +70,19 @@ class Dashboard extends Component {
         }
       }
 
+      console.log(dataToSend);
+
+      // Set the graph color based on if the data has improved
+      let graphColor;
+      if (dataToSend[0] > dataToSend[6]){
+        graphColor = "#E60023";
+      }
+      else if (dataToSend[0] < dataToSend[6]){
+        graphColor = "#2CB85C";
+      }
+      else {
+        graphColor = "#F9B112";
+      }
       // Return the link table row with its content
       return (
       <LinkTableRow
@@ -78,6 +92,7 @@ class Dashboard extends Component {
         date={link.date}
         clickCount={link.clicks.length}
         avgClickPerDay={avgClickPerDay}
+        graphColor={graphColor}
         active={true}
         key={index}
         />
@@ -173,7 +188,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Unique Clicks</small>
+                <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>

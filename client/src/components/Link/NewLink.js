@@ -57,23 +57,23 @@ class NewLink extends Component {
   render() {
 
     let copy = null;
-    
+
     if (this.props.link.shortLink && this.props.link.loading === false) {
       copy = (
         <>
-          <input 
+          <input
             ref={(textarea) => this.textArea = textarea}
-            type="text" 
-            value={"http://localhost:3000/shrincc/" + this.props.link.shortLink} 
-            id="shortLinkInput" 
+            type="text"
+            value={"http://localhost:3000/shrincc/" + this.props.link.shortLink}
+            id="shortLinkInput"
             className="w-75 px-3"
-            disabled/> 
-            <p 
-              className="btn btn-dark m-0"
+            disabled/>
+            <p
+              className="btn btn-dark w-25 copied-button"
               onClick={() => this.CopyText}
             >
               {!this.state.copied ? 'Copy' : 'Copied'}
-            </p> 
+            </p>
         </>
       );
     }
@@ -90,11 +90,11 @@ class NewLink extends Component {
                     type="text"
                     name="link"
                     placeholder="https://example.com/"
-                    className="w-75 px-3"
+                    className="w-75 px-3 mb-3"
                     value={this.state.link}
                     onChange={this.onChange}
                     required/>
-                    <button className="btn btn-primary" type="submit">Shrincc My Link</button>
+                    <button className="btn btn-primary w-25 mb-3" type="submit">Shrincc My Link</button>
                     {copy}
                 </div>
                 <br/>

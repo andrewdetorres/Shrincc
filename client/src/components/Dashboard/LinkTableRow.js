@@ -46,7 +46,7 @@ export default class LinkTableRow extends Component {
         {
           fill: false,
           lineTension: 0.2,
-          borderColor: '#E60023',
+          borderColor: this.props.graphColor,
           pointRadius: 0,
           data: this.props.data
         }

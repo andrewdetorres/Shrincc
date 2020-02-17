@@ -14,7 +14,7 @@ class Settings extends Component {
     return (
       <Fragment>
         <div className="container">
-          <div className="row">
+          <div className="row mt-5">
             <div className="col-12 col-md-4 col-lg-3 p-0 d-flex justify-content-center">
               <div className="card border-0 w-100">
                 <div className="card-body">
