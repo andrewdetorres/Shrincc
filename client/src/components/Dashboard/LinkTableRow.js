@@ -93,13 +93,13 @@ export default class LinkTableRow extends Component {
         </td>
         <td>
           <div>
-            <a href={this.props.shortLink}>{this.props.shortLink}</a> 
+            <a href={this.props.shortLink}>{this.props.shortLink}</a>
             &nbsp;|&nbsp;
             <span className="cursor-pointer" onClick={this.CopyText}>
               {this.state.copied ? "Copied" : "Copy"}
             </span>
           </div>
-          <div className="small text-muted"> 
+          <div className="small text-muted">
             Created: <GetDate date={this.props.date}></GetDate>
           </div>
           <div className="small text-muted">
@@ -115,7 +115,7 @@ export default class LinkTableRow extends Component {
           </div>
         </td>
         <td className="text-center">
-          <strong>[INT]</strong>
+          <strong>{this.props.avgClickPerDay}</strong>
         </td>
         <td>
           <div className="small text-muted">Click Count</div><strong>{this.props.clickCount}</strong>

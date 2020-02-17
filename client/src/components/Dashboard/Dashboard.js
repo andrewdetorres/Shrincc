@@ -34,18 +34,36 @@ class Dashboard extends Component {
     let higgestClickCount = 0;
     let obj;
 
+    // Get the date from 7 days ago.
+    let d = new Date();
+    let sevenDays = d.setDate(d.getDate() - 7);
+    var oneWeekAgo = new Date(sevenDays).toISOString();
+
     if (this.props.link.AllLinks && this.props.link.loading === false) {
       rows = this.props.link.AllLinks.map((link, index) => {
-       return (
-        <LinkTableRow
-          shortLink={"http://localhost:3000/shrincc/" + link.shortLink}
-          longLink={link.longLink}
-          data={[23,45,36,17,24]}
-          date={link.date}
-          clickCount={link.clicks.length}
-          active={true}
-          key={index}
-          />
+
+      let clickThisWeek = [];
+
+      // Get all the clicks within the last week
+      link.clicks.forEach(click => {
+        if(oneWeekAgo <= click.date) {
+          clickThisWeek.push({"date": click.date.substring(0, 10)});
+        }
+      })
+
+      let avgClickPerDay = (clickThisWeek.length / 7).toFixed(2);
+
+      return (
+      <LinkTableRow
+        shortLink={"http://localhost:3000/shrincc/" + link.shortLink}
+        longLink={link.longLink}
+        data={[23,45,36,17,24]}
+        date={link.date}
+        clickCount={link.clicks.length}
+        avgClickPerDay={avgClickPerDay}
+        active={true}
+        key={index}
+        />
        )
       });
 
@@ -59,12 +77,6 @@ class Dashboard extends Component {
           </tr>
         )
       }
-
-      totalLinks = this.props.link.AllLinks.length;
-
-      this.props.link.AllLinks.forEach(link => {
-        totalClicks = totalClicks + link.clicks.length;
-      });
 
       // Push the date of each link click to array
       this.props.link.AllLinks.forEach(link => {
@@ -86,6 +98,14 @@ class Dashboard extends Component {
         }
         heatDataFinal.push(obj);
       });
+
+      // Determine the total amount of clicks for all links the user owns
+      this.props.link.AllLinks.forEach(link => {
+        totalClicks = totalClicks + link.clicks.length;
+      });
+
+      // Gather the total amount of links the user owns
+      totalLinks = this.props.link.AllLinks.length;
 
       // Average clicks calculation
       averageLinkClick = totalClicks / totalLinks;
@@ -166,7 +186,7 @@ class Dashboard extends Component {
                       <th >User</th>
                       <th className="text-center">Active</th>
                       <th className="text-center">Usage</th>
-                      <th className="text-center">Avg. Click Rate</th>
+                      <th className="text-center">Avg. Click Rate <small>(Last 7 days)</small></th>
                       <th>Activity</th>
                     </tr>
                   </thead>
@@ -192,7 +212,6 @@ class Dashboard extends Component {
                     showOutOfRangeDays={true}
                     values={heatDataFinal}
                     classForValue={(value) => {
-                      console.log(higgestClickCount);
                       if (!value) {
                         return 'color-empty';
                       }
@@ -227,24 +246,6 @@ class Dashboard extends Component {
             </div>
           </div>
         </div>
-        {/* <div className="d-flex justify-content-between px-5 mt-3">
-          <div className="card border-0 w-50 mr-4 shadow">
-            <div className="card-body">
-              <div className="c-chart-wrapper">
-                <h3>Click By Month</h3>
-                <Line data={data} options={options}/>
-              </div>
-            </div>
-          </div>
-          <div className="card border-0 w-50 ml-4 shadow">
-            <div className="card-body">
-              <div className="c-chart-wrapper">
-                <h3>Click By Month</h3>
-                <Doughnut data={doughnutData} options={doughnutOptions}/>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     )
   }
