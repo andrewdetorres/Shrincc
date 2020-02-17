@@ -204,7 +204,8 @@ class IndividualLink extends Component {
               </div>
             </div>
           </div>
-        </div><div className="px-5 mt-3">
+        </div>
+        <div className="px-5 mt-3">
           <div className="card border-0 shadow">
             <div className="card-body">
               <div className="c-chart-wrapper">

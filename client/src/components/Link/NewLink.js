@@ -80,7 +80,7 @@ class NewLink extends Component {
             disabled/>
             <p
               className="btn btn-dark w-25 copied-button"
-              onClick={() => this.CopyText}
+              onClick={this.CopyText}
             >
               {!this.state.copied ? 'Copy' : 'Copied'}
             </p>
@@ -90,7 +90,7 @@ class NewLink extends Component {
 
     return (
 
-      <div className="c-wrapper">
+      <>
         <header className="c-header c-header-light">
           <div className="c-subheader px-3">
             <ol className="breadcrumb border-0 m-0">
@@ -123,7 +123,7 @@ class NewLink extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </>
     )
   }
 }
