@@ -20,7 +20,7 @@ export default class LinkTableRow extends Component {
 
   CopyText = () => {
     // Copy text to clipboard
-    navigator.clipboard.writeText(this.props.shortLink)
+    navigator.clipboard.writeText("http://localhost:3000/shrincc/" + this.props.shortLink)
 
     // Change copied text
     this.setState({
@@ -33,7 +33,7 @@ export default class LinkTableRow extends Component {
       showConfirmButton: false,
       html: (
         <>
-          <p>The link <span className="text-primary">{this.props.shortLink}</span> has been copied to your clipboard'</p>
+          <p>The link <span className="text-primary">{"http://localhost:3000/shrincc/" + this.props.shortLink}</span> has been copied to your clipboard'</p>
           <Okay />
         </>
       )
@@ -87,13 +87,13 @@ export default class LinkTableRow extends Component {
       <tr>
         <td className="text-center">
           <div>
-            <img className="avatar rounded-circle" src={require("../../assets/img/avatar.png")} alt="user@email.com" />
+            <img className="favicon-image rounded-circle" src={this.props.favicon} alt="user@email.com" />
             <span className="-status bg-success"></span>
           </div>
         </td>
         <td>
           <div>
-            <a href={this.props.shortLink}>{this.props.shortLink}</a>
+            <a href={"http://localhost:3000/shrincc/" + this.props.shortLink}>{"http://localhost:3000/shrincc/" + this.props.shortLink}</a>
             &nbsp;|&nbsp;
             <span className="cursor-pointer" onClick={this.CopyText}>
               {this.state.copied ? "Copied" : "Copy"}
@@ -119,6 +119,9 @@ export default class LinkTableRow extends Component {
         </td>
         <td>
           <div className="small text-muted">Click Count</div><strong>{this.props.clickCount}</strong>
+        </td>
+        <td>
+        <a href={"/link/" + this.props.shortLink}>View</a>
         </td>
       </tr>
     )

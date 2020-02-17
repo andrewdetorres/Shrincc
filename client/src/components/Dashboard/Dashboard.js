@@ -70,8 +70,6 @@ class Dashboard extends Component {
         }
       }
 
-      console.log(dataToSend);
-
       // Set the graph color based on if the data has improved
       let graphColor;
       if (dataToSend[0] > dataToSend[6]){
@@ -83,16 +81,23 @@ class Dashboard extends Component {
       else {
         graphColor = "#F9B112";
       }
+
+      // Get the favicon from each link
+      var a = document.createElement('a');
+      a.href = link.longLink;
+      let favicon = a['protocol'] + "//" + a['hostname'] + "/favicon.ico";
+
       // Return the link table row with its content
       return (
       <LinkTableRow
-        shortLink={"http://localhost:3000/shrincc/" + link.shortLink}
+        shortLink={link.shortLink}
         longLink={link.longLink}
         data={dataToSend}
         date={link.date}
         clickCount={link.clicks.length}
         avgClickPerDay={avgClickPerDay}
         graphColor={graphColor}
+        favicon={favicon}
         active={true}
         key={index}
         />
@@ -215,12 +220,13 @@ class Dashboard extends Component {
                 <table className="table table-responsive-sm table-hover table-outline mb-0">
                   <thead className="thead-white border-0">
                     <tr>
-                      <th className="text-center">Image</th>
-                      <th >User</th>
+                      <th>Site</th>
+                      <th></th>
                       <th className="text-center">Active</th>
                       <th className="text-center">Usage <small>(Last 7 days)</small></th>
                       <th className="text-center">Avg. Click Per Day <small>(Last 7 days)</small></th>
                       <th>Activity</th>
+                      <th>Link Stats</th>
                     </tr>
                   </thead>
                   <tbody>
