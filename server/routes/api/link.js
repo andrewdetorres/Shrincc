@@ -1,5 +1,7 @@
 // Require auth user middleware
 const auth = require("../../services/auth");
+const DeviceDetector = require('node-device-detector');
+const detector = new DeviceDetector;
 
 // Require models
 const User = require("../../model/User");
@@ -53,7 +55,7 @@ module.exports = app => {
 
 
   //--------------------------------------------------------
-  //@request  : POST
+  //@request  : GET
   //@route    : /api/click/all/
   //@access   : Private
   //@desc     : Get all clicks from a link
@@ -71,16 +73,50 @@ module.exports = app => {
 
   //--------------------------------------------------------
   //@request  : GET
+  //@route    : /api/click/all/:shortLink
+  //@access   : Private
+  //@desc     : Get specific link
+  //--------------------------------------------------------
+  app.get("/api/click/all/:shortLink", auth, (req, res) => {
+    Link
+      .findOne({"shortLink" : req.params.shortLink})
+      .then(link => {
+        res.send(link);
+      })
+      .catch(error => {
+        res.status(500).send('Server error!');
+      })
+  })
+
+
+  //--------------------------------------------------------
+  //@request  : GET
   //@route    : /shrincc/:shortLink
   //@access   : Public
   //@desc     : Redirect Link
   //--------------------------------------------------------
   app.get("/shrincc/:shortLink", (req, res) => {
 
+    const result = detector.detect(req.headers['user-agent']);
+    // console.log("results", req.headers['user-agent']);
+    console.log("operating system", result.os.name);
+    console.log("client type", result.client.type);
+    console.log("client name", result.client.name);
+    console.log("device type", result.device.type);
+
+    let os = result.os.name ? result.os.name : '';
+    let clientType = result.client.type ? result.client.type : '';
+    let clientName = result.client.name ? result.client.name : '';
+    let deviceType = result.device.type ? result.device.type : '';
+
     Link
       .findOne({shortLink: req.params.shortLink})
       .then(link => {
         link.clicks.unshift({
+          os: os,
+          clientType: clientType,
+          clientName: clientName,
+          deviceType: deviceType,
           ip: ip.address(),
           referrer: req.get('Referrer'),
           date: Date.now()
@@ -164,24 +200,6 @@ module.exports = app => {
         res.status(500).send('Server error!');
       })
   })
-
-  //--------------------------------------------------------
-  //@request  : POST
-  //@route    : /api/click/all/:shortLink
-  //@access   : Private
-  //@desc     : Get all clicks from a link
-  //--------------------------------------------------------
-  app.get("/api/click/all/:shortLink", auth, (req, res) => {
-    Link
-      .findOne({shortLink : req.params.shortLink})
-      .then(link => {
-        res.send(link.clicks);
-      })
-      .catch(error => {
-        res.status(500).send('Server error!');
-      })
-  })
-
 }
 
 function generateUniqueURLKey() {

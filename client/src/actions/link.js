@@ -6,6 +6,8 @@ import {
   GET_NEW_LINK_FAILED,
   GET_ALL_LINKS,
   GET_ALL_LINKS_FAILED,
+  GET_INDIVIDUAL_LINK,
+  GET_INDIVIDUAL_LINK_FAILED,
   GET_ERRORS
 } from "./types";
 
@@ -41,6 +43,26 @@ export const getAllLinks = () => dispatch => {
     .catch(errors => {
       dispatch({
         type: GET_ALL_LINKS_FAILED
+      });
+      dispatch({
+        type: GET_ERRORS,
+        payload: errors.response.data
+      });
+    })
+}
+
+export const getIndividualLink = (linkId) => dispatch => {
+  axios
+    .get(`/api/click/all/${linkId}`)
+    .then(res => {
+      dispatch({
+        type: GET_INDIVIDUAL_LINK,
+        payload: res.data
+      });
+    })
+    .catch(errors => {
+      dispatch({
+        type: GET_INDIVIDUAL_LINK_FAILED
       });
       dispatch({
         type: GET_ERRORS,

@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import CalendarHeatmap from 'react-calendar-heatmap';
+import ReactTooltip from 'react-tooltip';
 import 'react-calendar-heatmap/dist/styles.css';
 
 import _ from 'lodash';
@@ -33,21 +34,77 @@ class Dashboard extends Component {
     let higgestClickCount = 0;
     let obj;
 
+    // Get the date from 7 days ago.
+    let d = new Date();
+    let sevenDays = d.setDate(d.getDate() - 7);
+    var oneWeekAgo = new Date(sevenDays).toISOString();
+
     if (this.props.link.AllLinks && this.props.link.loading === false) {
       rows = this.props.link.AllLinks.map((link, index) => {
-       return (
-        <LinkTableRow
-          shortLink={"http://localhost:3000/shrincc/" + link.shortLink}
-          longLink={link.longLink}
-          data={[23,45,36,17,24]}
-          date={link.date}
-          clickCount={link.clicks.length}
-          active={false}
-          key={index}
-          />
+
+      let clickThisWeek = [];
+
+      // Get all the clicks within the last week
+      link.clicks.forEach(click => {
+        if(oneWeekAgo <= click.date) {
+          clickThisWeek.push({"date": click.date.substring(0, 10)});
+        }
+      })
+
+      let avgClickPerDay = (clickThisWeek.length / 7).toFixed(2);
+
+      // Create graph data for each row
+      let graphData = _.groupBy(clickThisWeek, "date");
+      console.log(graphData);
+      let dataToSend = [];
+      for (let i = 6; i >= 0; i--) {
+        let date = new Date();
+        date.setDate(date.getDate() - i);
+        var dateCheck = new Date(date).toISOString();
+
+        if (graphData[dateCheck.substring(0, 10)]) {
+          dataToSend.push(graphData[dateCheck.substring(0, 10)].length);
+        }
+        else {
+          dataToSend.push(0);
+        }
+      }
+
+      // Set the graph color based on if the data has improved
+      let graphColor;
+      if (dataToSend[0] > dataToSend[6]){
+        graphColor = "#E60023";
+      }
+      else if (dataToSend[0] < dataToSend[6]){
+        graphColor = "#2CB85C";
+      }
+      else {
+        graphColor = "#F9B112";
+      }
+
+      // Get the favicon from each link
+      var a = document.createElement('a');
+      a.href = link.longLink;
+      let favicon = a['protocol'] + "//" + a['hostname'] + "/favicon.ico";
+
+      // Return the link table row with its content
+      return (
+      <LinkTableRow
+        shortLink={link.shortLink}
+        longLink={link.longLink}
+        data={dataToSend}
+        date={link.date}
+        clickCount={link.clicks.length}
+        avgClickPerDay={avgClickPerDay}
+        graphColor={graphColor}
+        favicon={favicon}
+        active={true}
+        key={index}
+        />
        )
       });
 
+      // Return a new link prompt if now links created
       if (rows.length < 1) {
         rows = (
           <tr>
@@ -58,12 +115,6 @@ class Dashboard extends Component {
           </tr>
         )
       }
-
-      totalLinks = this.props.link.AllLinks.length;
-
-      this.props.link.AllLinks.forEach(link => {
-        totalClicks = totalClicks + link.clicks.length;
-      });
 
       // Push the date of each link click to array
       this.props.link.AllLinks.forEach(link => {
@@ -86,19 +137,25 @@ class Dashboard extends Component {
         heatDataFinal.push(obj);
       });
 
+      // Determine the total amount of clicks for all links the user owns
+      this.props.link.AllLinks.forEach(link => {
+        totalClicks = totalClicks + link.clicks.length;
+      });
+
+      // Gather the total amount of links the user owns
+      totalLinks = this.props.link.AllLinks.length;
+
       // Average clicks calculation
       averageLinkClick = totalClicks / totalLinks;
     }
 
     return (
 
-
       <div className="c-wrapper">
         {/* Sub header with breadcrumbs */}
         <header className="c-header c-header-light">
           <div className="c-subheader px-3">
             <ol className="breadcrumb border-0 m-0">
-              <li className="breadcrumb-item">Home</li>
               <li className="breadcrumb-item active">Dashboard</li>
             </ol>
           </div>
@@ -123,7 +180,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{totalClicks}</div><small className="text-muted text-uppercase font-weight-bold">Visitors</small>
+                <div className="text-value-lg">{totalClicks}</div><small className="text-muted text-uppercase font-weight-bold">Clicks</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -145,7 +202,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{averageLinkClick}</div><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
+                <div className="text-value-lg">{averageLinkClick.toFixed(2)}</div><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-danger w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -161,12 +218,13 @@ class Dashboard extends Component {
                 <table className="table table-responsive-sm table-hover table-outline mb-0">
                   <thead className="thead-white border-0">
                     <tr>
-                      <th className="text-center">Image</th>
-                      <th >User</th>
+                      <th>Site</th>
+                      <th></th>
                       <th className="text-center">Active</th>
-                      <th className="text-center">Usage</th>
-                      <th className="text-center">Avg. Click Rate</th>
-                      <th>Activity</th>
+                      <th className="text-center">Usage <small>(Last 7 days)</small></th>
+                      <th className="text-center">Avg. Click Per Day <small>(Last 7 days)</small></th>
+                      <th>Total visits</th>
+                      <th>Link Stats</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -183,7 +241,7 @@ class Dashboard extends Component {
           <div className="card border-0 shadow">
             <div className="card-body">
               <div className="c-chart-wrapper">
-                <h3>Daily Click Heatmap</h3>
+                <h4>Daily Click Heatmap</h4>
                 <div className="px-5">
                   <CalendarHeatmap
                     startDate={new Date('2020-01-01')}
@@ -191,7 +249,6 @@ class Dashboard extends Component {
                     showOutOfRangeDays={true}
                     values={heatDataFinal}
                     classForValue={(value) => {
-                      console.log(higgestClickCount);
                       if (!value) {
                         return 'color-empty';
                       }
@@ -211,33 +268,21 @@ class Dashboard extends Component {
                         return `color-scale-large`;
                       }
                     }}
+                    tooltipDataAttrs={value => {
+                      return {
+                        "data-tip": `${value.date ? `Date : ` + value.date + ' | ': ''}` + `${value.count ? `Clicks : ` + value.count : ""}`
+                      };
+                    }}
                     onClick={(value) => {
                       console.log(value);
                     }}
                   />
+                  <ReactTooltip />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {/* <div className="d-flex justify-content-between px-5 mt-3">
-          <div className="card border-0 w-50 mr-4 shadow">
-            <div className="card-body">
-              <div className="c-chart-wrapper">
-                <h3>Click By Month</h3>
-                <Line data={data} options={options}/>
-              </div>
-            </div>
-          </div>
-          <div className="card border-0 w-50 ml-4 shadow">
-            <div className="card-body">
-              <div className="c-chart-wrapper">
-                <h3>Click By Month</h3>
-                <Doughnut data={doughnutData} options={doughnutOptions}/>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     )
   }

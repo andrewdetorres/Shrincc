@@ -15,6 +15,7 @@ import CreateProfilePrompt from "../UserProfile/CreateProfilePrompt";
 import Landing from "../Landing/Landing";
 import NewLink from "../Link/NewLink";
 import Dashboard from "../Dashboard/Dashboard";
+import IndividualLink from "../Link/IndividualLink";
 
 class AuthUser extends Component {
 
@@ -49,6 +50,7 @@ class AuthUser extends Component {
             <AuthNavigation />
               <Switch>
                 <Route path="/new" component={NewLink} />
+                <Route path="/link/:linkId" component={IndividualLink} />
                 <Route path="/user/:userId" component={UserProfile} />
                 <Route path="/settings" component={Settings} />
                 <Route path="/" component={Dashboard} />

@@ -5874,6 +5874,11 @@ is-typedarray@~1.0.0:
   resolved "https://registry.yarnpkg.com/is-typedarray/-/is-typedarray-1.0.0.tgz#e479c80858df0c1b11ddda6940f96011fcda4a9a"
   integrity sha1-5HnICFjfDBsR3dppQPlgEfzaSpo=
 
+is-url@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/is-url/-/is-url-1.2.4.tgz#04a4df46d28c4cff3d73d01ff06abeb318a1aa52"
+  integrity sha512-ITvGim8FhRiYe4IQ5uHSkj7pVaPDrCTkNd3yq3cV7iZAcJdHTUMPMEHcqSOy9xZ9qFenQCvi+2wjH9a1nXqHww==
+
 is-utf8@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/is-utf8/-/is-utf8-0.2.1.tgz#4b0da1442104d1b336340e80797e865cf39f7d72"
@@ -9190,6 +9195,13 @@ react-step-wizard@^5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/react-step-wizard/-/react-step-wizard-5.3.0.tgz#2965b647bef457ec2c187e3f02826fcb98975875"
   integrity sha512-WsYIvfYn9dDQowrqBK0vW5kSzavNGmq7epmcGRET6aFfWlz6Up+M3Hqiwj0S/zyufO3mEhuFGpZCKaygDgwKuA==
+
+react-tooltip@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-4.0.3.tgz#2c1f97bb8c4edec0c11e40d39e2c97b7c2bab72b"
+  integrity sha512-xEM+fr8tr/KJP5PZEOg/fc5bZ7ZkC658iMDgCq5DfTqHVyuIOOd5loyxQD0eAJiZ6jWdEd18owbRqd3stHtEDg==
+  dependencies:
+    prop-types "^15.6.0"
 
 react-transition-group@^2.5.0:
   version "2.9.0"

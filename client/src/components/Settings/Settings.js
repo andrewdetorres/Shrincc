@@ -12,9 +12,17 @@ class Settings extends Component {
 
   render() {
     return (
-      <Fragment>
+      <div className="c-wrapper">
+        <header className="c-header c-header-light">
+          <div className="c-subheader px-3">
+            <ol className="breadcrumb border-0 m-0">
+              <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
+              <li className="breadcrumb-item active">Account Settings</li>
+            </ol>
+          </div>
+        </header>
         <div className="container">
-          <div className="row">
+          <div className="row mt-5">
             <div className="col-12 col-md-4 col-lg-3 p-0 d-flex justify-content-center">
               <div className="card border-0 w-100">
                 <div className="card-body">
@@ -68,7 +76,7 @@ class Settings extends Component {
             </div>
           </div>
         </div>
-      </Fragment>
+      </div>
     )
   }
 }
