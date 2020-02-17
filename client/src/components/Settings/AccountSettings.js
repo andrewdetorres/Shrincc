@@ -53,7 +53,7 @@ class AccountSettings extends Component {
       this.toggleClass();
     }
   };
-  
+
   render() {
     return (
       <div className="card border-0 w-100">
@@ -62,12 +62,12 @@ class AccountSettings extends Component {
           <div className="mb-3">
             <form onSubmit={this.onEmailSubmit}>
               <label htmlFor="email" className="mb-0">Email Address</label>
-              <input 
-                type="email" 
-                className="form-control w-100" 
-                id="email" 
+              <input
+                type="email"
+                className="form-control w-100"
+                id="email"
                 name="email"
-                placeholder="Email Address" 
+                placeholder="Email Address"
                 value={this.state.email}
                 onChange={this.onChange}
               />

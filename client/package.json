@@ -15,6 +15,7 @@
     "chart.js": "^2.9.3",
     "d3": "^5.15.0",
     "heatmap-calendar-react": "^1.0.1",
+    "is-url": "^1.2.4",
     "jwt-decode": "^2.2.0",
     "material-icons-react": "^1.0.4",
     "node-sass": "^4.13.0",

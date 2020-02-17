@@ -151,13 +151,11 @@ class Dashboard extends Component {
 
     return (
 
-
       <div className="c-wrapper">
         {/* Sub header with breadcrumbs */}
         <header className="c-header c-header-light">
           <div className="c-subheader px-3">
             <ol className="breadcrumb border-0 m-0">
-              <li className="breadcrumb-item">Home</li>
               <li className="breadcrumb-item active">Dashboard</li>
             </ol>
           </div>
@@ -225,7 +223,7 @@ class Dashboard extends Component {
                       <th className="text-center">Active</th>
                       <th className="text-center">Usage <small>(Last 7 days)</small></th>
                       <th className="text-center">Avg. Click Per Day <small>(Last 7 days)</small></th>
-                      <th>Activity</th>
+                      <th>Total visits</th>
                       <th>Link Stats</th>
                     </tr>
                   </thead>

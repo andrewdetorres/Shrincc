@@ -87,7 +87,7 @@ export default class LinkTableRow extends Component {
       <tr>
         <td className="text-center">
           <div>
-            <img className="favicon-image rounded-circle" src={this.props.favicon} alt="user@email.com" />
+            <img className="favicon-image" src={this.props.favicon} alt="Website Icon" />
             <span className="-status bg-success"></span>
           </div>
         </td>
@@ -118,10 +118,10 @@ export default class LinkTableRow extends Component {
           <strong>{this.props.avgClickPerDay}</strong>
         </td>
         <td>
-          <div className="small text-muted">Click Count</div><strong>{this.props.clickCount}</strong>
+          <strong>{this.props.clickCount}</strong>
         </td>
-        <td>
-        <a href={"/link/" + this.props.shortLink}>View</a>
+        <td className="text-center">
+          <a href={"/link/" + this.props.shortLink}>View</a>
         </td>
       </tr>
     )
