@@ -36,7 +36,7 @@ class Dashboard extends Component {
 
     // Get the date from 7 days ago.
     let d = new Date();
-    let sevenDays = d.setDate(d.getDate() - 7);
+    let sevenDays = d.setDate(d.getDate() - 6);
     var oneWeekAgo = new Date(sevenDays).toISOString();
 
     if (this.props.link.AllLinks && this.props.link.loading === false) {
@@ -53,11 +53,28 @@ class Dashboard extends Component {
 
       let avgClickPerDay = (clickThisWeek.length / 7).toFixed(2);
 
+      // Create graph data for each row
+      let graphData = _.groupBy(clickThisWeek, "date");
+      let dataToSend = [];
+      for (let i = 6; i >= 0; i--) {
+        let date = new Date();
+        date.setDate(date.getDate() - i);
+        var dateCheck = new Date(date).toISOString();
+
+        if (graphData[dateCheck.substring(0, 10)]) {
+          dataToSend.push(graphData[dateCheck.substring(0, 10)].length);
+        }
+        else {
+          dataToSend.push(0);
+        }
+      }
+
+      // Return the link table row with its content
       return (
       <LinkTableRow
         shortLink={"http://localhost:3000/shrincc/" + link.shortLink}
         longLink={link.longLink}
-        data={[23,45,36,17,24]}
+        data={dataToSend}
         date={link.date}
         clickCount={link.clicks.length}
         avgClickPerDay={avgClickPerDay}
@@ -67,6 +84,7 @@ class Dashboard extends Component {
        )
       });
 
+      // Return a new link prompt if now links created
       if (rows.length < 1) {
         rows = (
           <tr>
@@ -185,8 +203,8 @@ class Dashboard extends Component {
                       <th className="text-center">Image</th>
                       <th >User</th>
                       <th className="text-center">Active</th>
-                      <th className="text-center">Usage</th>
-                      <th className="text-center">Avg. Click Rate <small>(Last 7 days)</small></th>
+                      <th className="text-center">Usage <small>(Last 7 days)</small></th>
+                      <th className="text-center">Avg. Click Per Day <small>(Last 7 days)</small></th>
                       <th>Activity</th>
                     </tr>
                   </thead>

@@ -41,7 +41,7 @@ export default class LinkTableRow extends Component {
   }
   render() {
     const data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: ['1', '2', '3', '4', '5', '6', '7'],
       datasets: [
         {
           fill: false,
