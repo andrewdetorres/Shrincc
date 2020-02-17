@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import CalendarHeatmap from 'react-calendar-heatmap';
+import ReactTooltip from 'react-tooltip';
 import 'react-calendar-heatmap/dist/styles.css';
 
 import _ from 'lodash';
@@ -123,7 +124,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{totalClicks}</div><small className="text-muted text-uppercase font-weight-bold">Visitors</small>
+                <div className="text-value-lg">{totalClicks}</div><small className="text-muted text-uppercase font-weight-bold">Clicks</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -134,7 +135,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
+                <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Unique Clicks</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -211,10 +212,16 @@ class Dashboard extends Component {
                         return `color-scale-large`;
                       }
                     }}
+                    tooltipDataAttrs={value => {
+                      return {
+                        "data-tip": `${value.date ? `Date : ` + value.date + ' | ': ''}` + `${value.count ? `Clicks : ` + value.count : ""}`
+                      };
+                    }}
                     onClick={(value) => {
                       console.log(value);
                     }}
                   />
+                  <ReactTooltip />
                 </div>
               </div>
             </div>
