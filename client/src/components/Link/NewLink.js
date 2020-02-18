@@ -24,7 +24,7 @@ class NewLink extends Component {
 
   CopyText = () => {
     // Copy text to clipboard
-    navigator.clipboard.writeText("http://localhost:3000/shrincc/" + this.props.link.shortLink)
+    navigator.clipboard.writeText("https://shrin.cc" + this.props.link.shortLink)
 
     // Change copied text
     this.setState({
@@ -33,7 +33,7 @@ class NewLink extends Component {
 
     swal.fire({
       title: 'Link Copied!',
-      text: 'The link http://localhost:3000/shrincc/' + this.props.link.shortLink + ' has been copied to your clipboard',
+      text: 'The link https://shrin.cc' + this.props.link.shortLink + ' has been copied to your clipboard',
       icon: 'success',
       showConfirmButton: false,
       html: (
@@ -74,13 +74,13 @@ class NewLink extends Component {
           <input
             ref={(textarea) => this.textArea = textarea}
             type="text"
-            value={"http://localhost:3000/shrincc/" + this.props.link.shortLink}
+            value={"https://shrin.cc" + this.props.link.shortLink}
             id="shortLinkInput"
             className="w-75 px-3"
             disabled/>
             <p
               className="btn btn-dark w-25 copied-button"
-              onClick={() => this.CopyText}
+              onClick={this.CopyText}
             >
               {!this.state.copied ? 'Copy' : 'Copied'}
             </p>
@@ -90,7 +90,7 @@ class NewLink extends Component {
 
     return (
 
-      <div className="c-wrapper">
+      <>
         <header className="c-header c-header-light">
           <div className="c-subheader px-3">
             <ol className="breadcrumb border-0 m-0">
@@ -123,7 +123,7 @@ class NewLink extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </>
     )
   }
 }

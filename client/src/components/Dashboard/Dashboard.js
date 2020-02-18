@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import CalendarHeatmap from 'react-calendar-heatmap';
 import ReactTooltip from 'react-tooltip';
+import { Line, Bar, Pie } from 'react-chartjs-2';
 import 'react-calendar-heatmap/dist/styles.css';
 
 import _ from 'lodash';
@@ -13,6 +14,9 @@ import LinkTableRow from './LinkTableRow';
 
 // Import Actions
 import { getAllLinks } from '../../actions/link';
+import BrowserData from '../Graphs/BrowserData';
+import DeviceData from '../Graphs/DeviceData';
+import OsData from '../Graphs/OsData';
 
 class Dashboard extends Component {
 
@@ -22,8 +26,47 @@ class Dashboard extends Component {
 
   render() {
 
+    const data = {
+      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+      datasets: [
+        {
+          fill: false,
+          lineTension: 0.2,
+          borderColor: this.props.graphColor,
+          pointRadius: 0,
+          data: [34,97,45,36,75,64,57]
+        }
+      ]
+    };
+
+    const options = {
+      responsive: true,
+      maintainAspectRatio: true,
+      legend: {
+         display: false
+      },
+      tooltips: {
+           enabled: false
+      },
+      scales: {
+        xAxes: [{
+            gridLines: {
+              display: false
+            },
+        }]
+      }
+    }
+
     // Heatmap data
     var heatData = [];
+
+    // Graph data
+    let browserLabels = [];
+    let browserData = [];
+    let deviceLabels = [];
+    let deviceData = [];
+    let osLabels = [];
+    let osData = [];
 
     // Create Table
     let rows = null;
@@ -40,69 +83,102 @@ class Dashboard extends Component {
     var oneWeekAgo = new Date(sevenDays).toISOString();
 
     if (this.props.link.AllLinks && this.props.link.loading === false) {
+
+      let browser = [];
+      let device = [];
+      let os = [];
+
       rows = this.props.link.AllLinks.map((link, index) => {
 
-      let clickThisWeek = [];
+        link.clicks.forEach(click => {
+          browser.push(click);
+          device.push(click);
+          os.push(click);
+        });
 
-      // Get all the clicks within the last week
-      link.clicks.forEach(click => {
-        if(oneWeekAgo <= click.date) {
-          clickThisWeek.push({"date": click.date.substring(0, 10)});
+        let clickThisWeek = [];
+
+        // Get all the clicks within the last week
+        link.clicks.forEach(click => {
+          if(oneWeekAgo <= click.date) {
+            clickThisWeek.push({"date": click.date.substring(0, 10)});
+          }
+        })
+
+        let avgClickPerDay = (clickThisWeek.length / 7).toFixed(2);
+
+        // Create graph data for each row
+        let graphData = _.groupBy(clickThisWeek, "date");
+
+        let dataToSend = [];
+        for (let i = 6; i >= 0; i--) {
+          let date = new Date();
+          date.setDate(date.getDate() - i);
+          var dateCheck = new Date(date).toISOString();
+
+          if (graphData[dateCheck.substring(0, 10)]) {
+            dataToSend.push(graphData[dateCheck.substring(0, 10)].length);
+          }
+          else {
+            dataToSend.push(0);
+          }
         }
-      })
 
-      let avgClickPerDay = (clickThisWeek.length / 7).toFixed(2);
-
-      // Create graph data for each row
-      let graphData = _.groupBy(clickThisWeek, "date");
-      console.log(graphData);
-      let dataToSend = [];
-      for (let i = 6; i >= 0; i--) {
-        let date = new Date();
-        date.setDate(date.getDate() - i);
-        var dateCheck = new Date(date).toISOString();
-
-        if (graphData[dateCheck.substring(0, 10)]) {
-          dataToSend.push(graphData[dateCheck.substring(0, 10)].length);
+        // Set the graph color based on if the data has improved
+        let graphColor;
+        if (dataToSend[0] > dataToSend[6]){
+          graphColor = "#E60023";
+        }
+        else if (dataToSend[0] < dataToSend[6]){
+          graphColor = "#2CB85C";
         }
         else {
-          dataToSend.push(0);
+          graphColor = "#F9B112";
         }
-      }
 
-      // Set the graph color based on if the data has improved
-      let graphColor;
-      if (dataToSend[0] > dataToSend[6]){
-        graphColor = "#E60023";
-      }
-      else if (dataToSend[0] < dataToSend[6]){
-        graphColor = "#2CB85C";
-      }
-      else {
-        graphColor = "#F9B112";
-      }
+        // Get the favicon from each link
+        var a = document.createElement('a');
+        a.href = link.longLink;
+        let favicon = a['protocol'] + "//" + a['hostname'] + "/favicon.ico";
 
-      // Get the favicon from each link
-      var a = document.createElement('a');
-      a.href = link.longLink;
-      let favicon = a['protocol'] + "//" + a['hostname'] + "/favicon.ico";
-
-      // Return the link table row with its content
-      return (
-      <LinkTableRow
-        shortLink={link.shortLink}
-        longLink={link.longLink}
-        data={dataToSend}
-        date={link.date}
-        clickCount={link.clicks.length}
-        avgClickPerDay={avgClickPerDay}
-        graphColor={graphColor}
-        favicon={favicon}
-        active={true}
-        key={index}
-        />
-       )
+        // Return the link table row with its content
+        return (
+        <LinkTableRow
+          shortLink={link.shortLink}
+          longLink={link.longLink}
+          data={dataToSend}
+          date={link.date}
+          clickCount={link.clicks.length}
+          avgClickPerDay={avgClickPerDay}
+          graphColor={graphColor}
+          favicon={favicon}
+          active={true}
+          key={index}
+          />
+        )
       });
+
+      let browserGraphBuilder = _.groupBy(browser, "clientName");
+      let deviceGraphBuilder = _.groupBy(device, "deviceType");
+      let osGraphBuilder = _.groupBy(os, "os");
+      
+      Object.keys(browserGraphBuilder).forEach(key => {
+        browserLabels.push(key);
+        browserData.push(browserGraphBuilder[key].length);
+      })
+
+      Object.keys(deviceGraphBuilder).forEach(key => {
+        deviceLabels.push(key);
+        deviceData.push(deviceGraphBuilder[key].length);
+      })
+
+      Object.keys(osGraphBuilder).forEach(key => {
+        osLabels.push(key);
+        osData.push(osGraphBuilder[key].length);
+      })
+
+      console.log(osLabels);
+      console.log(osData);
 
       // Return a new link prompt if now links created
       if (rows.length < 1) {
@@ -162,7 +238,7 @@ class Dashboard extends Component {
         </header>
 
         {/* First row of cards */}
-        <div className="px-md-5 px-1 mt-5">
+        <div className="px-md-5 px-1 mt-4">
           <div className="card-group shadow mb-4">
             {/* Links Created */}
             <div className="card border-0">
@@ -170,7 +246,7 @@ class Dashboard extends Component {
                 <div className="text-muted text-right mb-4">
                 </div>
                 <div className="text-value-lg">{totalLinks}</div><small className="text-muted text-uppercase font-weight-bold">Links Created</small>
-                <div className="progress progress-xs mt-3 mb-0">
+                <div className="progress progress-xs mt-1 mb-0">
                   <div className="progress-bar bg-warning w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
@@ -181,7 +257,7 @@ class Dashboard extends Component {
                 <div className="text-muted text-right mb-4">
                 </div>
                 <div className="text-value-lg">{totalClicks}</div><small className="text-muted text-uppercase font-weight-bold">Clicks</small>
-                <div className="progress progress-xs mt-3 mb-0">
+                <div className="progress progress-xs mt-1 mb-0">
                   <div className="progress-bar bg-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
@@ -192,7 +268,7 @@ class Dashboard extends Component {
                 <div className="text-muted text-right mb-4">
                 </div>
                 <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
-                <div className="progress progress-xs mt-3 mb-0">
+                <div className="progress progress-xs mt-1 mb-0">
                   <div className="progress-bar bg-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
@@ -203,7 +279,7 @@ class Dashboard extends Component {
                 <div className="text-muted text-right mb-4">
                 </div>
                 <div className="text-value-lg">{averageLinkClick.toFixed(2)}</div><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
-                <div className="progress progress-xs mt-3 mb-0">
+                <div className="progress progress-xs mt-1 mb-0">
                   <div className="progress-bar bg-danger w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
@@ -211,7 +287,7 @@ class Dashboard extends Component {
           </div>
         </div>
 
-        <div className="px-md-5 px-1 mt-3">
+        <div className="px-md-5 px-1 mt-1">
           <div className="card border-0 shadow" id="dashboard-table">
             <div className="card-body py-4">
               <div className="text-muted text-right mb-4">
@@ -237,7 +313,7 @@ class Dashboard extends Component {
         </div>
 
         {/* Daily Heatmap */}
-        <div className="px-5 mt-3">
+        <div className="px-5 mt-1">
           <div className="card border-0 shadow">
             <div className="card-body">
               <div className="c-chart-wrapper">
@@ -278,6 +354,41 @@ class Dashboard extends Component {
                     }}
                   />
                   <ReactTooltip />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="d-flex justify-content-center px-md-5 px-1 mt-1">
+          <div className="card-group shadow mb-4 w-100">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <h4>Device Type</h4>
+                <div >
+                  <DeviceData data={deviceData} labels={deviceLabels}/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="card-group shadow mb-4 mx-3 w-100">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <h4>Browser Type <small>(Clicks)</small></h4>
+                <div >
+                  <BrowserData data={browserData} labels={browserLabels}/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="card-group shadow mb-4 w-100">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <h4>Operating System</h4>
+                <div>
+                  <OsData data={osData} labels={osLabels}/>
                 </div>
               </div>
             </div>

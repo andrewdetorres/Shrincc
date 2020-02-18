@@ -18,7 +18,7 @@ export default class LinkTableRow extends Component {
 
   CopyText = () => {
     // Copy text to clipboard
-    navigator.clipboard.writeText("http://localhost:3000/shrincc/" + this.props.shortLink)
+    navigator.clipboard.writeText("https://shrin.cc/" + this.props.shortLink)
 
     // Change copied text
     this.setState({
@@ -31,7 +31,7 @@ export default class LinkTableRow extends Component {
       showConfirmButton: false,
       html: (
         <>
-          <p>The link <span className="text-primary">{"http://localhost:3000/shrincc/" + this.props.shortLink}</span> has been copied to your clipboard'</p>
+          <p>The link <span className="text-primary">{"https://shrin.cc/" + this.props.shortLink}</span> has been copied to your clipboard'</p>
           <Okay />
         </>
       )
@@ -91,7 +91,7 @@ export default class LinkTableRow extends Component {
         </td>
         <td>
           <div>
-            <a href={"http://localhost:3000/shrincc/" + this.props.shortLink}>{"http://localhost:3000/shrincc/" + this.props.shortLink}</a>
+            <a href={"https://shrin.cc/" + this.props.shortLink}>{"https://shrin.cc/" + this.props.shortLink}</a>
             &nbsp;|&nbsp;
             <span className="cursor-pointer" onClick={this.CopyText}>
               {this.state.copied ? "Copied" : "Copy"}
