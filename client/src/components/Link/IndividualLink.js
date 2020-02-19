@@ -6,11 +6,16 @@ import { Line, Bar } from 'react-chartjs-2';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import ReactTooltip from 'react-tooltip';
+import _ from 'lodash';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 // Import Actions
 import { getIndividualLink } from '../../actions/link';
+
+// Import Components
+import CustomBar from '../Graphs/CustomBar';
+import CustomPie from '../Graphs/CustomPie';
 
 const swal = withReactContent(Swal);
 
@@ -49,57 +54,83 @@ class IndividualLink extends Component {
   }
 
   render() {
-    const data = {
-      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-      datasets: [
-        {
-          fill: false,
-          lineTension: 0.2,
-          borderColor: this.props.graphColor,
-          pointRadius: 0,
-          data: [34,97,45,36,75,64,57]
-        }
-      ]
-    };
-
-
-    const options = {
-      responsive: true,
-      maintainAspectRatio: true,
-      legend: {
-         display: false
-      },
-      tooltips: {
-           enabled: false
-      },
-      scales: {
-        xAxes: [{
-            gridLines: {
-              display: false
-            },
-        }]
-      }
-    }
-
     let shortLink;
     let linkImage;
     let linkLocaiton;
+
+    // Graph data
+    let browser = [];
+    let device = [];
+    let os = [];
+    let ip = [];
+    let browserLabels = [];
+    let browserData = [];
+    let deviceLabels = [];
+    let deviceData = [];
+    let osLabels = [];
+    let osData = [];
+
+    // Top Bar Values
+    let active;
+    let clicksTotal;
+    let uniqueVisitors;
+    let avgDaily;
+
     if (this.props.link.currentLink && this.props.link.loading === false) {
+      
+      const { currentLink } = this.props.link;
+
+      // Set the short link value
       shortLink = (
-        <a href={"https://shrin.cc" + this.props.link.currentLink.shortLink}>
-          {"https://shrin.cc/" + this.props.link.currentLink.shortLink}
+        <a href={"https://shrin.cc" + currentLink.shortLink}>
+          {"https://shrin.cc/" + currentLink.shortLink}
         </a>
       );
 
-      // create favicon and linklocation from the LongLink
+      // Create favicon and linklocation from the LongLink
       var a = document.createElement('a');
-      a.href = this.props.link.currentLink.longLink;
+      a.href = currentLink.longLink;
       let favicon = a['protocol'] + "//" + a['hostname'] + "/favicon.ico";
       linkLocaiton = a['hostname'];
 
       linkImage = (
         <img className="favicon-image mr-2" src={favicon} alt={favicon} />
       )
+
+      // Get the browser, device and OS data
+      currentLink.clicks.forEach(click => {
+        browser.push(click);
+        device.push(click);
+        os.push(click);
+        ip.push(click);
+      });
+
+      let browserGraphBuilder = _.groupBy(browser, "clientName");
+      let deviceGraphBuilder = _.groupBy(device, "deviceType");
+      let osGraphBuilder = _.groupBy(os, "os");
+      let uniqueVisitorsBuilder = _.groupBy(ip, "ip");
+      
+      Object.keys(browserGraphBuilder).forEach(key => {
+        browserLabels.push(key);
+        browserData.push(browserGraphBuilder[key].length);
+      });
+
+      Object.keys(deviceGraphBuilder).forEach(key => {
+        deviceLabels.push(key);
+        deviceData.push(deviceGraphBuilder[key].length);
+      });
+
+      Object.keys(osGraphBuilder).forEach(key => {
+        osLabels.push(key);
+        osData.push(osGraphBuilder[key].length);
+      });
+      
+      // Get the Top Bar values
+      active = "True";
+
+      clicksTotal = currentLink.clicks.length;
+
+      uniqueVisitors = Object.keys(uniqueVisitorsBuilder).length;
     }
 
     return (
@@ -140,7 +171,7 @@ class IndividualLink extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Active</small>
+                <div className="text-value-lg">{active}</div><small className="text-muted text-uppercase font-weight-bold">Active</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-warning w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -151,7 +182,7 @@ class IndividualLink extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Clicks</small>
+                <div className="text-value-lg">{clicksTotal}</div><small className="text-muted text-uppercase font-weight-bold">Clicks</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -162,20 +193,9 @@ class IndividualLink extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
+                <div className="text-value-lg">{uniqueVisitors}</div><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-            </div>
-            {/* Click Per Link */}
-            <div className="card border-0">
-              <div className="card-body py-4">
-                <div className="text-muted text-right mb-4">
-                </div>
-                <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
-                <div className="progress progress-xs mt-3 mb-0">
-                  <div className="progress-bar bg-danger w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -188,7 +208,7 @@ class IndividualLink extends Component {
               <div className="card-body py-4 text-center">
                 <h4>Visits this week</h4>
                 <div >
-                  <Line data={data} options={options} height={200}/>
+                  <CustomPie data={deviceData} labels={deviceLabels}/>
                 </div>
               </div>
             </div>
@@ -199,7 +219,7 @@ class IndividualLink extends Component {
               <div className="card-body py-4 text-center">
                 <h4>Traffic Source</h4>
                 <div >
-                  <Bar data={data} options={options} height={200}/>
+                  <CustomBar data={browserData} labels={browserLabels}/>
                 </div>
               </div>
             </div>

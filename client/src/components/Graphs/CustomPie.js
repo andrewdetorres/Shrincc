@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Pie } from 'react-chartjs-2';
 
-export default class OsData extends Component {
+export default class CustomPie extends Component {
   render() {
 
     const data = {

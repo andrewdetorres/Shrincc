@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Pie } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
-export default class DeviceData extends Component {
+export default class CustomBar extends Component {
   render() {
 
     const data = {
@@ -28,17 +28,29 @@ export default class DeviceData extends Component {
     const options = {
       responsive: true,
       maintainAspectRatio: true,
-      // legend: {
-      //    display: false
-      // },
+      legend: {
+         display: false
+      },
       tooltips: {
            enabled: false
+      },
+      scales: {
+        xAxes: [{
+            gridLines: {
+              display: false
+            },
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
       }
     }
 
     return (
       <>
-        <Pie data={data} options={options} height={200}/>
+        <Bar data={data} options={options} height={200}/>
       </>
     )
   }
