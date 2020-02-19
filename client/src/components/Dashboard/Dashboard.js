@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import CalendarHeatmap from 'react-calendar-heatmap';
 import ReactTooltip from 'react-tooltip';
-import { Line, Bar, Pie } from 'react-chartjs-2';
 import 'react-calendar-heatmap/dist/styles.css';
 
 import _ from 'lodash';
@@ -14,9 +13,8 @@ import LinkTableRow from './LinkTableRow';
 
 // Import Actions
 import { getAllLinks } from '../../actions/link';
-import BrowserData from '../Graphs/BrowserData';
-import DeviceData from '../Graphs/DeviceData';
-import OsData from '../Graphs/OsData';
+import CustomBar from '../Graphs/CustomBar';
+import CustomPie from '../Graphs/CustomPie';
 
 class Dashboard extends Component {
 
@@ -366,7 +364,7 @@ class Dashboard extends Component {
               <div className="card-body py-4 text-center">
                 <h4>Device Type</h4>
                 <div >
-                  <DeviceData data={deviceData} labels={deviceLabels}/>
+                  <CustomPie data={deviceData} labels={deviceLabels}/>
                 </div>
               </div>
             </div>
@@ -377,7 +375,7 @@ class Dashboard extends Component {
               <div className="card-body py-4 text-center">
                 <h4>Browser Type <small>(Clicks)</small></h4>
                 <div >
-                  <BrowserData data={browserData} labels={browserLabels}/>
+                  <CustomBar data={browserData} labels={browserLabels}/>
                 </div>
               </div>
             </div>
@@ -388,7 +386,7 @@ class Dashboard extends Component {
               <div className="card-body py-4 text-center">
                 <h4>Operating System</h4>
                 <div>
-                  <OsData data={osData} labels={osLabels}/>
+                  <CustomPie data={osData} labels={osLabels}/>
                 </div>
               </div>
             </div>
