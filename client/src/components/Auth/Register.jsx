@@ -79,7 +79,7 @@ class Register extends Component {
                     <input
                       type="text"
                       name="email"
-                      placeholder="Email"
+                      placeholder="Email Address"
                       className="w-75 mt-4 px-3"
                       value={this.state.email}
                       onChange={this.onChange}
@@ -129,8 +129,14 @@ class Register extends Component {
                         Sign up with Facebook
                       </button>
                     </a>
+                    <a href="/auth/twitter" className="social mx-2">
+                      <button className="btn btn-twitter my-2">
+                        <FontAwesomeIcon icon={['fab', 'twitter']} height="20px" className="mr-2"/>
+                        Sign up with twitter
+                      </button>
+                    </a>
                     <a href="/auth/google" className="social mx-2">
-                      <button className="btn btn-google my-2">
+                      <button className="btn btn-danger my-2">
                         <FontAwesomeIcon icon={['fab', 'google']} height="20px" className="mr-2"/>
                         Sign up with Google
                       </button>

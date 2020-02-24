@@ -194,14 +194,12 @@ class Dashboard extends Component {
 
     return (
 
-      <div className="c-wrapper">
+      <div className="shrincc-wrapper">
         {/* Sub header with breadcrumbs */}
-        <header className="c-header c-header-light">
-          <div className="c-subheader px-3">
-            <ol className="breadcrumb border-0 m-0">
-              <li className="breadcrumb-item active">Dashboard</li>
-            </ol>
-          </div>
+        <header className="border-top">
+          <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
+            <li className="breadcrumb-item active">Dashboard</li>
+          </ol>
         </header>
 
         {/* First row of cards */}
@@ -212,9 +210,9 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{totalLinks}</div><small className="text-muted text-uppercase font-weight-bold">Links Created</small>
+                <h4>{totalLinks}</h4><small className="text-muted text-uppercase font-weight-bold">Links Created</small>
                 <div className="progress progress-xs mt-1 mb-0">
-                  <div className="progress-bar bg-warning w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -223,9 +221,9 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{totalClicks}</div><small className="text-muted text-uppercase font-weight-bold">Clicks</small>
+                <h4>{totalClicks}</h4><small className="text-muted text-uppercase font-weight-bold">Clicks</small>
                 <div className="progress progress-xs mt-1 mb-0">
-                  <div className="progress-bar bg-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -234,9 +232,9 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">[INT]</div><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
+                <h4>[INT]</h4><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
                 <div className="progress progress-xs mt-1 mb-0">
-                  <div className="progress-bar bg-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -245,9 +243,9 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{averageLinkClick.toFixed(2)}</div><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
+                <h4>{averageLinkClick.toFixed(2)}</h4><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
                 <div className="progress progress-xs mt-1 mb-0">
-                  <div className="progress-bar bg-danger w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -280,7 +278,7 @@ class Dashboard extends Component {
         </div>
 
         {/* Daily Heatmap */}
-        <div className="px-5 mt-1">
+        <div className="px-5 mt-1 mt-4">
           <div className="card border-0 shadow">
             <div className="card-body">
               <div className="c-chart-wrapper">
@@ -327,7 +325,7 @@ class Dashboard extends Component {
           </div>
         </div>
         <div className="d-flex justify-content-center px-md-5 px-1 mt-1">
-          <div className="card-group shadow mb-4 w-100">
+          <div className="card-group shadow my-4 w-100">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
@@ -338,7 +336,7 @@ class Dashboard extends Component {
               </div>
             </div>
           </div>
-          <div className="card-group shadow mb-4 mx-3 w-100">
+          <div className="card-group shadow my-4 mx-3 w-100">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
@@ -349,7 +347,7 @@ class Dashboard extends Component {
               </div>
             </div>
           </div>
-          <div className="card-group shadow mb-4 w-100">
+          <div className="card-group shadow my-4 w-100">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">

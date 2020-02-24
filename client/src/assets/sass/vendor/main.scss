@@ -1,9 +1,9 @@
-
-// Import Bootstrap
-@import "../../../../node_modules/@coreui/coreui/dist/css/coreui.css";
 // Import Utilities
 @import "../utils/general";
 @import "../utils/variables";
+
+// Import Bootstrap
+@import "../../bootstrap/scss/bootstrap.scss";
 
 // Import Custom scss - Maintain alphabetical order for consistency
 @import "../../../components/Auth/Auth.scss";

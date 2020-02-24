@@ -50,8 +50,7 @@ class MainNavigation extends Component {
                 </a>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   <a className="dropdown-item" href="/">Dashboard</a>
-                  <a className="dropdown-item" href="/saved">Saved Jobs</a>
-                  <a className="dropdown-item" href="/track">Track Jobs</a>
+                  <a className="dropdown-item" href="/link">My Links</a>
                   <div className="dropdown-divider"></div>
                   <a className="dropdown-item" href="/help">Help</a>
                   <a className="dropdown-item" href="/terms-and-conditions">Terms &amp; Conditions</a>

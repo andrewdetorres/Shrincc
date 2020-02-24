@@ -180,15 +180,14 @@ class IndividualLink extends Component {
     }
 
     return (
-      <div className="c-wrapper">
+      <div className="shrincc-wrapper">
         {/* Sub header with breadcrumbs */}
-        <header className="c-header c-header-light">
-          <div className="c-subheader px-3">
-            <ol className="breadcrumb border-0 m-0">
-              <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
-              <li className="breadcrumb-item active">Link - {this.props.match.params.linkId}</li>
-            </ol>
-          </div>
+
+        <header className="border-top">
+          <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
+            <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li className="breadcrumb-item active">Link - {this.props.match.params.linkId}</li>
+          </ol>
         </header>
 
         {/* First row of cards */}

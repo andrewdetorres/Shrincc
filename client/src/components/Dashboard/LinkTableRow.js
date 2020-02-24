@@ -91,7 +91,9 @@ export default class LinkTableRow extends Component {
         </td>
         <td>
           <div>
-            <a href={"https://shrin.cc/" + this.props.shortLink}>{"https://shrin.cc/" + this.props.shortLink}</a>
+            <storng>
+              <a href={"https://shrin.cc/" + this.props.shortLink} className="text-secondary">{"https://shrin.cc/" + this.props.shortLink}</a>
+            </storng>
             &nbsp;|&nbsp;
             <span className="cursor-pointer" onClick={this.CopyText}>
               {this.state.copied ? "Copied" : "Copy"}
@@ -115,7 +117,7 @@ export default class LinkTableRow extends Component {
         <td className="text-center">
           <strong>{this.props.avgClickPerDay}</strong>
         </td>
-        <td>
+        <td className="text-center">
           <strong>{this.props.clickCount}</strong>
         </td>
         <td className="text-center">
