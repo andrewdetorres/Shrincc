@@ -67,11 +67,13 @@ class Login extends Component {
         <div className="container-fluid">
           <div className="row h-100 justify-content-center align-items-center">
             <div className="col-md-6 col-12 text-center">
-              <img
-                src={require("../../assets/img/temp_logo.png")}
+              <a href="/">
+                <img
+                src={require("../../assets/img/shrincc_logo.png")}
                 width="250px"
                 alt="Brand Logo"
                 />
+              </a>
               <h5 className="text-dark mt-4">Sign In To Continue</h5>
               <form onSubmit={this.onSubmit}>
                 <div className="input-group justify-content-center">

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Line, Bar } from 'react-chartjs-2';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import ReactTooltip from 'react-tooltip';
@@ -15,7 +14,7 @@ import { getIndividualLink } from '../../actions/link';
 
 // Import Components
 import CustomBar from '../Graphs/CustomBar';
-import CustomPie from '../Graphs/CustomPie';
+import CustomLine from '../Graphs/CustomLine';
 
 const swal = withReactContent(Swal);
 
@@ -23,12 +22,17 @@ class IndividualLink extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      days: 30,
       copied: false,
     };
   }
 
   componentDidMount() {
     this.props.getIndividualLink(this.props.match.params.linkId);
+  }
+
+  selectChange = (event) => {
+    this.setState({days: event.target.value});
   }
 
   CopyText = () => {
@@ -54,6 +58,7 @@ class IndividualLink extends Component {
   }
 
   render() {
+
     let shortLink;
     let linkImage;
     let linkLocaiton;
@@ -75,14 +80,55 @@ class IndividualLink extends Component {
     let clicksTotal;
     let uniqueVisitors;
     let avgDaily;
+    let dataToSend = [];
+    let labelsToSend = [];
+
+
+    // Get the date from 7 days ago.
+    let d = new Date();
+    let days = d.setDate(d.getDate() - this.state.days);
+    var daysAgo = new Date(days).toISOString();
 
     if (this.props.link.currentLink && this.props.link.loading === false) {
-      
+
       const { currentLink } = this.props.link;
+
+      let clicksCalc = [];
+
+      // Get all the clicks within the last week
+      currentLink.clicks.forEach(click => {
+        if(daysAgo <= click.date) {
+          clicksCalc.push({"date": click.date.substring(0, 10)});
+        }
+      })
+
+      console.log(clicksCalc);
+
+      let avgClickPerDay = (clicksCalc.length / this.state.days).toFixed(2);
+
+      console.log(avgClickPerDay);
+      // Create graph data for each row
+      let graphData = _.groupBy(clicksCalc, "date");
+
+      // let dataToSend = [];
+      // console.log("state", this.state.days);
+      for (let i = this.state.days - 1; i >= 0; i--) {
+        let date = new Date();
+        date.setDate(date.getDate() - i);
+        var dateCheck = new Date(date).toISOString();
+
+        if (graphData[dateCheck.substring(0, 10)]) {
+          dataToSend.push(graphData[dateCheck.substring(0, 10)].length);
+        }
+        else {
+          dataToSend.push(0);
+        }
+        labelsToSend.push(dateCheck.substring(5, 10));
+      }
 
       // Set the short link value
       shortLink = (
-        <a href={"https://shrin.cc" + currentLink.shortLink}>
+        <a href={"https://shrin.cc/" + currentLink.shortLink}>
           {"https://shrin.cc/" + currentLink.shortLink}
         </a>
       );
@@ -206,9 +252,17 @@ class IndividualLink extends Component {
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
+                <div className="d-flex justify-content-around">
                 <h4>Visits this week</h4>
+                <select onChange={this.selectChange}>
+                  <option value={7} defaultValue={this.state.days === 7 ? "selected" : ""}>Last 7 days</option>
+                  <option value={30} defaultValue={this.state.days === 30 ? "selected" : ""}>Last 30 days</option>
+                  <option value={60} defaultValue={this.state.days === 60 ? "selected" : ""}>Last 60 days</option>
+                  <option value={90} defaultValue={this.state.days === 90 ? "selected" : ""}>Last 90 days</option>
+                </select>
+                </div>
                 <div >
-                  <CustomPie data={deviceData} labels={deviceLabels}/>
+                  <CustomLine data={dataToSend} labels={labelsToSend}/>
                 </div>
               </div>
             </div>

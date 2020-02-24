@@ -89,9 +89,9 @@ module.exports = app => {
           },
           attachments:[
             {
-              filename : 'temp_logo.png',
-              path: path.join(__dirname, 'email/images/temp_logo.png'),
-              cid : 'temp_logo@huffet.com'
+              filename : 'shrincc_logo.png',
+              path: path.join(__dirname, 'email/images/shrincc_logo.png'),
+              cid : 'shrincc_logo@huffet.com'
             },
             {
               filename : 'emailheader.png',
@@ -184,9 +184,9 @@ module.exports = app => {
           },
           attachments:[
             {
-              filename : 'temp_logo.png',
-              path: path.join(__dirname, 'email/images/temp_logo.png'),
-              cid : 'temp_logo@huffet.com'
+              filename : 'shrincc_logo.png',
+              path: path.join(__dirname, 'email/images/shrincc_logo.png'),
+              cid : 'shrincc_logo@huffet.com'
             },
             {
               filename : 'emailheader.png',
@@ -398,9 +398,9 @@ module.exports = app => {
           },
           attachments:[
             {
-              filename : 'temp_logo.png',
-              path: path.join(__dirname, 'email/images/temp_logo.png'),
-              cid : 'temp_logo@huffet.com'
+              filename : 'shrincc_logo.png',
+              path: path.join(__dirname, 'email/images/shrincc_logo.png'),
+              cid : 'shrincc_logo@huffet.com'
             },
             {
               filename : 'emailheader.png',

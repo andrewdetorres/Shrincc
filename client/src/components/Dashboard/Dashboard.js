@@ -24,37 +24,6 @@ class Dashboard extends Component {
 
   render() {
 
-    const data = {
-      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-      datasets: [
-        {
-          fill: false,
-          lineTension: 0.2,
-          borderColor: this.props.graphColor,
-          pointRadius: 0,
-          data: [34,97,45,36,75,64,57]
-        }
-      ]
-    };
-
-    const options = {
-      responsive: true,
-      maintainAspectRatio: true,
-      legend: {
-         display: false
-      },
-      tooltips: {
-           enabled: false
-      },
-      scales: {
-        xAxes: [{
-            gridLines: {
-              display: false
-            },
-        }]
-      }
-    }
-
     // Heatmap data
     var heatData = [];
 
