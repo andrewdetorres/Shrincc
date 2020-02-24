@@ -40,6 +40,7 @@ class Dashboard extends Component {
     let totalLinks = 0;
     let totalClicks = 0;
     let averageLinkClick = 0;
+    let uniqueVisitors = 0;
     let heatDataFinal = [];
     let higgestClickCount = 0;
     let obj;
@@ -54,6 +55,7 @@ class Dashboard extends Component {
       let browser = [];
       let device = [];
       let os = [];
+      let ip = [];
 
       rows = this.props.link.AllLinks.map((link, index) => {
 
@@ -61,6 +63,7 @@ class Dashboard extends Component {
           browser.push(click);
           device.push(click);
           os.push(click);
+          ip.push(click);
         });
 
         let clickThisWeek = [];
@@ -144,14 +147,15 @@ class Dashboard extends Component {
         osData.push(osGraphBuilder[key].length);
       })
 
-      console.log(osLabels);
-      console.log(osData);
+
+      let uniqueVisitorsBuilder = _.groupBy(ip, "ip");
+      uniqueVisitors = Object.keys(uniqueVisitorsBuilder).length;
 
       // Return a new link prompt if now links created
       if (rows.length < 1) {
         rows = (
           <tr>
-            <td colSpan="6" className="text-center">
+            <td colSpan="7" className="text-center">
               <p>No Data</p>
               <p>Create a new link <a href="/new">here</a></p>
             </td>
@@ -232,7 +236,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <h4>[INT]</h4><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
+                <h4>{uniqueVisitors}</h4><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
                 <div className="progress progress-xs mt-1 mb-0">
                   <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -243,7 +247,7 @@ class Dashboard extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <h4>{averageLinkClick.toFixed(2)}</h4><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
+                <h4>{averageLinkClick > 0 ? averageLinkClick.toFixed(2) : 0}</h4><small className="text-muted text-uppercase font-weight-bold">Avg. Click Per Link</small>
                 <div className="progress progress-xs mt-1 mb-0">
                   <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>

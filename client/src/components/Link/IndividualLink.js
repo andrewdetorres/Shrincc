@@ -22,7 +22,7 @@ class IndividualLink extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      days: 30,
+      days: 7,
       copied: false,
     };
   }
@@ -79,10 +79,15 @@ class IndividualLink extends Component {
     let active;
     let clicksTotal;
     let uniqueVisitors;
-    let avgDaily;
     let dataToSend = [];
     let labelsToSend = [];
 
+
+
+    let heatData = [];
+    let heatDataFinal = [];
+    let higgestClickCount = 0;
+    let obj;
 
     // Get the date from 7 days ago.
     let d = new Date();
@@ -170,12 +175,30 @@ class IndividualLink extends Component {
         osLabels.push(key);
         osData.push(osGraphBuilder[key].length);
       });
-      
+
+      // Collect Heatmap data
+      // Push the date of each link click to array
+      currentLink.clicks.forEach(click => {
+        heatData.push({date: click.date.substring(0, 10)})
+      });
+
+      // Group results by date
+      let nextHeatData = _.groupBy(heatData, "date");
+
+      // Iterate through array and build data structure for heatmap
+      Object.keys(nextHeatData).forEach(click => {
+        obj = {
+          "date": click, "count": nextHeatData[click].length
+        }
+        if(nextHeatData[click].length > higgestClickCount) {
+          higgestClickCount = nextHeatData[click].length;
+        }
+        heatDataFinal.push(obj);
+      });
+
       // Get the Top Bar values
       active = "True";
-
       clicksTotal = currentLink.clicks.length;
-
       uniqueVisitors = Object.keys(uniqueVisitorsBuilder).length;
     }
 
@@ -288,12 +311,32 @@ class IndividualLink extends Component {
                     startDate={new Date('2020-01-01')}
                     endDate={new Date('2020-12-31')}
                     showOutOfRangeDays={true}
-                    values={[
-                      { date: '2016-01-01' },
-                      { date: '2016-01-22' },
-                      { date: '2016-01-30' },
-                      // ...and so on
-                    ]}
+                    values={heatDataFinal}
+                    classForValue={(value) => {
+                      if (!value) {
+                        return 'color-empty';
+                      }
+                      if (value.count <= ((higgestClickCount / 100) * 20)) {
+                        return `color-scale-1`;
+                      }
+                      else if (value.count <= ((higgestClickCount / 100) * 40)) {
+                        return `color-scale-2`;
+                      }
+                      else if (value.count <= ((higgestClickCount / 100) * 60)) {
+                        return `color-scale-3`;
+                      }
+                      else if (value.count <= ((higgestClickCount / 100) * 80)) {
+                        return `color-scale-4`;
+                      }
+                      else if (value.count <= ((higgestClickCount / 100) * 100)) {
+                        return `color-scale-large`;
+                      }
+                    }}
+                    tooltipDataAttrs={value => {
+                      return {
+                        "data-tip": `${value.date ? `Date : ` + value.date + ' | ': ''}` + `${value.count ? `Clicks : ` + value.count : ""}`
+                      };
+                    }}
                     onClick={(value) => {
                       console.log(value);
                     }}
