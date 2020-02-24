@@ -9,6 +9,12 @@
 #dashboard-table {
   max-height: 500px;
   overflow-y: scroll;
+  .table td {
+    vertical-align: middle !important;
+  }
+  .table th {
+    border: unset;
+  }
 }
 
 .cursor-pointer {

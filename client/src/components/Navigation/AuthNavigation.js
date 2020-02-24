@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { withRouter } from "react-router-dom";
 
 // Import Actions
@@ -25,7 +24,7 @@ class MainNavigation extends Component {
       <Fragment>
         <nav className="navbar navbar-expand-lg navbar-dark bg-white">
           <a className="navbar-brand ml-2 logo-font text-dark" href="/">
-            <img src={require("../../assets/img/temp_logo.png")} height="40px" alt="Brand logo"/>
+            <img src={require("../../assets/img/shrincc_logo.png")} height="40px" alt="Brand logo"/>
           </a>
           <button className="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -50,8 +49,7 @@ class MainNavigation extends Component {
                 </a>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                   <a className="dropdown-item" href="/">Dashboard</a>
-                  <a className="dropdown-item" href="/saved">Saved Jobs</a>
-                  <a className="dropdown-item" href="/track">Track Jobs</a>
+                  <a className="dropdown-item" href="/link">My Links</a>
                   <div className="dropdown-divider"></div>
                   <a className="dropdown-item" href="/help">Help</a>
                   <a className="dropdown-item" href="/terms-and-conditions">Terms &amp; Conditions</a>

@@ -70,7 +70,7 @@ class Login extends Component {
           <div className="row h-100 justify-content-center align-items-center">
             <div className="col-md-6 col-12 text-center">
               <img
-                src={require("../../assets/img/temp_logo.png")}
+                src={require("../../assets/img/shrincc_logo.png")}
                 width="250px"
                 alt="Brand Logo"
                 />

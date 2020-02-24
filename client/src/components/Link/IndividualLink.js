@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Line, Bar } from 'react-chartjs-2';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import ReactTooltip from 'react-tooltip';
@@ -15,7 +14,7 @@ import { getIndividualLink } from '../../actions/link';
 
 // Import Components
 import CustomBar from '../Graphs/CustomBar';
-import CustomPie from '../Graphs/CustomPie';
+import CustomLine from '../Graphs/CustomLine';
 
 const swal = withReactContent(Swal);
 
@@ -23,12 +22,17 @@ class IndividualLink extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      days: 7,
       copied: false,
     };
   }
 
   componentDidMount() {
     this.props.getIndividualLink(this.props.match.params.linkId);
+  }
+
+  selectChange = (event) => {
+    this.setState({days: event.target.value});
   }
 
   CopyText = () => {
@@ -54,6 +58,7 @@ class IndividualLink extends Component {
   }
 
   render() {
+
     let shortLink;
     let linkImage;
     let linkLocaiton;
@@ -74,15 +79,65 @@ class IndividualLink extends Component {
     let active;
     let clicksTotal;
     let uniqueVisitors;
-    let avgDaily;
+    let dataToSend = [];
+    let labelsToSend = [];
+
+
+
+    let heatData = [];
+    let heatDataFinal = [];
+    let higgestClickCount = 0;
+    let obj;
+
+    // Get the date from 7 days ago.
+    let d = new Date();
+    let days = d.setDate(d.getDate() - this.state.days);
+    var daysAgo = new Date(days).toISOString();
 
     if (this.props.link.currentLink && this.props.link.loading === false) {
-      
+
       const { currentLink } = this.props.link;
+
+      let clicksCalc = [];
+
+      // Get all the clicks within the last week
+      currentLink.clicks.forEach(click => {
+        if(daysAgo <= click.date) {
+          clicksCalc.push({"date": click.date.substring(0, 10)});
+        }
+      })
+
+      console.log(clicksCalc);
+
+      let avgClickPerDay = (clicksCalc.length / this.state.days).toFixed(2);
+
+      console.log(avgClickPerDay);
+      // Create graph data for each row
+      let graphData = _.groupBy(clicksCalc, "date");
+
+      // let dataToSend = [];
+      // console.log("state", this.state.days);
+      for (let i = this.state.days - 1; i >= 0; i--) {
+        let date = new Date();
+        date.setDate(date.getDate() - i);
+        var dateCheck = new Date(date).toISOString();
+
+        if (graphData[dateCheck.substring(0, 10)]) {
+          dataToSend.push(graphData[dateCheck.substring(0, 10)].length);
+        }
+        else {
+          dataToSend.push(0);
+        }
+        labelsToSend.push(dateCheck.substring(5, 10));
+      }
 
       // Set the short link value
       shortLink = (
-        <a href={"https://shrin.cc" + currentLink.shortLink}>
+        <a 
+          href={"https://shrin.cc/" + currentLink.shortLink} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          >
           {"https://shrin.cc/" + currentLink.shortLink}
         </a>
       );
@@ -124,25 +179,42 @@ class IndividualLink extends Component {
         osLabels.push(key);
         osData.push(osGraphBuilder[key].length);
       });
-      
+
+      // Collect Heatmap data
+      // Push the date of each link click to array
+      currentLink.clicks.forEach(click => {
+        heatData.push({date: click.date.substring(0, 10)})
+      });
+
+      // Group results by date
+      let nextHeatData = _.groupBy(heatData, "date");
+
+      // Iterate through array and build data structure for heatmap
+      Object.keys(nextHeatData).forEach(click => {
+        obj = {
+          "date": click, "count": nextHeatData[click].length
+        }
+        if(nextHeatData[click].length > higgestClickCount) {
+          higgestClickCount = nextHeatData[click].length;
+        }
+        heatDataFinal.push(obj);
+      });
+
       // Get the Top Bar values
       active = "True";
-
       clicksTotal = currentLink.clicks.length;
-
       uniqueVisitors = Object.keys(uniqueVisitorsBuilder).length;
     }
 
     return (
-      <div className="c-wrapper">
+      <div className="shrincc-wrapper">
         {/* Sub header with breadcrumbs */}
-        <header className="c-header c-header-light">
-          <div className="c-subheader px-3">
-            <ol className="breadcrumb border-0 m-0">
-              <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
-              <li className="breadcrumb-item active">Link - {this.props.match.params.linkId}</li>
-            </ol>
-          </div>
+
+        <header className="border-top">
+          <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
+            <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li className="breadcrumb-item active">Link - {this.props.match.params.linkId}</li>
+          </ol>
         </header>
 
         {/* First row of cards */}
@@ -171,9 +243,10 @@ class IndividualLink extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{active}</div><small className="text-muted text-uppercase font-weight-bold">Active</small>
+                <h4>{active}</h4>
+                <small className="text-muted text-uppercase font-weight-bold">Active</small>
                 <div className="progress progress-xs mt-3 mb-0">
-                  <div className="progress-bar bg-warning w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -182,9 +255,10 @@ class IndividualLink extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{clicksTotal}</div><small className="text-muted text-uppercase font-weight-bold">Clicks</small>
+                <h4>{clicksTotal}</h4>
+                <small className="text-muted text-uppercase font-weight-bold">Clicks</small>
                 <div className="progress progress-xs mt-3 mb-0">
-                  <div className="progress-bar bg-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -193,9 +267,10 @@ class IndividualLink extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{uniqueVisitors}</div><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
+                <h4>{uniqueVisitors}</h4>
+                <small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
                 <div className="progress progress-xs mt-3 mb-0">
-                  <div className="progress-bar bg-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -206,9 +281,17 @@ class IndividualLink extends Component {
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
+                <div className="d-flex justify-content-around">
                 <h4>Visits this week</h4>
+                <select onChange={this.selectChange}>
+                  <option value={7} defaultValue={this.state.days === 7 ? "selected" : ""}>Last 7 days</option>
+                  <option value={30} defaultValue={this.state.days === 30 ? "selected" : ""}>Last 30 days</option>
+                  <option value={60} defaultValue={this.state.days === 60 ? "selected" : ""}>Last 60 days</option>
+                  <option value={90} defaultValue={this.state.days === 90 ? "selected" : ""}>Last 90 days</option>
+                </select>
+                </div>
                 <div >
-                  <CustomPie data={deviceData} labels={deviceLabels}/>
+                  <CustomLine data={dataToSend} labels={labelsToSend} graphColor={"#00beff"}/>
                 </div>
               </div>
             </div>
@@ -235,12 +318,32 @@ class IndividualLink extends Component {
                     startDate={new Date('2020-01-01')}
                     endDate={new Date('2020-12-31')}
                     showOutOfRangeDays={true}
-                    values={[
-                      { date: '2016-01-01' },
-                      { date: '2016-01-22' },
-                      { date: '2016-01-30' },
-                      // ...and so on
-                    ]}
+                    values={heatDataFinal}
+                    classForValue={(value) => {
+                      if (!value) {
+                        return 'color-empty';
+                      }
+                      if (value.count <= ((higgestClickCount / 100) * 20)) {
+                        return `color-scale-1`;
+                      }
+                      else if (value.count <= ((higgestClickCount / 100) * 40)) {
+                        return `color-scale-2`;
+                      }
+                      else if (value.count <= ((higgestClickCount / 100) * 60)) {
+                        return `color-scale-3`;
+                      }
+                      else if (value.count <= ((higgestClickCount / 100) * 80)) {
+                        return `color-scale-4`;
+                      }
+                      else if (value.count <= ((higgestClickCount / 100) * 100)) {
+                        return `color-scale-large`;
+                      }
+                    }}
+                    tooltipDataAttrs={value => {
+                      return {
+                        "data-tip": `${(value.date ? "Date : " + value.date + " | ": "") + (value.count ? "Clicks : " + value.count : "")}`
+                      };
+                    }}
                     onClick={(value) => {
                       console.log(value);
                     }}

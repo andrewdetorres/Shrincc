@@ -89,15 +89,13 @@ class NewLink extends Component {
     }
 
     return (
-
-      <>
-        <header className="c-header c-header-light">
-          <div className="c-subheader px-3">
-            <ol className="breadcrumb border-0 m-0">
-              <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
-              <li className="breadcrumb-item active">New Link</li>
-            </ol>
-          </div>
+      <div className="shrincc-wrapper">
+        {/* Sub header with breadcrumbs */}
+        <header className="border-top">
+          <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
+            <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li className="breadcrumb-item active">New Link</li>
+          </ol>
         </header>
         <div className="content" id="MyLink">
           <div className="container-fluid">
@@ -123,7 +121,7 @@ class NewLink extends Component {
             </div>
           </div>
         </div>
-      </>
+      </div>
     )
   }
 }
