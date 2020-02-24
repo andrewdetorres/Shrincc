@@ -133,7 +133,11 @@ class IndividualLink extends Component {
 
       // Set the short link value
       shortLink = (
-        <a href={"https://shrin.cc/" + currentLink.shortLink}>
+        <a 
+          href={"https://shrin.cc/" + currentLink.shortLink} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          >
           {"https://shrin.cc/" + currentLink.shortLink}
         </a>
       );
@@ -239,9 +243,10 @@ class IndividualLink extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{active}</div><small className="text-muted text-uppercase font-weight-bold">Active</small>
+                <h4>{active}</h4>
+                <small className="text-muted text-uppercase font-weight-bold">Active</small>
                 <div className="progress progress-xs mt-3 mb-0">
-                  <div className="progress-bar bg-warning w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -250,9 +255,10 @@ class IndividualLink extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{clicksTotal}</div><small className="text-muted text-uppercase font-weight-bold">Clicks</small>
+                <h4>{clicksTotal}</h4>
+                <small className="text-muted text-uppercase font-weight-bold">Clicks</small>
                 <div className="progress progress-xs mt-3 mb-0">
-                  <div className="progress-bar bg-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -261,9 +267,10 @@ class IndividualLink extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <div className="text-value-lg">{uniqueVisitors}</div><small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
+                <h4>{uniqueVisitors}</h4>
+                <small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
                 <div className="progress progress-xs mt-3 mb-0">
-                  <div className="progress-bar bg-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -284,7 +291,7 @@ class IndividualLink extends Component {
                 </select>
                 </div>
                 <div >
-                  <CustomLine data={dataToSend} labels={labelsToSend}/>
+                  <CustomLine data={dataToSend} labels={labelsToSend} graphColor={"#00beff"}/>
                 </div>
               </div>
             </div>
@@ -334,7 +341,7 @@ class IndividualLink extends Component {
                     }}
                     tooltipDataAttrs={value => {
                       return {
-                        "data-tip": `${value.date ? `Date : ` + value.date + ' | ': ''}` + `${value.count ? `Clicks : ` + value.count : ""}`
+                        "data-tip": `${(value.date ? "Date : " + value.date + " | ": "") + (value.count ? "Clicks : " + value.count : "")}`
                       };
                     }}
                     onClick={(value) => {

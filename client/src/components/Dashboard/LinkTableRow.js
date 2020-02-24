@@ -91,9 +91,16 @@ export default class LinkTableRow extends Component {
         </td>
         <td>
           <div>
-            <storng>
-              <a href={"https://shrin.cc/" + this.props.shortLink} className="text-secondary">{"https://shrin.cc/" + this.props.shortLink}</a>
-            </storng>
+            <strong>
+              <a 
+                href={"https://shrin.cc/" + this.props.shortLink} 
+                className="text-secondary" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                >
+                {"https://shrin.cc/" + this.props.shortLink}
+                </a>
+            </strong>
             &nbsp;|&nbsp;
             <span className="cursor-pointer" onClick={this.CopyText}>
               {this.state.copied ? "Copied" : "Copy"}

@@ -17,9 +17,6 @@ export default class CustomLine extends Component {
           pointStrokeColor: "#fff",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(151,187,205,1)",
-          borderColor: [
-            "#e55353"
-          ],
         }
       ]
     };

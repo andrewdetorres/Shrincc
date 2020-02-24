@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
-import { Route, withRouter, Redirect, Switch } from "react-router-dom";
+import { Route, withRouter, Switch } from "react-router-dom";
 
 // Import Actions
 import { getCurrentUserProfile } from './../../actions/profile';

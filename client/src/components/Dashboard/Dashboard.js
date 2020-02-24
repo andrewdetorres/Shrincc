@@ -128,6 +128,7 @@ class Dashboard extends Component {
         )
       });
 
+      // 
       let browserGraphBuilder = _.groupBy(browser, "clientName");
       let deviceGraphBuilder = _.groupBy(device, "deviceType");
       let osGraphBuilder = _.groupBy(os, "os");
@@ -315,7 +316,7 @@ class Dashboard extends Component {
                     }}
                     tooltipDataAttrs={value => {
                       return {
-                        "data-tip": `${value.date ? `Date : ` + value.date + ' | ': ''}` + `${value.count ? `Clicks : ` + value.count : ""}`
+                        "data-tip": `${(value.date ? "Date : " + value.date + " | ": "") + (value.count ? "Clicks : " + value.count : "")}`
                       };
                     }}
                     onClick={(value) => {
