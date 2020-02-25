@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Line } from 'react-chartjs-2';
+import { Line, Chart } from 'react-chartjs-2';
 import GetDate from '../Common/GetDate';
 
 import Swal from 'sweetalert2'
@@ -37,6 +37,11 @@ export default class LinkTableRow extends Component {
       )
     })
   }
+
+  addDefaultSrc(ev){
+    ev.target.src = require("../../assets/img/default_favicon.png");
+  }
+
   render() {
     const data = {
       labels: ['1', '2', '3', '4', '5', '6', '7'],
@@ -78,6 +83,11 @@ export default class LinkTableRow extends Component {
               display: false
             }
         }]
+      },
+      layout: {
+        padding: {
+          top: 5
+        }
       }
     }
     return (
@@ -85,7 +95,7 @@ export default class LinkTableRow extends Component {
       <tr>
         <td className="text-center">
           <div>
-            <img className="favicon-image" src={this.props.favicon} alt="Website Icon" />
+            <img className="favicon-image" src={this.props.favicon} onError={this.addDefaultSrc} alt="Website Icon" />
             <span className="-status bg-success"></span>
           </div>
         </td>

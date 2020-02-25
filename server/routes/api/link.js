@@ -10,6 +10,7 @@ const Link = require("../../model/Link");
 // Get IP Address
 var ip = require("ip");
 // console.dir ( ip.address() );
+var scrape = require('html-metadata');
 
 module.exports = app => {
 
@@ -21,7 +22,17 @@ module.exports = app => {
   //--------------------------------------------------------
 
   app.get("/api/link/test", (req, res) => {
-    res.json({ message: "Link test works" });
+    var url = "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find";
+    scrape(url)
+      .then((metadata) => {
+        const {icons} = metadata.general;
+        console.log("title",metadata.general.title);
+        console.log("description",metadata.general.description);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+      res.json({ message: "Link test works" });
   });
 
   //--------------------------------------------------------
