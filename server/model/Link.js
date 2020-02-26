@@ -14,6 +14,12 @@ const LinkSchema = new Schema({
     type: String,
     required: true
   },
+  title: {
+    type: String
+  },
+  description: {
+    type: String
+  },
   clicks : [
     {
       ip: {

@@ -41,6 +41,10 @@ class IndividualLink extends Component {
     }
   }
 
+  addDefaultSrc(ev){
+    ev.target.src = require("../../assets/img/default_favicon.png");
+  }
+
   CopyText = () => {
     // Copy text to clipboard
     navigator.clipboard.writeText("https://shrin.cc" + this.props.link.currentLink.shortLink)
@@ -139,23 +143,17 @@ class IndividualLink extends Component {
 
       // Set the short link value
       shortLink = (
-        <a 
-          href={"https://shrin.cc/" + currentLink.shortLink} 
-          target="_blank" 
+        <a
+          href={"https://shrin.cc/" + currentLink.shortLink}
+          target="_blank"
           rel="noopener noreferrer"
           >
           {"https://shrin.cc/" + currentLink.shortLink}
         </a>
       );
 
-      // Create favicon and linklocation from the LongLink
-      var a = document.createElement('a');
-      a.href = currentLink.longLink;
-      let favicon = a['protocol'] + "//" + a['hostname'] + "/favicon.ico";
-      linkLocaiton = a['hostname'];
-
       linkImage = (
-        <img className="favicon-image mr-2" src={favicon} alt={favicon} />
+        <img className="favicon-image mr-2" src={"https://www.google.com/s2/favicons?domain=" + currentLink.longLink} onError={this.addDefaultSrc} />
       )
 
       // Get the browser, device and OS data
@@ -170,7 +168,7 @@ class IndividualLink extends Component {
       let deviceGraphBuilder = _.groupBy(device, "deviceType");
       let osGraphBuilder = _.groupBy(os, "os");
       let uniqueVisitorsBuilder = _.groupBy(ip, "ip");
-      
+
       Object.keys(browserGraphBuilder).forEach(key => {
         browserLabels.push(key);
         browserData.push(browserGraphBuilder[key].length);

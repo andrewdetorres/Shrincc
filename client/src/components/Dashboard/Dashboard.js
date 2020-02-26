@@ -106,11 +106,6 @@ class Dashboard extends Component {
           graphColor = "#F9B112";
         }
 
-        // Get the favicon from each link
-        var a = document.createElement('a');
-        a.href = link.longLink;
-        let favicon = a['protocol'] + "//" + a['hostname'] + "/favicon.ico";
-
         // Return the link table row with its content
         return (
         <LinkTableRow
@@ -121,18 +116,17 @@ class Dashboard extends Component {
           clickCount={link.clicks.length}
           avgClickPerDay={avgClickPerDay}
           graphColor={graphColor}
-          favicon={favicon}
           active={true}
           key={index}
           />
         )
       });
 
-      // 
+      //
       let browserGraphBuilder = _.groupBy(browser, "clientName");
       let deviceGraphBuilder = _.groupBy(device, "deviceType");
       let osGraphBuilder = _.groupBy(os, "os");
-      
+
       Object.keys(browserGraphBuilder).forEach(key => {
         browserLabels.push(key);
         browserData.push(browserGraphBuilder[key].length);

@@ -95,17 +95,17 @@ export default class LinkTableRow extends Component {
       <tr>
         <td className="text-center">
           <div>
-            <img className="favicon-image" src={this.props.favicon} onError={this.addDefaultSrc} alt="Website Icon" />
+            <img className="favicon-image" src={"https://www.google.com/s2/favicons?domain=" + this.props.longLink} onError={this.addDefaultSrc} alt="Website Icon" />
             <span className="-status bg-success"></span>
           </div>
         </td>
         <td>
           <div>
             <strong>
-              <a 
-                href={"https://shrin.cc/" + this.props.shortLink} 
-                className="text-secondary" 
-                target="_blank" 
+              <a
+                href={"https://shrin.cc/" + this.props.shortLink}
+                className="text-secondary"
+                target="_blank"
                 rel="noopener noreferrer"
                 >
                 {"https://shrin.cc/" + this.props.shortLink}
