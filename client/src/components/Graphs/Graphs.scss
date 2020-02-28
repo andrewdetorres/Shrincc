@@ -8,6 +8,10 @@
   stroke: url(#gradient-a) !important;
   stroke-width: 4px;
 }
+.ct-series-a .ct-bar {
+  stroke: #00beff;
+  stroke-width: 20px;
+}
 
 .test-chart .ct-series-a .ct-point {
   fill: transparent;
@@ -21,10 +25,10 @@
 }
 
 span.ct-label.ct-horizontal.ct-end {
-  padding-top: 20px;
+  padding-top: 5px;
 }
 
 .test-chart {
-  -webkit-filter: drop-shadow(0px 15px 4px rgba(0, 190, 255, 0.25));
-  filter: drop-shadow(0px 15px 4px rgba(0, 190, 255, 0.25));
+  -webkit-filter: drop-shadow(5px 10px 4px rgba(0, 190, 255, 0.5));
+  filter: drop-shadow(5px 10px 4px rgba(0, 190, 255, 0.5));
 }

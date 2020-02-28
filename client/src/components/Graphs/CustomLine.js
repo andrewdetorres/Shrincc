@@ -1,16 +1,16 @@
 import React from 'react';
 import ChartistGraph from 'react-chartist';
- 
+
 class CustomLine extends React.Component {
   render() {
- 
+
     var data = {
       labels: this.props.labels,
       series: [
         this.props.data
       ]
     };
- 
+
     var options = {
       showPoint: true,
       showLine: true,
@@ -31,9 +31,9 @@ class CustomLine extends React.Component {
       chartPadding: 10,
       height: '300px'
     };
- 
+
     var type = 'Line'
- 
+
     return (
       <div>
         <ChartistGraph data={data} options={options} type={type} className="test-chart"/>
