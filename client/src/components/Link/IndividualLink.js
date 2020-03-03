@@ -22,7 +22,8 @@ class IndividualLink extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      days: 7,
+      visitDays: 7,
+      sourceDays: 7,
       copied: false,
     };
   }
@@ -31,8 +32,17 @@ class IndividualLink extends Component {
     this.props.getIndividualLink(this.props.match.params.linkId);
   }
 
-  selectChange = (event) => {
-    this.setState({days: event.target.value});
+  selectChange = (value, type) => {
+    if (type === "visitDays" ) {
+      this.setState({visitDays: value});
+    }
+    else if (type === "sourceDays" ) {
+      this.setState({sourceDays: value});
+    }
+  }
+
+  addDefaultSrc(ev){
+    ev.target.src = require("../../assets/img/default_favicon.png");
   }
 
   CopyText = () => {
@@ -91,7 +101,7 @@ class IndividualLink extends Component {
 
     // Get the date from 7 days ago.
     let d = new Date();
-    let days = d.setDate(d.getDate() - this.state.days);
+    let days = d.setDate(d.getDate() - this.state.visitDays);
     var daysAgo = new Date(days).toISOString();
 
     if (this.props.link.currentLink && this.props.link.loading === false) {
@@ -109,15 +119,15 @@ class IndividualLink extends Component {
 
       console.log(clicksCalc);
 
-      let avgClickPerDay = (clicksCalc.length / this.state.days).toFixed(2);
+      let avgClickPerDay = (clicksCalc.length / this.state.visitDays).toFixed(2);
 
       console.log(avgClickPerDay);
       // Create graph data for each row
       let graphData = _.groupBy(clicksCalc, "date");
 
       // let dataToSend = [];
-      // console.log("state", this.state.days);
-      for (let i = this.state.days - 1; i >= 0; i--) {
+      // console.log("state", this.state.visitDays);
+      for (let i = this.state.visitDays - 1; i >= 0; i--) {
         let date = new Date();
         date.setDate(date.getDate() - i);
         var dateCheck = new Date(date).toISOString();
@@ -133,23 +143,17 @@ class IndividualLink extends Component {
 
       // Set the short link value
       shortLink = (
-        <a 
-          href={"https://shrin.cc/" + currentLink.shortLink} 
-          target="_blank" 
+        <a
+          href={"https://shrin.cc/" + currentLink.shortLink}
+          target="_blank"
           rel="noopener noreferrer"
           >
           {"https://shrin.cc/" + currentLink.shortLink}
         </a>
       );
 
-      // Create favicon and linklocation from the LongLink
-      var a = document.createElement('a');
-      a.href = currentLink.longLink;
-      let favicon = a['protocol'] + "//" + a['hostname'] + "/favicon.ico";
-      linkLocaiton = a['hostname'];
-
       linkImage = (
-        <img className="favicon-image mr-2" src={favicon} alt={favicon} />
+        <img className="favicon-image mr-2" src={"https://www.google.com/s2/favicons?domain=" + currentLink.longLink} onError={this.addDefaultSrc} />
       )
 
       // Get the browser, device and OS data
@@ -164,7 +168,7 @@ class IndividualLink extends Component {
       let deviceGraphBuilder = _.groupBy(device, "deviceType");
       let osGraphBuilder = _.groupBy(os, "os");
       let uniqueVisitorsBuilder = _.groupBy(ip, "ip");
-      
+
       Object.keys(browserGraphBuilder).forEach(key => {
         browserLabels.push(key);
         browserData.push(browserGraphBuilder[key].length);
@@ -276,21 +280,28 @@ class IndividualLink extends Component {
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-center px-md-5 px-1">
+        <div className="d-flex flex-md-row flex-column justify-content-center px-md-5 px-1">
           <div className="card-group shadow mb-4 mr-3 w-100">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
-                <div className="d-flex justify-content-around">
-                <h4>Visits this week</h4>
-                <select onChange={this.selectChange}>
-                  <option value={7} defaultValue={this.state.days === 7 ? "selected" : ""}>Last 7 days</option>
-                  <option value={30} defaultValue={this.state.days === 30 ? "selected" : ""}>Last 30 days</option>
-                  <option value={60} defaultValue={this.state.days === 60 ? "selected" : ""}>Last 60 days</option>
-                  <option value={90} defaultValue={this.state.days === 90 ? "selected" : ""}>Last 90 days</option>
-                </select>
+                <div className="d-flex justify-content-between pb-3">
+                <div className="text-left">
+                  <h4 className="m-0">Visits</h4>
+                  <small className="text-light">Visits made in the past {this.state.visitDays} days</small>
                 </div>
-                <div >
+                  <li className="list-unstyled my-auto mx-lg-2 py-2 py-lg-0 px-3 px-md-0">
+                    <p className="nav-link dropdown-toggle cursor-pointer" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {this.state.visitDays} days
+                    </p>
+                    <div className="dropdown-menu dropdown-menu-right border-top-0 rounded-0 p-0" aria-labelledby="navbarDropdown">
+                      <p onClick={() => this.selectChange(7, "visitDays")} className="dropdown-item m-0" href="/">7 Days</p>
+                      <p onClick={() => this.selectChange(14, "visitDays")} className="dropdown-item m-0" href="/">14 Days</p>
+                      <p onClick={() => this.selectChange(30, "visitDays")} className="dropdown-item m-0" href="/">30 Days</p>
+                    </div>
+                  </li>
+                </div>
+                <div>
                   <CustomLine data={dataToSend} labels={labelsToSend} graphColor={"#00beff"}/>
                 </div>
               </div>
@@ -300,9 +311,25 @@ class IndividualLink extends Component {
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
-                <h4>Traffic Source</h4>
+                <div className="d-flex justify-content-between pb-3">
+                <div className="text-left">
+                  <h4 className="m-0">Traffic Source</h4>
+                  <small className="text-light">Traffic Source since {this.state.sourceDays} days</small>
+                </div>
+                  <li className="list-unstyled my-auto mx-lg-2 py-2 py-lg-0 px-3 px-md-0">
+                    <p className="nav-link dropdown-toggle cursor-pointer" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {this.state.sourceDays} days
+                    </p>
+                    <div className="dropdown-menu dropdown-menu-right border-top-0 rounded-0 p-0" aria-labelledby="navbarDropdown">
+                      <p onClick={() => this.selectChange(7, "sourceDays")} className="dropdown-item m-0" href="/">7 Days</p>
+                      <p onClick={() => this.selectChange(14, "sourceDays")} className="dropdown-item m-0" href="/">14 Days</p>
+                      <p onClick={() => this.selectChange(30, "sourceDays")} className="dropdown-item m-0" href="/">30 Days</p>
+                    </div>
+                  </li>
+                </div>
                 <div >
-                  <CustomBar data={browserData} labels={browserLabels}/>
+                  <CustomBar data={browserData} labels={browserLabels} graphColor={"#00beff"}/>
+                  {/* <CustomBar data={browserData} labels={browserLabels}/> */}
                 </div>
               </div>
             </div>

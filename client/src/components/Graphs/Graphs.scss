@@ -1,0 +1,34 @@
+.ct-grid {
+  stroke: rgba(0, 0, 0, 0.05);
+  stroke-width: 1px;
+  stroke-dasharray: 0px;
+}
+
+.ct-series-a.ct-series .ct-line {
+  stroke: url(#gradient-a) !important;
+  stroke-width: 4px;
+}
+.ct-series-a .ct-bar {
+  stroke: #00beff;
+  stroke-width: 20px;
+}
+
+.test-chart .ct-series-a .ct-point {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 10;
+  &:hover{
+    fill: #fff;
+    stroke-width: 10;
+    stroke: #7b1fa2;
+  }
+}
+
+span.ct-label.ct-horizontal.ct-end {
+  padding-top: 5px;
+}
+
+.test-chart {
+  -webkit-filter: drop-shadow(5px 10px 4px rgba(0, 190, 255, 0.5));
+  filter: drop-shadow(5px 10px 4px rgba(0, 190, 255, 0.5));
+}

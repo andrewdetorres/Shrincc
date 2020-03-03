@@ -10,6 +10,7 @@ const Link = require("../../model/Link");
 // Get IP Address
 var ip = require("ip");
 // console.dir ( ip.address() );
+var scrape = require('html-metadata');
 
 module.exports = app => {
 
@@ -21,7 +22,17 @@ module.exports = app => {
   //--------------------------------------------------------
 
   app.get("/api/link/test", (req, res) => {
-    res.json({ message: "Link test works" });
+    var url = "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find";
+    scrape(url)
+      .then((metadata) => {
+        const {icons} = metadata.general;
+        console.log("title",metadata.general.title);
+        console.log("description",metadata.general.description);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+      res.json({ message: "Link test works" });
   });
 
   //--------------------------------------------------------
@@ -33,23 +44,50 @@ module.exports = app => {
   app.post("/api/link/new", auth, (req, res) => {
 
     console.log(req.body);
-    // Create new link object
-    const newLink = {
-      longLink: req.body.longLink,
-      shortLink: generateUniqueURLKey(),
-      user: req.user.id
-    }
+    scrape(req.body.longLink)
+      .then((metadata) => {
+        console.log(metadata.general);
+        // Create new link object
+        const newLink = {
+          longLink: req.body.longLink,
+          shortLink: generateUniqueURLKey(),
+          title: metadata.general.title,
+          description: metadata.general.description,
+          user: req.user.id
+        }
 
-    // Create new link in DB
-    new Link(newLink)
-      .save()
-      .then(link => {
-        console.log(link);
-        res.send(link);
+        // Create new link in DB
+        new Link(newLink)
+          .save()
+          .then(link => {
+            console.log(link);
+            res.send(link);
+          })
+          .catch(error => {
+            // Handle error if looged in user not found
+            res.status(500).send('Server error');
+            console.log(error);
+          });
       })
       .catch(error => {
-        // Handle error if looged in user not found
-        res.status(500).send('Server error');
+        const newLink = {
+          longLink: req.body.longLink,
+          shortLink: generateUniqueURLKey(),
+          user: req.user.id
+        }
+
+        // Create new link in DB
+        new Link(newLink)
+          .save()
+          .then(link => {
+            console.log(link);
+            res.send(link);
+          })
+          .catch(error => {
+            // Handle error if looged in user not found
+            res.status(500).send('Server error');
+            console.log(error);
+          });
       });
   })
 

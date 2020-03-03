@@ -2568,6 +2568,11 @@ chart.js@^2.9.3:
     chartjs-color "^2.1.0"
     moment "^2.10.2"
 
+chartist@^0.11.4:
+  version "0.11.4"
+  resolved "https://registry.yarnpkg.com/chartist/-/chartist-0.11.4.tgz#e96e1c573d8b67478920a3a6ae52359d9fc8d8b7"
+  integrity sha512-H4AimxaUD738/u9Mq8t27J4lh6STsLi4BQHt65nOtpLk3xyrBPaLiLMrHw7/WV9CmsjGA02WihjuL5qpSagLYw==
+
 chartjs-color-string@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/chartjs-color-string/-/chartjs-color-string-0.6.0.tgz#1df096621c0e70720a64f4135ea171d051402f71"
@@ -8981,6 +8986,13 @@ react-calendar-heatmap@^1.8.1:
   dependencies:
     memoize-one "^5.0.0"
     prop-types "^15.6.2"
+
+react-chartist@^0.14.3:
+  version "0.14.3"
+  resolved "https://registry.yarnpkg.com/react-chartist/-/react-chartist-0.14.3.tgz#e016a08ab5c94d3d1842c04a64755ceb660d3202"
+  integrity sha512-FXIml3c98nClpzautiB4JI9+URc5j9cO5e/ZSEikB7r4bBOoX/6vdxvOlyfoOIm19H4uY6L7zNsIKOuWDGsdDg==
+  dependencies:
+    prop-types "^15.5.8"
 
 react-chartjs-2@^2.9.0:
   version "2.9.0"
