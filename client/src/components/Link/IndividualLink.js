@@ -328,7 +328,7 @@ class IndividualLink extends Component {
                   </li>
                 </div>
                 <div >
-                  <CustomLine data={browserData} labels={browserLabels} graphColor={"#00beff"}/>
+                  <CustomBar data={browserData} labels={browserLabels} graphColor={"#00beff"}/>
                   {/* <CustomBar data={browserData} labels={browserLabels}/> */}
                 </div>
               </div>
