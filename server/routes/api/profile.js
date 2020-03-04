@@ -38,20 +38,7 @@ module.exports = app => {
 
     // Deconstruct the request body
     const {
-      firstName,
-      lastName,
-      role,
-      website,
-      location,
       username,
-      bio,
-      verified,
-      youtube,
-      twitter,
-      facebook,
-      linkedin,
-      instagram,
-      github,
       date
     } = req.body;
 
@@ -59,27 +46,9 @@ module.exports = app => {
     // Build profile object from send body request
     const newProfile = {};
 
-    // Required Fields
-    newProfile.user = req.user.id;
-    newProfile.firstName = firstName;
-    newProfile.lastName = lastName;
-
     // Optional Fields
-    if (role) newProfile.role = role;
-    if (website) newProfile.website = website;
-    if (location) newProfile.location = location;
     if (username) newProfile.username = username;
-    if (bio) newProfile.bio = bio;
-    if (verified) newProfile.verified = verified;
-    if (youtube) newProfile.youtube = youtube;
-    if (twitter) newProfile.twitter = twitter;
-    if (facebook) newProfile.facebook = facebook;
-    if (linkedin) newProfile.linkedin = linkedin;
-    if (instagram) newProfile.instagram = instagram;
-    if (github) newProfile.github = github;
     if (date) newProfile.date = date;
-
-
 
     // Using upsert option (creates new doc if no match is found):
     // upsert : true will create a new
@@ -94,34 +63,6 @@ module.exports = app => {
       })
       .catch(error => {
         // Handle error if looged in user not found
-        res.status(500).send('Server error');
-      });
-  });
-
-  //--------------------------------------------------------
-  //@request  : POST
-  //@route    : /api/profile/username
-  //@access   : Private
-  //@desc     : Get the current users profile
-  //--------------------------------------------------------
-
-  app.post("/api/profile/username", auth, (req, res) => {
-    Profile
-      .find({
-        $and: [
-          {username: req.body.username}, 
-          {user : {$ne: req.user.id}}
-        ]
-      })
-      .then(profile => {
-        if (profile.username) {
-          res.status(400).json({username: "Username already exists"});
-        }
-        else {
-          res.json(profile);
-        }
-      })
-      .catch(error => {
         res.status(500).send('Server error');
       });
   });
@@ -185,223 +126,30 @@ module.exports = app => {
   });
 
   //--------------------------------------------------------
-  //@request  : PUT
-  //@route    : /api/profile/follow/:user_id
+  //@request  : POST
+  //@route    : /api/profile/username
   //@access   : Private
-  //@desc     : Follow a specific user
+  //@desc     : Get the current users profile
   //--------------------------------------------------------
-  app.put("/api/profile/follow/:followed_user_id", auth, (req, res) => {
 
-    User.findById(req.params.followed_user_id)
-      .then(user => {
-
-        // Update the followers field in followed_user_id
-        Profile.findOne({'user' : user.id})
-        .then(profile => {
-
-          const profileToBeFollowed = profile.user;
-          const authUserFollowing = req.user.id;
-
-          // Check user is not attempting to follow themselves
-          if (profileToBeFollowed == authUserFollowing) {
-            return res.status(400).json({msg: 'You can not follow your own account'});
-          }
-
-          // Filter through list of current followers to check if user is already there
-          if (profile.followers.filter(follow => follow.user.toString() === req.user.id).length === 0) {
-
-            // Add follow to post
-            profile.followers.unshift({
-              user : req.user.id,
-              date: Date.now()
-            });
-
-            // Update profile by saving
-            profile
-              .save()
-              .then(profile => {
-                res.json(profile);
-              })
-              .catch(error => {
-                return res.status(404).json({msg: 'Profile not found'});
-              });
-          }
-          else {
-            return res.status(400).json({msg: 'Profile already been followed'});
-          }
-        })
-        .catch(error => {
-          return res.status(404).json({msg: 'Profile not found'});
-        });
-    })
-    .catch(error => {
-      return res.status(404).json({msg: 'User not found'});
-    });
-  });
-
-  //--------------------------------------------------------
-  //@request  : PUT
-  //@route    : /api/profile/updateFollowing/:followed_user_id
-  //@access   : Private
-  //@desc     : Follow a specific user
-  //--------------------------------------------------------
-  app.put("/api/profile/updateFollowing/:followed_user_id", auth, (req, res) => {
-
-    User.findById(req.user.id)
-      .then(user => {
-
-        // Update the followers field in followed_user_id
-        Profile.findOne({'user' : user.id})
-        .then(profile => {
-
-          const authUserFollowing = profile.user;
-          const profileToBeFollowed = req.params.followed_user_id;
-
-          // Check user is not attempting to follow themselves
-          if (profileToBeFollowed == authUserFollowing) {
-            return res.status(400).json({msg: 'You can not have your own account follow you'});
-          }
-
-          // Filter through list of current following to check if user is already there
-          if (profile.following.filter(follow => follow.user.toString() === profileToBeFollowed).length === 0) {
-
-            // Add follow to post
-            profile.following.unshift({
-              user : profileToBeFollowed,
-              date: Date.now()
-            });
-
-            // Update profile by saving
-            profile
-              .save()
-              .then(profile => {
-                res.json(profile);
-              })
-              .catch(error => {
-                return res.status(404).json({msg: 'Profile not found'});
-              });
-          }
-          else {
-            return res.status(400).json({msg: 'Profile already been followed'});
-          }
-        })
-        .catch(error => {
-          return res.status(404).json({msg: 'Profile not found'});
-        });
-    })
-    .catch(error => {
-      return res.status(404).json({msg: 'User not found'});
-    });
-  });
-
-  //--------------------------------------------------------
-  //@request  : PUT
-  //@route    : /api/profile/unfollow/:user_id
-  //@access   : Private
-  //@desc     : Follow a specific user
-  //--------------------------------------------------------
-  app.put("/api/profile/unfollow/:followed_user_id", auth, (req, res) => {
-
-    User.findById(req.params.followed_user_id)
-      .then(user => {
-
-        // Update the followers field in followed_user_id
-        Profile.findOne({'user' : user.id})
-        .then(profile => {
-
-          const profileToBeFollowed = profile.user;
-          const authUserFollowing = req.user.id;
-
-          // Check user is not attempting to follow themselves
-          if (profileToBeFollowed == authUserFollowing) {
-            return res.status(400).json({msg: 'You can not unfollow your own account'});
-          }
-
-          // Filter through list of current followers to check if user is already there
-          if (profile.followers.filter(follow => follow.user.toString() === req.user.id).length > 0) {
-
-            // Get the remove index
-            const removeIndex = profile.followers.map(follower =>
-              follower.user.toString()
-            ).indexOf(req.user.id);
-
-            // Remove follower from the profile
-            profile.followers.splice(removeIndex, 1);
-
-            profile.save()
-              .then(profile => {
-                res.json(profile);
-              })
-              .catch(error => {
-                // Handle error if logged in user not found
-                return res.status(400).json({msg: 'Profile has not been followed yet'});
-              });
-          }
-          else {
-            return res.status(400).json({msg: 'Profile has not been followed yet'});
-          }
-        })
-        .catch(error => {
-          return res.status(404).json({msg: 'Profile not found'});
-        });
-    })
-    .catch(error => {
-      return res.status(404).json({msg: 'User not found'});
-    });
-  });
-
-  //--------------------------------------------------------
-  //@request  : PUT
-  //@route    : /api/profile/updateUnfollowing/:followed_user_id
-  //@access   : Private
-  //@desc     : Follow a specific user
-  //--------------------------------------------------------
-  app.put("/api/profile/updateUnfollowing/:followed_user_id", auth, (req, res) => {
-
-    User.findById(req.user.id)
-      .then(user => {
-
-        // Update the followers field in followed_user_id
-        Profile.findOne({'user' : user.id})
-        .then(profile => {
-
-          const authUserFollowing = profile.user;
-          const profileToBeFollowed = req.params.followed_user_id;
-
-          // Check user is not attempting to follow themselves
-          if (profileToBeFollowed == authUserFollowing) {
-            return res.status(400).json({msg: 'You can not have your own account follow you'});
-          }
-
-          // Filter through list of current following to check if user is already there
-          if (profile.following.filter(follow => follow.user.toString() === profileToBeFollowed).length > 0) {
-
-            const removeIndex = profile.following.map(removeFollowing =>
-              removeFollowing.user.toString()
-            ).indexOf(profileToBeFollowed);
-
-            // Remove removeFollowing from the profile
-            profile.following.splice(removeIndex, 1);
-
-            profile.save()
-              .then(profile => {
-                res.json(profile);
-              })
-              .catch(error => {
-                // Handle error if logged in user not found
-                return res.status(400).json({msg: 'Post has not been followed on yet'});
-              });
-          }
-          else {
-            return res.status(400).json({msg: 'Profile already been followed'});
-          }
-        })
-        .catch(error => {
-          return res.status(404).json({msg: 'Profile not found'});
-        });
-    })
-    .catch(error => {
-      return res.status(404).json({msg: 'User not found'});
-    });
+  app.post("/api/profile/username", auth, (req, res) => {
+    Profile
+      .find({
+        $and: [
+          {username: req.body.username}, 
+          {user : {$ne: req.user.id}}
+        ]
+      })
+      .then(profile => {
+        if (profile.username) {
+          res.status(400).json({username: "Username already exists"});
+        }
+        else {
+          res.json(profile);
+        }
+      })
+      .catch(error => {
+        res.status(500).send('Server error');
+      });
   });
 }

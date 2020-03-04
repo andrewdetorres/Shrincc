@@ -24,6 +24,7 @@ class IndividualLink extends Component {
     this.state = {
       visitDays: 7,
       sourceDays: 7,
+      avgClickDays: 7,
       copied: false,
     };
   }
@@ -91,8 +92,7 @@ class IndividualLink extends Component {
     let uniqueVisitors;
     let dataToSend = [];
     let labelsToSend = [];
-
-
+    let avgClickPerDay;
 
     let heatData = [];
     let heatDataFinal = [];
@@ -104,29 +104,38 @@ class IndividualLink extends Component {
     let days = d.setDate(d.getDate() - this.state.visitDays);
     var daysAgo = new Date(days).toISOString();
 
+
+    let dAvg = new Date();
+    let daysAvg = dAvg.setDate(dAvg.getDate() - this.state.avgClickDays);
+    var daysAgoAvg = new Date(daysAvg).toISOString();
+
     if (this.props.link.currentLink && this.props.link.loading === false) {
 
       const { currentLink } = this.props.link;
 
       let clicksCalc = [];
 
-      // Get all the clicks within the last week
+      // Get all the clicks based on visit days
       currentLink.clicks.forEach(click => {
         if(daysAgo <= click.date) {
           clicksCalc.push({"date": click.date.substring(0, 10)});
         }
       })
 
-      console.log(clicksCalc);
-
-      let avgClickPerDay = (clicksCalc.length / this.state.visitDays).toFixed(2);
-
-      console.log(avgClickPerDay);
       // Create graph data for each row
       let graphData = _.groupBy(clicksCalc, "date");
 
-      // let dataToSend = [];
-      // console.log("state", this.state.visitDays);
+      let avgClickCalc = [];
+      
+      // Get all the clicks based on visit days
+      currentLink.clicks.forEach(click => {
+        if(daysAgoAvg <= click.date) {
+          avgClickCalc.push({"date": click.date.substring(0, 10)});
+        }
+      })
+
+      avgClickPerDay = (avgClickCalc.length / this.state.avgClickDays).toFixed(2);
+
       for (let i = this.state.visitDays - 1; i >= 0; i--) {
         let date = new Date();
         date.setDate(date.getDate() - i);
@@ -273,6 +282,18 @@ class IndividualLink extends Component {
                 </div>
                 <h4>{uniqueVisitors}</h4>
                 <small className="text-muted text-uppercase font-weight-bold">Unique Visitors</small>
+                <div className="progress progress-xs mt-3 mb-0">
+                  <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+            {/* Avg Clicks Per Day */}
+            <div className="card border-0">
+              <div className="card-body py-4">
+                <div className="text-muted text-right mb-4">
+                </div>
+                <h4>{avgClickPerDay}</h4>
+                <small className="text-muted text-uppercase font-weight-bold">Avg. Clicks Per Day (last {this.state.avgClickDays} days )</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>

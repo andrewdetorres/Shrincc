@@ -155,7 +155,6 @@ export const getUserProfile = (user_id) => dispatch => {
 
 
 export const createUserProfile = (profile) => dispatch => {
-  console.log(profile);
   axios
   // @todo - Don't dispatch, just return res.data.
     .post('/api/profile', profile)

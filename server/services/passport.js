@@ -29,7 +29,6 @@ passport.use(
     callbackURL: 'http://localhost:3000/auth/google/callback',
   },
   async (accessToken, refreshToken, profile, done) => {
-    console.log('profile', profile);
     User
       .findOne()
       .or([{ googleId: profile.id },{ email: profile._json.email }])
@@ -76,7 +75,6 @@ passport.use(
     includeEmail: true
   },
   async (accessToken, refreshToken, profile, done) => {
-    console.log('profile', profile)
     User
       .findOne()
       .or([{ twitterId: profile.id },{ email: profile._json.email }])
@@ -123,7 +121,6 @@ passport.use(
     profileFields: ['id', 'emails', 'name', 'picture.type(large)']
   },
   async (accessToken, refreshToken, profile, done) => {
-    console.log('profile', profile);
     User
       .findOne()
       .or([{ facebookId: profile.id },{ email: profile._json.email }])

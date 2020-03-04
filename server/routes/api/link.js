@@ -7,42 +7,9 @@ const detector = new DeviceDetector;
 const User = require("../../model/User");
 const Link = require("../../model/Link");
 
-// Get IP Address
-var ip = require("ip");
-// console.dir ( ip.address() );
 var scrape = require('html-metadata');
 
-const requestIp = require('request-ip');
-
-// inside middleware handler
-const ipMiddleware = function(req, res, next) {
-  const clientIp = requestIp.getClientIp(req); 
-  console.log("IP", clientIp);
-  next();
-};
-
 module.exports = app => {
-
-  //--------------------------------------------------------
-  //@request  : GET
-  //@route    : /api/profile/test
-  //@access   : Public
-  //@desc     : Test the profile public route
-  //--------------------------------------------------------
-
-  app.get("/api/link/test", (req, res) => {
-    var url = "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find";
-    scrape(url)
-      .then((metadata) => {
-        const {icons} = metadata.general;
-        console.log("title",metadata.general.title);
-        console.log("description",metadata.general.description);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-      res.json({ message: "Link test works" });
-  });
 
   //--------------------------------------------------------
   //@request  : POST
@@ -52,10 +19,10 @@ module.exports = app => {
   //--------------------------------------------------------
   app.post("/api/link/new", auth, (req, res) => {
 
-    console.log(req.body);
+    // Scrape meta data from the long link
     scrape(req.body.longLink)
       .then((metadata) => {
-        console.log(metadata.general);
+
         // Create new link object
         const newLink = {
           longLink: req.body.longLink,
@@ -69,7 +36,6 @@ module.exports = app => {
         new Link(newLink)
           .save()
           .then(link => {
-            console.log(link);
             res.send(link);
           })
           .catch(error => {
@@ -79,6 +45,7 @@ module.exports = app => {
           });
       })
       .catch(error => {
+        // If meta data scrape fails, create link without meta data.
         const newLink = {
           longLink: req.body.longLink,
           shortLink: generateUniqueURLKey(),
@@ -89,7 +56,6 @@ module.exports = app => {
         new Link(newLink)
           .save()
           .then(link => {
-            console.log(link);
             res.send(link);
           })
           .catch(error => {
@@ -105,7 +71,7 @@ module.exports = app => {
   //@request  : GET
   //@route    : /api/click/all/
   //@access   : Private
-  //@desc     : Get all clicks from a link
+  //@desc     : Get all links for auth user
   //--------------------------------------------------------
   app.get("/api/click/all", auth, (req, res) => {
     Link
@@ -122,11 +88,14 @@ module.exports = app => {
   //@request  : GET
   //@route    : /api/click/all/:shortLink
   //@access   : Private
-  //@desc     : Get specific link
+  //@desc     : Get specific link for auth user
   //--------------------------------------------------------
   app.get("/api/click/all/:shortLink", auth, (req, res) => {
     Link
-      .findOne({"shortLink" : req.params.shortLink})
+      .findOne({
+        user : req.user.id,
+        "shortLink" : req.params.shortLink
+      })
       .then(link => {
         res.send(link);
       })
@@ -145,8 +114,6 @@ module.exports = app => {
     Link
       .findOne({shortLink: req.params.shortLink})
       .then(link => {
-        console.log(link.user);
-        console.log(req.user.id);
         if (link.user != req.user.id) {
           res.status(401).send('You do not own this link and therefore can not delete it');
           return;

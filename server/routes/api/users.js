@@ -74,7 +74,8 @@ module.exports = app => {
 
         // Generate a user verfification token
         const verificationToken = jwt.sign({
-          data: req.body.email
+          email: req.body.email,
+          tempEmail: req.body.email
         }, keys.secretKey, { expiresIn: '7d' });
 
 
@@ -104,6 +105,7 @@ module.exports = app => {
         //Create a new user from the data provided
         const newUser = new User({
           email: req.body.email,
+          tempEmail: req.body.email,
           password: req.body.password,
           token: verificationToken
         });
@@ -123,6 +125,7 @@ module.exports = app => {
         const payload = {
           id: newUser.id,
           email: newUser.email,
+          tempEmail: newUser.tempEmail,
           isAdmin: newUser.isAdmin,
           date: newUser.date
         };
@@ -204,7 +207,7 @@ module.exports = app => {
 
   //--------------------------------------------------------
   //@request  : get
-  //@route    : /auth/reset/verify/:token
+  //@route    : /auth/reset/verify/:resetToken
   //@access   : Public
   //@isAdmin  : False
   //@desc     : This route is for a user to verify their password reset
@@ -303,6 +306,12 @@ module.exports = app => {
             bcrypt.compare(req.body.password, user.password)
             .then(result => {
               if (result) {
+
+                User.findOneAndUpdate(
+                  { email: req.body.email }, // Find token
+                  { passwordBlock : '0' } // Update value
+                );
+                
                 // Create payload
                 const payload = {
                   id: user.id,
@@ -428,6 +437,8 @@ module.exports = app => {
   //--------------------------------------------------------
   app.get("/auth/local/verify/:token", async (req, res) => {
     await  jwt.verify(req.params.token, keys.secretKey, (error, decoded) => {
+
+      console.log(decoded);
       if(error){
         res.status(401).json({ response: 'Token is not valid' });
       }
@@ -444,10 +455,15 @@ module.exports = app => {
         .then((data) => {
           if (data) {
             res.redirect('/verification?activated');
-          } else {
-            // Failed to find a result
-            res.send(false);
           }
+          else {
+            console.log(data)
+            res.status(500).send('Server error');
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          res.status(500).send('Server error');
         });
       }
     });
