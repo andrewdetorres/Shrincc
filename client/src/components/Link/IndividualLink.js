@@ -104,7 +104,6 @@ class IndividualLink extends Component {
     let days = d.setDate(d.getDate() - this.state.visitDays);
     var daysAgo = new Date(days).toISOString();
 
-
     let dAvg = new Date();
     let daysAvg = dAvg.setDate(dAvg.getDate() - this.state.avgClickDays);
     var daysAgoAvg = new Date(daysAvg).toISOString();

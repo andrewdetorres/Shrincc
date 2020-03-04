@@ -122,7 +122,6 @@ class Dashboard extends Component {
         )
       });
 
-      //
       let browserGraphBuilder = _.groupBy(browser, "clientName");
       let deviceGraphBuilder = _.groupBy(device, "deviceType");
       let osGraphBuilder = _.groupBy(os, "os");
@@ -179,6 +178,7 @@ class Dashboard extends Component {
         heatDataFinal.push(obj);
       });
 
+      console.log("heatdate: ", heatDataFinal);
       // Determine the total amount of clicks for all links the user owns
       this.props.link.AllLinks.forEach(link => {
         totalClicks = totalClicks + link.clicks.length;
@@ -276,6 +276,31 @@ class Dashboard extends Component {
           </div>
         </div>
 
+        <div className="d-flex justify-content-center px-md-5 px-1 mt-1">
+          <div className="card-group shadow mt-3 mr-2 w-100">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <h4>Device Type</h4>
+                <div >
+                  <CustomBar data={deviceData} labels={deviceLabels}/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="card-group shadow mt-3 ml-2 w-100">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <h4>Browser Type</h4>
+                <div >
+                  <CustomBar data={browserData} labels={browserLabels}/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Daily Heatmap */}
         <div className="px-5 mt-1 mt-4">
           <div className="card border-0 shadow">
@@ -323,36 +348,27 @@ class Dashboard extends Component {
             </div>
           </div>
         </div>
+
+        
         <div className="d-flex justify-content-center px-md-5 px-1 mt-1">
-          <div className="card-group shadow my-4 w-100">
+          <div className="card-group shadow mt-3 mr-2 w-100">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
                 <h4>Device Type</h4>
                 <div >
-                  <CustomPie data={deviceData} labels={deviceLabels}/>
+                  <CustomBar data={deviceData} labels={deviceLabels}/>
                 </div>
               </div>
             </div>
           </div>
-          <div className="card-group shadow my-4 mx-3 w-100">
-            {/* Links Created */}
-            <div className="card border-0">
-              <div className="card-body py-4 text-center">
-                <h4>Browser Type <small>(Clicks)</small></h4>
-                <div >
-                  <CustomBar data={browserData} labels={browserLabels}/>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="card-group shadow my-4 w-100">
+          <div className="card-group shadow mt-3 ml-2 w-100">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
                 <h4>Operating System</h4>
                 <div>
-                  <CustomPie data={osData} labels={osLabels}/>
+                  <CustomBar data={osData} labels={osLabels}/>
                 </div>
               </div>
             </div>
