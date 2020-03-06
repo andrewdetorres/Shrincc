@@ -6,20 +6,9 @@ const ProfileSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
-  firstName: {
-    type: String,
-    required : true
-  },
-  lastName: {
-    type: String,
-    required : true
-  },
   username: {
     type: String,
     required : true
-  },
-  bio: {
-    type: String
   },
   date: {
     type: Date,

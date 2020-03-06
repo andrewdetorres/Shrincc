@@ -4,6 +4,9 @@
   stroke-dasharray: 0px;
 }
 
+.ct-label {
+  font-size: 10px;
+}
 .ct-series-a.ct-series .ct-line {
   stroke: url(#gradient-a) !important;
   stroke-width: 4px;
@@ -13,7 +16,12 @@
   stroke-width: 20px;
 }
 
-.test-chart .ct-series-a .ct-point {
+.ct-series-a .ct-bar {
+  stroke: #00beff !important;
+  stroke-width: 20px;
+}
+
+.line-chart .ct-series-a .ct-point {
   fill: transparent;
   stroke: transparent;
   stroke-width: 10;
@@ -24,11 +32,16 @@
   }
 }
 
-span.ct-label.ct-horizontal.ct-end {
-  padding-top: 5px;
+.line-chart span.ct-label.ct-horizontal.ct-end {
+  padding-top: 20px;
 }
 
-.test-chart {
-  -webkit-filter: drop-shadow(5px 10px 4px rgba(0, 190, 255, 0.5));
-  filter: drop-shadow(5px 10px 4px rgba(0, 190, 255, 0.5));
+.bar-chart span.ct-label.ct-horizontal.ct-end {
+  padding-top: 0px;
+}
+
+.line-chart,
+.bar-chart {
+  -webkit-filter: drop-shadow(5px 5px 4px rgba(0, 190, 255, .5));
+  filter: drop-shadow(5px 5px 4px rgba(0, 190, 255, .5));
 }

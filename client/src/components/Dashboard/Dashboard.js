@@ -14,12 +14,29 @@ import LinkTableRow from './LinkTableRow';
 // Import Actions
 import { getAllLinks } from '../../actions/link';
 import CustomBar from '../Graphs/CustomBar';
-import CustomPie from '../Graphs/CustomPie';
+import CustomLine from '../Graphs/CustomLine';
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visitDays: 7,
+      copied: false,
+    };
+  }
 
   componentDidMount() {
     this.props.getAllLinks();
+  }
+
+
+  selectChange = (value, type) => {
+    if (type === "visitDays" ) {
+      this.setState({visitDays: value});
+    }
+    else if (type === "sourceDays" ) {
+      this.setState({sourceDays: value});
+    }
   }
 
   render() {
@@ -28,6 +45,8 @@ class Dashboard extends Component {
     var heatData = [];
 
     // Graph data
+    let clickLabelsToSend = [];
+    let clickDataToSend = [];
     let browserLabels = [];
     let browserData = [];
     let deviceLabels = [];
@@ -81,6 +100,7 @@ class Dashboard extends Component {
         let graphData = _.groupBy(clickThisWeek, "date");
 
         let dataToSend = [];
+
         for (let i = 6; i >= 0; i--) {
           let date = new Date();
           date.setDate(date.getDate() - i);
@@ -106,6 +126,21 @@ class Dashboard extends Component {
           graphColor = "#F9B112";
         }
 
+
+        for (let i = this.state.visitDays - 1; i >= 0; i--) {
+          let date = new Date();
+          date.setDate(date.getDate() - i);
+          var dateCheck = new Date(date).toISOString();
+  
+          if (graphData[dateCheck.substring(0, 10)]) {
+            clickDataToSend.push(graphData[dateCheck.substring(0, 10)].length);
+          }
+          else {
+            clickDataToSend.push(0);
+          }
+          clickLabelsToSend.push(dateCheck.substring(5, 10));
+        }
+
         // Return the link table row with its content
         return (
         <LinkTableRow
@@ -122,7 +157,6 @@ class Dashboard extends Component {
         )
       });
 
-      //
       let browserGraphBuilder = _.groupBy(browser, "clientName");
       let deviceGraphBuilder = _.groupBy(device, "deviceType");
       let osGraphBuilder = _.groupBy(os, "os");
@@ -183,7 +217,10 @@ class Dashboard extends Component {
       this.props.link.AllLinks.forEach(link => {
         totalClicks = totalClicks + link.clicks.length;
       });
-
+      
+      console.log("labels", clickLabelsToSend);
+      console.log("data", clickDataToSend);
+      
       // Gather the total amount of links the user owns
       totalLinks = this.props.link.AllLinks.length;
 
@@ -276,6 +313,46 @@ class Dashboard extends Component {
           </div>
         </div>
 
+        <div className="d-flex justify-content-center px-md-5 px-1 mt-1">
+          <div className="card-group shadow mt-3 mr-2 w-100">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <div className="d-flex justify-content-between pb-3">
+                <div className="text-left">
+                  <h4 className="m-0">Visits</h4>
+                  <small className="text-light">Visits made in the past {this.state.visitDays} days</small>
+                </div>
+                  <li className="list-unstyled my-auto mx-lg-2 py-2 py-lg-0 px-3 px-md-0">
+                    <p className="nav-link dropdown-toggle cursor-pointer" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {this.state.visitDays} days
+                    </p>
+                    <div className="dropdown-menu dropdown-menu-right border-top-0 rounded-0 p-0" aria-labelledby="navbarDropdown">
+                      <p onClick={() => this.selectChange(7, "visitDays")} className="dropdown-item m-0" href="/">7 Days</p>
+                      <p onClick={() => this.selectChange(14, "visitDays")} className="dropdown-item m-0" href="/">14 Days</p>
+                      <p onClick={() => this.selectChange(30, "visitDays")} className="dropdown-item m-0" href="/">30 Days</p>
+                    </div>
+                  </li>
+                </div>
+                <div>
+                  <CustomLine data={clickDataToSend} labels={clickLabelsToSend} graphColor={"#00beff"}/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="card-group shadow mt-3 ml-2 w-100">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <h4>Browser Type</h4>
+                <div >
+                  <CustomBar data={browserData} labels={browserLabels}/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Daily Heatmap */}
         <div className="px-5 mt-1 mt-4">
           <div className="card border-0 shadow">
@@ -323,36 +400,27 @@ class Dashboard extends Component {
             </div>
           </div>
         </div>
+
+        
         <div className="d-flex justify-content-center px-md-5 px-1 mt-1">
-          <div className="card-group shadow my-4 w-100">
+          <div className="card-group shadow mt-3 mr-2 w-100">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
                 <h4>Device Type</h4>
                 <div >
-                  <CustomPie data={deviceData} labels={deviceLabels}/>
+                  <CustomBar data={deviceData} labels={deviceLabels}/>
                 </div>
               </div>
             </div>
           </div>
-          <div className="card-group shadow my-4 mx-3 w-100">
-            {/* Links Created */}
-            <div className="card border-0">
-              <div className="card-body py-4 text-center">
-                <h4>Browser Type <small>(Clicks)</small></h4>
-                <div >
-                  <CustomBar data={browserData} labels={browserLabels}/>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="card-group shadow my-4 w-100">
+          <div className="card-group shadow mt-3 ml-2 w-100">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
                 <h4>Operating System</h4>
                 <div>
-                  <CustomPie data={osData} labels={osLabels}/>
+                  <CustomBar data={osData} labels={osLabels}/>
                 </div>
               </div>
             </div>

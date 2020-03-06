@@ -55,6 +55,33 @@ class AccountSettings extends Component {
   };
 
   render() {
+
+    let updateEmailDisabled;
+    
+    if (this.state.email === this.props.auth.user.email) {
+      updateEmailDisabled = (
+        <button 
+          type="submit" 
+          name="resetPassword" 
+          className="btn btn-outline-dark"
+          disabled
+          >
+          Update Email
+        </button>
+      )
+    }
+    else {
+      updateEmailDisabled = (
+        <button 
+          type="submit" 
+          name="resetPassword" 
+          className="btn btn-outline-dark"
+          >
+          Update Email
+        </button>
+      )
+    }
+
     return (
       <div className="card border-0 w-100">
         <div className="card-body">
@@ -74,9 +101,7 @@ class AccountSettings extends Component {
               <p>
                 <small>All new email adresses will have to be verified to continue</small>
               </p>
-              <button type="submit" name="resetPassword" className="btn btn-outline-dark">
-                Save new email
-              </button>
+              {updateEmailDisabled}
             </form>
           </div>
           <div className="mb-3">

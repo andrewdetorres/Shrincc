@@ -19,6 +19,11 @@ export default class CustomPie extends Component {
             "#3299ff",
             "#f9b115",
             "#aa64d6",
+            "#e55353",
+            "#2eb85c",
+            "#3299ff",
+            "#f9b115",
+            "#aa64d6",
           ],
         }
       ]
@@ -28,11 +33,12 @@ export default class CustomPie extends Component {
     const options = {
       responsive: true,
       maintainAspectRatio: true,
-      // legend: {
-      //    display: false
-      // },
+      legend: {
+        display: true,
+        position: "right"
+      },
       tooltips: {
-           enabled: false
+        enabled: true
       }
     }
 

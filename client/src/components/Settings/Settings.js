@@ -36,15 +36,15 @@ class Settings extends Component {
                     </div>
                   </div>
                   <div className="item-icons my-4">
-                    <a href="/settings/edit-profile" className="py-2">
-                      <FontAwesomeIcon icon={['fas', 'user']} className="mr-2 my-auto"/>
-                        Edit Profile
-                    </a>
-                  </div>
-                  <div className="item-icons my-4">
                     <a href="/settings/account-settings" className="py-2">
                       <FontAwesomeIcon icon={['fas', 'cog']} className="mr-2 my-auto"/>
                         Account Settings
+                    </a>
+                  </div>
+                  <div className="item-icons my-4">
+                    <a href="/settings/edit-profile" className="py-2">
+                      <FontAwesomeIcon icon={['fas', 'user']} className="mr-2 my-auto"/>
+                        Edit Username
                     </a>
                   </div>
                   <div className="item-icons my-4">
@@ -65,12 +65,12 @@ class Settings extends Component {
             </div>
             <div className="col-12 col-md-8 col-lg-9 p-0 d-flex justify-content-center">
               <Switch>
-                <Route path="/settings/edit-profile" component={EditProfile} />
                 <Route path="/settings/account-settings" component={AccountSettings} />
+                <Route path="/settings/edit-profile" component={EditProfile} />
                 <Route path="/settings/social-media" component={SocialMedia} />
                 <Route path="/settings/privacy-security" component={PrivacySecurity} />
-                <Redirect from="/settings" to="/settings/edit-profile" />
-                <Redirect from="/settings/*" to="/settings/edit-profile" />
+                <Redirect from="/settings" to="/settings/account-settings" />
+                <Redirect from="/settings/*" to="/settings/account-settings" />
               </Switch>
             </div>
           </div>

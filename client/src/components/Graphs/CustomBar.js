@@ -1,14 +1,9 @@
 import React from 'react';
-import Chartist from 'chartist';
 import ChartistGraph from 'react-chartist';
-
+ 
 class CustomBar extends React.Component {
-
   render() {
-
-    let newChartist = new Chartist.Svg('circle');
-    console.log(newChartist);
-
+ 
     var data = {
       labels: this.props.labels,
       series: [
@@ -33,72 +28,25 @@ class CustomBar extends React.Component {
       chartPadding: 10,
       height: '300px'
     };
-
+ 
     var type = 'Bar'
-
+ 
     return (
       <div>
-        <ChartistGraph data={data} options={options} type={type} className="test-chart"/>
+        <ChartistGraph data={data} options={options} type={type} className="bar-chart"/>
+        <svg viewBox="0 0 0 0" style={{"height":"0", "width":"0"}}>
+          <defs>
+            <linearGradient id="bar-gradient-a" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="rgba(0, 190, 255, 0)"></stop>
+              <stop offset="15%" stopColor="rgba(0, 190, 255, 1)"></stop>
+              <stop offset="85%" stopColor="rgba(0, 190, 255, 1)"></stop>
+              <stop offset="100%" stopColor="rgba(0, 190, 255, 0)"></stop>
+            </linearGradient>
+          </defs>
+        </svg>
       </div>
     )
   }
 }
 
 export default CustomBar;
-// import React, { Component } from 'react'
-// import { Bar } from 'react-chartjs-2';
-
-// export default class CustomBar extends Component {
-//   render() {
-
-//     const data = {
-//       labels: this.props.labels,
-//       datasets: [
-//         {
-//           fill: false,
-//           lineTension: 0.2,
-//           borderColor: this.props.graphColor,
-//           pointRadius: 0,
-//           data: this.props.data,
-//           backgroundColor: [
-//             "#e55353",
-//             "#2eb85c",
-//             "#3299ff",
-//             "#f9b115",
-//             "#aa64d6",
-//           ],
-//         }
-//       ]
-//     };
-
-
-//     const options = {
-//       responsive: true,
-//       maintainAspectRatio: true,
-//       legend: {
-//          display: false
-//       },
-//       tooltips: {
-//            enabled: false
-//       },
-//       scales: {
-//         xAxes: [{
-//             gridLines: {
-//               display: false
-//             },
-//         }],
-//         yAxes: [{
-//           ticks: {
-//             beginAtZero: true
-//           }
-//         }]
-//       }
-//     }
-
-//     return (
-//       <>
-//         <Bar data={data} options={options} height={200}/>
-//       </>
-//     )
-//   }
-// }

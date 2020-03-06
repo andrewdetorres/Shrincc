@@ -19,6 +19,9 @@ mongoose.connect(keys.mongoURI, {
 //Initialise app
 const app = express();
 
+const requestIp = require('request-ip');
+app.use(requestIp.mw());
+
 // Return JSON body upon express requests
 app.use(express.json({extended: false}));
 
