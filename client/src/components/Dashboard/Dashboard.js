@@ -218,9 +218,6 @@ class Dashboard extends Component {
         totalClicks = totalClicks + link.clicks.length;
       });
       
-      console.log("labels", clickLabelsToSend);
-      console.log("data", clickDataToSend);
-      
       // Gather the total amount of links the user owns
       totalLinks = this.props.link.AllLinks.length;
 
@@ -230,7 +227,7 @@ class Dashboard extends Component {
 
     return (
 
-      <div className="shrincc-wrapper">
+      <div className="shrincc-wrapper pb-5">
         {/* Sub header with breadcrumbs */}
         <header className="border-top">
           <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
@@ -319,10 +316,10 @@ class Dashboard extends Component {
             <div className="card border-0">
               <div className="card-body py-4 text-center">
                 <div className="d-flex justify-content-between pb-3">
-                <div className="text-left">
-                  <h4 className="m-0">Visits</h4>
-                  <small className="text-light">Visits made in the past {this.state.visitDays} days</small>
-                </div>
+                  <div className="text-left">
+                    <h4 className="m-0">Visits</h4>
+                    <small className="text-light">Visits made in the past {this.state.visitDays} days</small>
+                  </div>
                   <li className="list-unstyled my-auto mx-lg-2 py-2 py-lg-0 px-3 px-md-0">
                     <p className="nav-link dropdown-toggle cursor-pointer" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       {this.state.visitDays} days
@@ -344,8 +341,11 @@ class Dashboard extends Component {
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
-                <h4>Browser Type</h4>
-                <div >
+                <div className="text-left pb-3">
+                  <h4 className="m-0">Browser Type</h4>
+                  <small className="text-light">Varied browsers based on visits</small>
+                </div>
+                <div>
                   <CustomBar data={browserData} labels={browserLabels}/>
                 </div>
               </div>
@@ -358,7 +358,10 @@ class Dashboard extends Component {
           <div className="card border-0 shadow">
             <div className="card-body">
               <div className="c-chart-wrapper">
-                <h4>Daily Click Heatmap</h4>
+                <div className="text-left pb-">
+                  <h4 className="m-0">Daily Heatmap</h4>
+                  <small className="text-light">Daily Heatmap based on visits</small>
+                </div>
                 <div className="px-5">
                   <CalendarHeatmap
                     startDate={new Date('2020-01-01')}
@@ -407,7 +410,10 @@ class Dashboard extends Component {
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
-                <h4>Device Type</h4>
+                <div className="text-left pb-3">
+                  <h4 className="m-0">Device Type</h4>
+                  <small className="text-light">Varied device types based on visits</small>
+                </div>
                 <div >
                   <CustomBar data={deviceData} labels={deviceLabels}/>
                 </div>
@@ -418,7 +424,10 @@ class Dashboard extends Component {
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
-                <h4>Operating System</h4>
+                <div className="text-left pb-3">
+                  <h4 className="m-0">Operating System</h4>
+                  <small className="text-light">Varied operating system based on visits</small>
+                </div>
                 <div>
                   <CustomBar data={osData} labels={osLabels}/>
                 </div>

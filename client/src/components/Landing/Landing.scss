@@ -1,37 +1,50 @@
-.landing-background {
-  height: 100vh;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: -1000;
-
-  .overlay {
-    z-index: -999;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
+.masthead {
+  padding: 20px 75px 0px 75px;
+  
+  @media screen and (min-width: map-get($break-points, 'medium')) {
+    padding: 40px 75px 0px 75px;
   }
-  .main-title,
-  .sub-title {
-    text-align: center;
-    width: 75%;
-    margin: 0 auto;
-    color: white;
-    h1 {
-      font-size: 5em;
-      letter-spacing: -2px;
-      line-height: 100px;
+  @media screen and (min-width: map-get($break-points, 'large')) {
+    padding: 60px 75px 0px 75px;
+  }
+  @media screen and (min-width: map-get($break-points, 'extra-large')) {
+    padding: 80px 75px 0px 75px;
+  }
+  .landing-background {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 400px;
+    width: 100%;
+    @media screen and (min-width: map-get($break-points, 'medium')) {
+      width: 80%;
+      text-align: center;
     }
-    h4 {
-      letter-spacing: -1px;
+    @media screen and (min-width: map-get($break-points, 'large')) {
+      width: 70%;
     }
-    .highlighted {
-      padding: 0px 6px;
+    @media screen and (min-width: map-get($break-points, 'extra-large')) {
+      width: 50%;
     }
   }
   
+  .landing-text {
+    width: 100%;
+    height: 50%;
+    text-align: center;
+    @media screen and (min-width: map-get($break-points, 'medium')) {
+      width: 80%;
+      text-align: left;
+    }
+    @media screen and (min-width: map-get($break-points, 'large')) {
+      width: 70%;
+    }
+    @media screen and (min-width: map-get($break-points, 'extra-large')) {
+      width: 50%;
+    }
+  }
+}
+.features {
+  margin: 0 auto;
+  width: 50%;
 }

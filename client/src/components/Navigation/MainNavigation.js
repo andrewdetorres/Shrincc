@@ -9,7 +9,7 @@ class MainNavigation extends Component {
   render() {
     return (
       <Fragment>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-transparent py-md-3">
           <a className="navbar-brand ml-2 logo-font text-dark" href="/">
             <img src={require("../../assets/img/shrincc_logo.png")} height="40px" alt="Brand logo"/>
           </a>
