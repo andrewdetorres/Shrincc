@@ -28,20 +28,26 @@
   &:hover{
     fill: #fff;
     stroke-width: 10;
-    stroke: #7b1fa2;
+    stroke: #00beff;
   }
 }
 
 .line-chart span.ct-label.ct-horizontal.ct-end {
-  padding-top: 20px;
+  padding-top: 5px;
 }
 
 .bar-chart span.ct-label.ct-horizontal.ct-end {
-  padding-top: 0px;
+  padding-top: 5px;
 }
 
 .line-chart,
 .bar-chart {
   -webkit-filter: drop-shadow(5px 5px 4px rgba(0, 190, 255, .5));
   filter: drop-shadow(5px 5px 4px rgba(0, 190, 255, .5));
+}
+
+// Heatmap
+.react-calendar-heatmap text.react-calendar-heatmap-month-label {
+  font-size: 6px;
+  fill: #00beff;
 }
