@@ -126,19 +126,28 @@ class Dashboard extends Component {
           graphColor = "#F9B112";
         }
 
-
         for (let i = this.state.visitDays - 1; i >= 0; i--) {
           let date = new Date();
           date.setDate(date.getDate() - i);
-          var dateCheck = new Date(date).toISOString();
+          var dateCheck2 = new Date(date).toISOString();
   
-          if (graphData[dateCheck.substring(0, 10)]) {
-            clickDataToSend.push(graphData[dateCheck.substring(0, 10)].length);
+          if (graphData[dateCheck2.substring(0, 10)]) {
+            if (!clickDataToSend[dateCheck2.substring(0, 10)]) {
+              clickDataToSend[dateCheck2.substring(0, 10)] = graphData[dateCheck2.substring(0, 10)].length;
+            }
+            else {
+              clickDataToSend[dateCheck2.substring(0, 10)] = clickDataToSend[dateCheck2.substring(0, 10)] + graphData[dateCheck2.substring(0, 10)].length;
+            }
           }
           else {
-            clickDataToSend.push(0);
+            if (!clickDataToSend[dateCheck2.substring(0, 10)]) {
+              clickDataToSend[dateCheck2.substring(0, 10)] = 0;
+            }
+            else {
+              clickDataToSend[dateCheck2.substring(0, 10)] = clickDataToSend[dateCheck2.substring(0, 10)] + 0;
+            }
           }
-          clickLabelsToSend.push(dateCheck.substring(5, 10));
+          
         }
 
         // Return the link table row with its content
@@ -156,6 +165,9 @@ class Dashboard extends Component {
           />
         )
       });
+
+      console.log(Object.values(clickDataToSend));
+      console.log(clickLabelsToSend);
 
       let browserGraphBuilder = _.groupBy(browser, "clientName");
       let deviceGraphBuilder = _.groupBy(device, "deviceType");
@@ -223,6 +235,7 @@ class Dashboard extends Component {
 
       // Average clicks calculation
       averageLinkClick = totalClicks / totalLinks;
+
     }
 
     return (
@@ -320,19 +333,9 @@ class Dashboard extends Component {
                     <h4 className="m-0">Visits</h4>
                     <small className="text-light">Visits made in the past {this.state.visitDays} days</small>
                   </div>
-                  <li className="list-unstyled my-auto mx-lg-2 py-2 py-lg-0 px-3 px-md-0">
-                    <p className="nav-link dropdown-toggle cursor-pointer" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {this.state.visitDays} days
-                    </p>
-                    <div className="dropdown-menu dropdown-menu-right border-top-0 rounded-0 p-0" aria-labelledby="navbarDropdown">
-                      <p onClick={() => this.selectChange(7, "visitDays")} className="dropdown-item m-0" href="/">7 Days</p>
-                      <p onClick={() => this.selectChange(14, "visitDays")} className="dropdown-item m-0" href="/">14 Days</p>
-                      <p onClick={() => this.selectChange(30, "visitDays")} className="dropdown-item m-0" href="/">30 Days</p>
-                    </div>
-                  </li>
                 </div>
                 <div>
-                  <CustomLine data={clickDataToSend} labels={clickLabelsToSend} graphColor={"#00beff"}/>
+                  <CustomLine data={Object.values(clickDataToSend)} labels={Object.keys(clickDataToSend)} graphColor={"#00beff"}/>
                 </div>
               </div>
             </div>
