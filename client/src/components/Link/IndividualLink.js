@@ -161,7 +161,7 @@ class IndividualLink extends Component {
       );
 
       linkImage = (
-        <img className="favicon-image mr-2" src={"https://www.google.com/s2/favicons?domain=" + currentLink.longLink} onError={this.addDefaultSrc} />
+        <img className="favicon-image mr-2" src={"https://www.google.com/s2/favicons?domain=" + currentLink.longLink} onError={this.addDefaultSrc} alt="favicon"/>
       )
 
       // Get the browser, device and OS data
