@@ -27,10 +27,7 @@ class MainNavigation extends Component {
                 <a className="nav-link text-dark" href="/articles">Articles</a>
               </li>
               <li className="nav-item my-auto mx-3">
-                <a className="nav-link text-dark" href="/why-shirncc">Why Shrincc?</a>
-              </li>
-              <li className="nav-item my-auto mx-3">
-                <a className="nav-link text-dark" href="/contact">Contact</a>
+                <a className="nav-link text-dark" href="/about">About Shrincc</a>
               </li>
               <li className="nav-item my-auto mx-2 my-auto">
                 <a className="nav-link text-dark px-4" href="/login">

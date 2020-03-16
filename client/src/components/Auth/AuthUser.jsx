@@ -14,6 +14,7 @@ import UserProfile from "../UserProfile/UserProfile";
 import CreateProfilePrompt from "../UserProfile/CreateProfilePrompt";
 import Landing from "../Landing/Landing";
 import Articles from "../Landing/Articles";
+import About from "../Landing/About";
 import NewLink from "../Link/NewLink";
 import Dashboard from "../Dashboard/Dashboard";
 import IndividualLink from "../Link/IndividualLink";
@@ -39,6 +40,7 @@ class AuthUser extends Component {
           <MainNavigation />
           <Route exact path="/" component={Landing} />
           <Route exact path="/articles" component={Articles} />
+          <Route exact path="/about" component={About} />
           <Route path="/user/:userId" component={UserProfile} />
         </Fragment>
       )
