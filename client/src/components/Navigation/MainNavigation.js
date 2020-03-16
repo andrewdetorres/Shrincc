@@ -21,7 +21,7 @@ class MainNavigation extends Component {
             </ul>
             <ul className="navbar-nav navbar-right mr-2">
               <li className="nav-item my-auto mx-3">
-                <a className="nav-link text-dark" href="/features">Features</a>
+                <a className="nav-link text-dark" href="/">Home</a>
               </li>
               <li className="nav-item my-auto mx-3">
                 <a className="nav-link text-dark" href="/articles">Articles</a>
