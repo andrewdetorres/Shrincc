@@ -86,7 +86,7 @@ module.exports = app => {
           subject: 'Account verification - Swim Hydro',
           template: 'index',
           context: {
-            verificationToken : "http://localhost:3000/auth/local/verify/" + verificationToken
+            verificationToken : "https://shrincc.com/auth/local/verify/" + verificationToken
           },
           attachments:[
             {
@@ -183,7 +183,7 @@ module.exports = app => {
           subject: 'Reset Password - Huffet',
           template: 'passwordReset',
           context: {
-            verificationToken : "http://localhost:3000/passwordreset/confirm/" + verificationToken
+            verificationToken : "https://shrincc.com/passwordreset/confirm/" + verificationToken
           },
           attachments:[
             {
@@ -403,7 +403,7 @@ module.exports = app => {
           subject: 'Account verification - Swim Hydro',
           template: 'index',
           context: {
-            verificationToken : "http://localhost:3000/auth/local/verify/" + verificationToken
+            verificationToken : "https://shrincc.com/auth/local/verify/" + verificationToken
           },
           attachments:[
             {
