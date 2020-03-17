@@ -26,7 +26,7 @@ passport.use(
   new GoogleStrategy({
     clientID: keys.googleClientId,
     clientSecret: keys.googleClientSecret,
-    callbackURL: 'http://localhost:3000/auth/google/callback',
+    callbackURL: 'https://shrincc.com/auth/google/callback',
   },
   async (accessToken, refreshToken, profile, done) => {
     User
@@ -71,7 +71,7 @@ passport.use(
   new TwitterStrategy({
     consumerKey: keys.twitterClientId,
     consumerSecret: keys.twitterClientSecret,
-    callbackURL: "http://localhost:3000/auth/twitter/callback",
+    callbackURL: "https://shrincc.com/auth/twitter/callback",
     includeEmail: true
   },
   async (accessToken, refreshToken, profile, done) => {
@@ -117,7 +117,7 @@ passport.use(
   new FacebookStrategy({
     clientID: keys.facebookClientId,
     clientSecret: keys.facebookClientSecret,
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    callbackURL: "https://shrincc.com/auth/facebook/callback",
     profileFields: ['id', 'emails', 'name', 'picture.type(large)']
   },
   async (accessToken, refreshToken, profile, done) => {
