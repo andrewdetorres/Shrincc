@@ -250,7 +250,7 @@ class Dashboard extends Component {
 
         {/* First row of cards */}
         <div className="px-md-5 px-1 mt-4">
-          <div className="card-group shadow mb-4">
+          <div className="card-group shadow mb-4 mx-md-0 mx-4 bg-white">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4">
@@ -299,7 +299,7 @@ class Dashboard extends Component {
         </div>
 
         <div className="px-md-5 px-1 mt-1">
-          <div className="card border-0 shadow" id="dashboard-table">
+          <div className="card border-0 shadow mx-md-0 mx-4" id="dashboard-table">
             <div className="card-body py-4">
               <div className="text-muted text-right mb-4">
                 <table className="table table-responsive-sm table-hover table-outline mb-0">
@@ -323,8 +323,8 @@ class Dashboard extends Component {
           </div>
         </div>
 
-        <div className="d-flex justify-content-center px-md-5 px-1 mt-1">
-          <div className="card-group shadow mt-3 mr-2 w-100">
+        <div className="d-flex flex-md-row flex-column justify-content-center px-md-5 px-1 mt-1">
+          <div className="graph-width card-group shadow mt-3 mr-md-2 mx-md-0 mx-4">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
@@ -340,7 +340,7 @@ class Dashboard extends Component {
               </div>
             </div>
           </div>
-          <div className="card-group shadow mt-3 ml-2 w-100">
+          <div className="graph-width card-group shadow mt-3 ml-md-2 mx-md-0 mx-4">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
@@ -408,8 +408,8 @@ class Dashboard extends Component {
         </div>
 
         
-        <div className="d-flex justify-content-center px-md-5 px-1 mt-1">
-          <div className="card-group shadow mt-3 mr-2 w-100">
+        <div className="d-flex flex-md-row flex-column justify-content-center px-md-5 px-1 mt-1">
+          <div className="graph-width card-group shadow mt-3 mr-md-2 mx-md-0 mx-4">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
@@ -423,7 +423,7 @@ class Dashboard extends Component {
               </div>
             </div>
           </div>
-          <div className="card-group shadow mt-3 ml-2 w-100">
+          <div className="graph-width card-group shadow mt-3 mr-md-2 mx-md-0 mx-4">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">

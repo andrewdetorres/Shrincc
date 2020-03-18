@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Route, withRouter, Switch } from "react-router-dom";
 
 // Import Actions
+import { isActivated } from './../../actions/auth';
 import { getCurrentUserProfile } from './../../actions/profile';
 
 // Import Components
@@ -12,6 +13,7 @@ import Loading from '../Common/Loading'
 import Settings from '../Settings/Settings'
 import UserProfile from "../UserProfile/UserProfile";
 import CreateProfilePrompt from "../UserProfile/CreateProfilePrompt";
+import ApproveEmail from "../UserProfile/ApproveEmail";
 import Landing from "../Landing/Landing";
 import Articles from "../Landing/Articles";
 import About from "../Landing/About";
@@ -23,6 +25,7 @@ class AuthUser extends Component {
 
   componentDidMount() {
     this.props.getCurrentUserProfile();
+    this.props.isActivated();
   }
 
   componentDidUpdate(prevProps) {
@@ -41,14 +44,14 @@ class AuthUser extends Component {
           <Route exact path="/" component={Landing} />
           <Route exact path="/articles" component={Articles} />
           <Route exact path="/about" component={About} />
-          <Route path="/user/:userId" component={UserProfile} />
+          {/* <Route path="/user/:userId" component={UserProfile} /> */}
         </Fragment>
       )
     }
 
     // Authenticated User
     else if (this.props.auth.isAuthenticated === true && this.props.auth.loading === false) {
-      if (this.props.profile.userProfile && this.props.profile.loading === false) {
+      if (this.props.profile.userProfile && this.props.profile.loading === false && this.props.auth.user.activated == true) {
         User = (
           <Fragment>
             <AuthNavigation />
@@ -67,6 +70,14 @@ class AuthUser extends Component {
           <Fragment>
             <AuthNavigation />
             <Route path="/" component={CreateProfilePrompt} />
+          </Fragment>
+        )
+      }
+      else if (this.props.auth.user.activated == false && this.props.profile.loading === false) {
+        User = (
+          <Fragment>
+            <AuthNavigation />
+            <Route path="/" component={ApproveEmail} />
           </Fragment>
         )
       }
@@ -92,4 +103,4 @@ const mapStateToProps = state => ({
   profile: state.profile
 });
 
-export default connect(mapStateToProps, { getCurrentUserProfile })(withRouter(AuthUser));
+export default connect(mapStateToProps, { getCurrentUserProfile, isActivated })(withRouter(AuthUser));

@@ -231,7 +231,7 @@ class IndividualLink extends Component {
 
         {/* First row of cards */}
         <div className="px-md-5 px-1 mt-4">
-          <div className="card-group shadow mb-4">
+          <div className="card-group shadow mb-4 mx-md-0 mx-4 bg-white">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
@@ -249,7 +249,7 @@ class IndividualLink extends Component {
               </div>
             </div>
           </div>
-          <div className="card-group shadow mb-4">
+          <div className="card-group shadow mb-4 mx-md-0 mx-4 bg-white">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4">
@@ -301,7 +301,7 @@ class IndividualLink extends Component {
           </div>
         </div>
         <div className="d-flex flex-md-row flex-column justify-content-center px-md-5 px-1">
-          <div className="card-group shadow mb-4 mr-3 w-100">
+          <div className="graph-width card-group shadow mt-3 mr-md-2 mx-md-0 mx-4">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
@@ -327,7 +327,7 @@ class IndividualLink extends Component {
               </div>
             </div>
           </div>
-          <div className="card-group shadow mb-4 ml-3 w-100">
+          <div className="graph-width card-group shadow mt-3 ml-md-2 mx-md-0 mx-4">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">

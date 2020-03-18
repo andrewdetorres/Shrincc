@@ -9,6 +9,7 @@ import {
   LOGIN_FAILED,
   RESET_SUCCESSFUL,
   EMAIL_RESET_SUCCESSFUL,
+  IS_ACTIVATED_SUCCESSFUL,
   RESET_FAILED,
   GET_ERRORS,
   USER_LOADED,
@@ -123,6 +124,24 @@ export const fetchUser = () => dispatch => {
       });
     });
 };
+
+// Check if user account is activated
+export const isActivated = () => dispatch => {
+  axios
+  .get("/auth/activated")
+  .then(res => {
+    dispatch({
+      type: IS_ACTIVATED_SUCCESSFUL,
+      payload: res.data
+    });
+  })
+  .catch(errors => {
+    dispatch({
+      type: GET_ERRORS,
+      payload: errors.response.data
+    });
+  });
+}
 
 // Send reset token to user
 export const emailReset = (userData) => dispatch => {
