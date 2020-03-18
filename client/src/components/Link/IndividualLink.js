@@ -48,7 +48,7 @@ class IndividualLink extends Component {
 
   CopyText = () => {
     // Copy text to clipboard
-    navigator.clipboard.writeText("https://shrin.cc" + this.props.link.currentLink.shortLink)
+    navigator.clipboard.writeText("https://shrin.cc/" + this.props.link.currentLink.shortLink)
 
     // Change copied text
     this.setState({
@@ -61,7 +61,7 @@ class IndividualLink extends Component {
       showConfirmButton: false,
       html: (
         <>
-          <p>The link <span className="text-primary">{"https://shrin.cc" + this.props.link.currentLink.shortLink}</span> has been copied to your clipboard'</p>
+          <p>The link <span className="text-primary">{"https://shrin.cc/" + this.props.link.currentLink.shortLink}</span> has been copied to your clipboard'</p>
           <Okay />
         </>
       )
