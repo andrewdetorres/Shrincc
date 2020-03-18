@@ -5,6 +5,7 @@ import {
   LOGIN_FAILED,
   RESET_SUCCESSFUL,
   EMAIL_RESET_SUCCESSFUL,
+  IS_ACTIVATED_SUCCESSFUL,
   RESET_FAILED,
   USER_LOADED,
   AUTH_ERROR
@@ -54,6 +55,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         errors: action.payload
+      }
+    case IS_ACTIVATED_SUCCESSFUL:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          activated: action.payload
+        }
       }
     default:
       return state;

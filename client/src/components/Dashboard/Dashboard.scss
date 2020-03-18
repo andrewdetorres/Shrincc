@@ -48,6 +48,13 @@
   }
 }
 
+.graph-width {
+  width: auto;
+  @media screen and (min-width: map-get($break-points, 'medium')) {
+    width: 100%;
+  }
+}
+
 .favicon-image {
   width: 20px;
   height: 20px;

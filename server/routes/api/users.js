@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const auth = require("../../services/auth");
 
 // Node Mailer
 const nodemailer = require("nodemailer");
@@ -469,5 +470,25 @@ module.exports = app => {
     });
 
   });
+
+   //--------------------------------------------------------
+  //@request  : get
+  //@route    : /auth/activated
+  //@access   : Public
+  //@isAdmin  : False
+  //@desc     : This route is for to see if a user account is activated
+  //--------------------------------------------------------
+  app.get("/auth/activated", auth, (req, res) => {
+    User
+      .findById(req.user.id)
+      .then(user => {
+        res.json(user.activated);
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(500).send('Server error');
+      });
+  });
 }
+
 
