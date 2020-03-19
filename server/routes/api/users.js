@@ -84,7 +84,7 @@ module.exports = app => {
         mailer.sendMail({
           from: keys.emailUser, // sender address
           to: req.body.email, // list of receivers
-          subject: 'Account verification - Swim Hydro',
+          subject: 'Account verification - Shrincc',
           template: 'index',
           context: {
             verificationToken : "https://shrincc.com/auth/local/verify/" + verificationToken
@@ -403,7 +403,7 @@ module.exports = app => {
         mailer.sendMail({
           from: keys.emailUser, // sender address
           to: req.body.newEmail, // list of receivers
-          subject: 'Account verification - Swim Hydro',
+          subject: 'Account verification - Shrincc',
           template: 'index',
           context: {
             verificationToken : "https://shrincc.com/auth/local/verify/" + verificationToken
