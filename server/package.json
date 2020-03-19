@@ -1,9 +1,9 @@
 {
-  "name": "huffet",
+  "name": "shrincc",
   "version": "1.0.0",
-  "description": "Huffet.com",
+  "description": "shrincc.com",
   "main": "server.js",
-  "repository": "https://github.com/andrewdetorres/huffet",
+  "repository": "https://github.com/andrewdetorres/shrincc",
   "author": "Andrew De Torres",
   "license": "MIT",
   "scripts": {

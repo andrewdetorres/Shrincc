@@ -93,12 +93,12 @@ module.exports = app => {
             {
               filename : 'shrincc_logo.png',
               path: path.join(__dirname, 'email/images/shrincc_logo.png'),
-              cid : 'shrincc_logo@huffet.com'
+              cid : 'shrincc_logo@shrincc.com'
             },
             {
               filename : 'emailheader.png',
               path: path.join(__dirname, 'email/images/emailheader.png'),
-              cid : 'emailheader@huffet.com'
+              cid : 'emailheader@shrincc.com'
             }
           ]
         });
@@ -182,7 +182,7 @@ module.exports = app => {
         mailer.sendMail({
           from: keys.emailUser, // sender address
           to: req.body.email, // list of receivers
-          subject: 'Reset Password - Huffet',
+          subject: 'Reset Password - shrincc',
           template: 'passwordReset',
           context: {
             verificationToken : "https://shrincc.com/passwordreset/confirm/" + verificationToken
@@ -191,12 +191,12 @@ module.exports = app => {
             {
               filename : 'shrincc_logo.png',
               path: path.join(__dirname, 'email/images/shrincc_logo.png'),
-              cid : 'shrincc_logo@huffet.com'
+              cid : 'shrincc_logo@shrincc.com'
             },
             {
               filename : 'emailheader.png',
               path: path.join(__dirname, 'email/images/emailheader.png'),
-              cid : 'emailheader@huffet.com'
+              cid : 'emailheader@shrincc.com'
             }
           ]
         });
@@ -412,12 +412,12 @@ module.exports = app => {
             {
               filename : 'shrincc_logo.png',
               path: path.join(__dirname, 'email/images/shrincc_logo.png'),
-              cid : 'shrincc_logo@huffet.com'
+              cid : 'shrincc_logo@shrincc.com'
             },
             {
               filename : 'emailheader.png',
               path: path.join(__dirname, 'email/images/emailheader.png'),
-              cid : 'emailheader@huffet.com'
+              cid : 'emailheader@shrincc.com'
             }
           ]
         });
