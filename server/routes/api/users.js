@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
-const auth = require("../../services/auth");
+const auth = require("../../services/auth")
 
 // Node Mailer
 const nodemailer = require("nodemailer");
@@ -128,6 +128,7 @@ module.exports = app => {
           email: newUser.email,
           tempEmail: newUser.tempEmail,
           isAdmin: newUser.isAdmin,
+          activated: newUser.activated,
           date: newUser.date
         };
 
@@ -318,6 +319,7 @@ module.exports = app => {
                   id: user.id,
                   email: user.email,
                   isAdmin: user.isAdmin,
+                  activated: user.activated,
                   date: user.date
                 };
 

@@ -13,7 +13,12 @@ import reducers from './reducers';
 import './index.css';
 
 // Only run devtools in dev
-const composeEnhancers = compose;
+const composeEnhancers = 
+window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+  trace: true,
+  traceLimit: 25
+}) || 
+compose;
 const enhancer = composeEnhancers(
   applyMiddleware(reduxThunk)
 );
