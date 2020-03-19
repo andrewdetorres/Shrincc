@@ -1,11 +1,11 @@
-# Huffet
-Welcome to Huffet. A portfolio project to help further develop my React, Node, Express and MongoDB skills.
+# Shrincc
+Welcome to Shrincc. A portfolio project to help further develop my React, Node, Express and MongoDB skills.
 
 # Set up
 
 First clone this project into an appropriate directory.
 ```
-git clone https://github.com/andrewdetorres/huffet-social.git
+git clone https://github.com/andrewdetorres/shrincc.git
 ```
 
 Navigate to the directory root and run the build script. This will install all of the dependancies relevent to the project.
@@ -48,7 +48,7 @@ This will build the project in development mode at the url ```http://localhost:3
 ### Cloning a repository for development
 
 ```
-git clone https://github.com/andrewdetorres/huffet-social.git
+git clone https://github.com/andrewdetorres/shrincc.git
 git checkout develop
 git checkout -b [feature-branch]
 git add path/to/changes

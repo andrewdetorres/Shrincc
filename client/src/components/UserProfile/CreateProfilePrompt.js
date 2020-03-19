@@ -224,7 +224,7 @@ class Finish extends Component {
           <div className={'text-center'}>
             <p>Welcome to Shrincc <strong>{this.props.form.username ? this.props.form.username : ''}</strong></p>
             <p>Are you sure you are happy with the username <strong>{this.props.form.username ? this.props.form.username : ''}</strong>?</p>
-            <small className="mt-2">If you would like to change any of you information, please use the 'Go Back' Button. Otherwise, click the 'Finish' button below to begin using Huffet.</small>
+            <small className="mt-2">If you would like to change any of you information, please use the 'Go Back' Button. Otherwise, click the 'Finish' button below to begin using Shrincc.</small>
           </div>
           <Stats step={4} {...this.props} nextStep={this.submit}/>
         </div>
