@@ -11,31 +11,6 @@ const path = require('path');
 // Require models
 const User = require("../../model/User");
 
-// Set up nodemail
-let mailer = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: keys.emailUser,
-    pass: keys.emailPass
-  }
-});
-
-let options = {
-  viewEngine: {
-    extname: '.html', // handlebars extension
-    layoutsDir: path.join(__dirname, './email'), // location of handlebars templates
-    defaultLayout: 'index',
-    viewPath: path.join(__dirname, './email'),
-    partialsDir: path.join(__dirname, './email')
-  },
-  viewPath: path.join(__dirname, './email'),
-  extName: '.html'
-}
-
-mailer.use('compile', hbs(options));
-
 // Require the validation of login and sign up
 const validateRegisterInput = require("../../validation/registrationValidation");
 const validateLoginInput = require("../../validation/loginValidation");
@@ -80,6 +55,31 @@ module.exports = app => {
         }, keys.secretKey, { expiresIn: '7d' });
 
 
+        // Set up nodemail
+        let mailer = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 465,
+          secure: true,
+          auth: {
+            user: keys.emailUser,
+            pass: keys.emailPass
+          }
+        });
+
+        let options = {
+          viewEngine: {
+            extname: '.html', // handlebars extension
+            layoutsDir: path.join(__dirname, './views/layouts'), // location of handlebars templates
+            defaultLayout: 'index',
+            viewPath: path.join(__dirname, './views/layouts'),
+            partialsDir: path.join(__dirname, './views/layouts')
+          },
+          viewPath: path.join(__dirname, './views/layouts'),
+          extName: '.html'
+        }
+
+        mailer.use('compile', hbs(options));
+
         // Send Email verification
         mailer.sendMail({
           from: keys.emailUser, // sender address
@@ -92,12 +92,12 @@ module.exports = app => {
           attachments:[
             {
               filename : 'shrincc_logo.png',
-              path: path.join(__dirname, 'email/images/shrincc_logo.png'),
+              path: path.join(__dirname, 'views/layouts/images/shrincc_logo.png'),
               cid : 'shrincc_logo@shrincc.com'
             },
             {
               filename : 'emailheader.png',
-              path: path.join(__dirname, 'email/images/emailheader.png'),
+              path: path.join(__dirname, 'views/layouts/images/emailheader.png'),
               cid : 'emailheader@shrincc.com'
             }
           ]
@@ -178,6 +178,32 @@ module.exports = app => {
           res.status(400).json(error);
         })
 
+
+        // Set up nodemail
+        let mailer = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 465,
+          secure: true,
+          auth: {
+            user: keys.emailUser,
+            pass: keys.emailPass
+          }
+        });
+
+        let options = {
+          viewEngine: {
+            extname: '.html', // handlebars extension
+            layoutsDir: path.join(__dirname, './views/layouts'), // location of handlebars templates
+            defaultLayout: 'passwordReset',
+            viewPath: path.join(__dirname, './views/layouts'),
+            partialsDir: path.join(__dirname, './views/layouts')
+          },
+          viewPath: path.join(__dirname, './views/layouts'),
+          extName: '.html'
+        }
+
+        mailer.use('compile', hbs(options));
+
         // Send Email verification
         mailer.sendMail({
           from: keys.emailUser, // sender address
@@ -190,15 +216,18 @@ module.exports = app => {
           attachments:[
             {
               filename : 'shrincc_logo.png',
-              path: path.join(__dirname, 'email/images/shrincc_logo.png'),
+              path: path.join(__dirname, 'views/layouts/images/shrincc_logo.png'),
               cid : 'shrincc_logo@shrincc.com'
             },
             {
               filename : 'emailheader.png',
-              path: path.join(__dirname, 'email/images/emailheader.png'),
+              path: path.join(__dirname, 'views/layouts/images/emailheader.png'),
               cid : 'emailheader@shrincc.com'
             }
           ]
+        })
+        .catch(error => {
+          console.log(error);
         });
       } else {
         // Failed to find a result
@@ -399,6 +428,33 @@ module.exports = app => {
           activated: false
         } // Update value
       ).then((user) => {
+
+
+        // Set up nodemail
+        let mailer = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 465,
+          secure: true,
+          auth: {
+            user: keys.emailUser,
+            pass: keys.emailPass
+          }
+        });
+
+        let options = {
+          viewEngine: {
+            extname: '.html', // handlebars extension
+            layoutsDir: path.join(__dirname, './views/layouts'), // location of handlebars templates
+            defaultLayout: 'index',
+            viewPath: path.join(__dirname, './views/layouts'),
+            partialsDir: path.join(__dirname, './views/layouts')
+          },
+          viewPath: path.join(__dirname, './views/layouts'),
+          extName: '.html'
+        }
+
+        mailer.use('compile', hbs(options));
+
         // Send Email verification
         mailer.sendMail({
           from: keys.emailUser, // sender address
@@ -411,12 +467,12 @@ module.exports = app => {
           attachments:[
             {
               filename : 'shrincc_logo.png',
-              path: path.join(__dirname, 'email/images/shrincc_logo.png'),
+              path: path.join(__dirname, 'views/layouts/images/shrincc_logo.png'),
               cid : 'shrincc_logo@shrincc.com'
             },
             {
               filename : 'emailheader.png',
-              path: path.join(__dirname, 'email/images/emailheader.png'),
+              path: path.join(__dirname, 'views/layouts/images/emailheader.png'),
               cid : 'emailheader@shrincc.com'
             }
           ]
