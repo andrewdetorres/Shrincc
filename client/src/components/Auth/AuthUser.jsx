@@ -49,7 +49,6 @@ class AuthUser extends Component {
           <Route exact path="/" component={Landing} />
           <Route exact path="/articles" component={Articles} />
           <Route exact path="/about" component={About} />
-          {/* <Route path="/user/:userId" component={UserProfile} /> */}
         </Fragment>
       )
     }
@@ -64,7 +63,7 @@ class AuthUser extends Component {
                 <Route path="/new" component={NewLink} />
                 <Route path="/link/:linkId" component={IndividualLink} />
                 <Route path="/user/:userId" component={UserProfile} />
-                <Route path="/settings" component={Settings} />
+                <Route path="/settings" component={Settings}/>
                 <Route path="/" component={Dashboard} />
               </Switch>
           </Fragment>
