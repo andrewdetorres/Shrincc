@@ -29,7 +29,12 @@
   float: right;
 }
 
+.heatmap-container {
+  overflow-x: scroll;
+}
+
 .react-calendar-heatmap {
+  min-width: 900px;
   .color-empty { fill: rgb(209, 209, 209) !important }
   .color-scale-1 { fill: #d4f4ff; }
   .color-scale-2 { fill: #6edbff; }

@@ -348,7 +348,7 @@ class IndividualLink extends Component {
             <div className="card-body">
               <div className="c-chart-wrapper">
                 <h4>Daily Click Heatmap</h4>
-                <div className="px-5">
+                <div className="px-5 py-3 heatmap-container">
                   <CalendarHeatmap
                     startDate={new Date('2020-01-01')}
                     endDate={new Date('2020-12-31')}

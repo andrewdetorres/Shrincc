@@ -365,7 +365,7 @@ class Dashboard extends Component {
                   <h4 className="m-0">Daily Heatmap</h4>
                   <small className="text-light">Daily Heatmap based on visits</small>
                 </div>
-                <div className="px-5">
+                <div className="px-5 py-3 heatmap-container">
                   <CalendarHeatmap
                     startDate={new Date('2020-01-01')}
                     endDate={new Date('2020-12-31')}
