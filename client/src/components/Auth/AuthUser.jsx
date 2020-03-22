@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
-import { Route, withRouter, Switch } from "react-router-dom";
+import { Route, withRouter, Switch, Redirect } from "react-router-dom";
 
 // Import Actions
 import { isActivated } from './../../actions/auth';
@@ -19,6 +19,7 @@ import Articles from "../Landing/Articles";
 import About from "../Landing/About";
 import NewLink from "../Link/NewLink";
 import Dashboard from "../Dashboard/Dashboard";
+import MyLinks from "../Link/MyLinks";
 import IndividualLink from "../Link/IndividualLink";
 
 class AuthUser extends Component {
@@ -26,7 +27,6 @@ class AuthUser extends Component {
   componentDidMount() {
     this.props.getCurrentUserProfile();
     this.props.isActivated();
-    console.log("Called");
   }
 
   componentDidUpdate(prevProps) {
@@ -46,9 +46,9 @@ class AuthUser extends Component {
       User = (
         <Fragment>
           <MainNavigation />
-          <Route exact path="/" component={Landing} />
           <Route exact path="/articles" component={Articles} />
           <Route exact path="/about" component={About} />
+          <Route path="/" component={Landing} />
         </Fragment>
       )
     }
@@ -64,6 +64,7 @@ class AuthUser extends Component {
                 <Route path="/link/:linkId" component={IndividualLink} />
                 <Route path="/user/:userId" component={UserProfile} />
                 <Route path="/settings" component={Settings}/>
+                <Route path="/my-links" component={MyLinks}/>
                 <Route path="/" component={Dashboard} />
               </Switch>
           </Fragment>

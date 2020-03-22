@@ -23,20 +23,30 @@ module.exports = app => {
     scrape(req.body.longLink)
       .then((metadata) => {
 
-        // Create new link object
-        const newLink = {
-          longLink: req.body.longLink,
-          shortLink: generateUniqueURLKey(),
-          title: metadata.general.title,
-          description: metadata.general.description,
-          user: req.user.id
-        }
+          // Generate random string for URL
+          generateUniqueURLKey()
+            .then(uniqueURLKey => {
 
-        // Create new link in DB
-        new Link(newLink)
-          .save()
-          .then(link => {
-            res.send(link);
+            // Create new link object
+            const newLink = {
+              longLink: req.body.longLink,
+              shortLink: uniqueURLKey,
+              title: metadata.general.title,
+              description: metadata.general.description,
+              user: req.user.id
+            }
+
+            // Create new link in DB
+            new Link(newLink)
+              .save()
+              .then(link => {
+                res.send(link);
+              })
+              .catch(error => {
+                // Handle error if looged in user not found
+                res.status(500).send('Server error');
+                console.log(error);
+              });
           })
           .catch(error => {
             // Handle error if looged in user not found
@@ -129,28 +139,32 @@ module.exports = app => {
   })
 }
 
-function generateUniqueURLKey() {
+const generateUniqueURLKey = async function() {
   var result           = '';
   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var charactersLength = characters.length;
+
   for ( var i = 0; i < 7; i++ ) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
 
-  Link
+  return Link
     .find({shortLink: result})
     .then(link => {
-      if (link) {
-        generateUniqueURLKey();
+      // console.log(link);
+      if (link.length > 0) {
+        if(link[0].shortLink === result) {
+          // Return a recursive function
+          return generateUniqueURLKey();
+        }
       }
       else {
-        return;
+        return result;
       }
     })
     .catch(error => {
       // Handle error if looged in user not found
-      res.status(500).send('Server error');
-    })
-
-  return result;
+      console.log(error);
+      return;
+    });
 }

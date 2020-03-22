@@ -8,6 +8,8 @@ import {
   GET_ALL_LINKS_FAILED,
   GET_INDIVIDUAL_LINK,
   GET_INDIVIDUAL_LINK_FAILED,
+  LINK_DELETED,
+  LINK_DELETED_FAILED,
   GET_ERRORS
 } from "./types";
 
@@ -63,6 +65,25 @@ export const getIndividualLink = (linkId) => dispatch => {
     .catch(errors => {
       dispatch({
         type: GET_INDIVIDUAL_LINK_FAILED
+      });
+      dispatch({
+        type: GET_ERRORS,
+        payload: errors.response.data
+      });
+    })
+}
+
+export const deleteLink = (linkId) => dispatch => {
+  axios
+    .delete(`/api/link/${linkId}`)
+    .then(res => {
+      dispatch({
+        type: LINK_DELETED,
+      });
+    })
+    .catch(errors => {
+      dispatch({
+        type: LINK_DELETED_FAILED
       });
       dispatch({
         type: GET_ERRORS,

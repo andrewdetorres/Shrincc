@@ -43,18 +43,19 @@ class NewLink extends Component {
   }
   onSubmit = (event) => {
     event.preventDefault();
+
     if (isUrl(this.state.link)) {
       this.props.createLink({longLink: this.state.link});
       // Change copied text
       this.setState({
         copied: false,
         errors: {}
-      })
+      });
     }
     else {
       this.setState({
         errors: {
-          URL: "URL is invalid, please enter a valid URL"
+          URL: "URL is invalid, please enter a valid URL (please include 'https://'"
         }
       })
     }

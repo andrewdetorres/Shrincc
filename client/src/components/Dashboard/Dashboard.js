@@ -311,11 +311,16 @@ class Dashboard extends Component {
                       <th className="text-center">Usage <small>(Last 7 days)</small></th>
                       <th className="text-center">Avg. Click Per Day <small>(Last 7 days)</small></th>
                       <th>Total visits</th>
-                      <th>Link Stats</th>
+                      <th>View Link</th>
                     </tr>
                   </thead>
                   <tbody>
                     {rows}
+                    <tr>
+                      <td colSpan="7" className="text-center">
+                        <p><a href="/my-links">View All Links</a></p>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

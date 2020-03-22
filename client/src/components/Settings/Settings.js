@@ -13,6 +13,12 @@ class Settings extends Component {
 
   render() {
 
+    let ProfilePictureURL = null;
+
+    if (this.props.auth.loading === false && this.props.auth.user.profilePicture) {
+      ProfilePictureURL = this.props.auth.user.profilePicture;
+    }
+
     return (
       <div className="shrincc-wrapper">
         {/* Sub header with breadcrumbs */}
@@ -30,7 +36,7 @@ class Settings extends Component {
                   <h2 className="card-title">Settings</h2>
                   <div className="item-icons my-4 d-flex">
                     <div className="px-0 mx-0 w-auto">
-                      <img src="https://imgix.bustle.com/uploads/image/2018/5/9/fa2d3d8d-9b6c-4df4-af95-f4fa760e3c5c-2t4a9501.JPG?w=970&h=546&fit=crop&crop=faces&auto=format&q=70" alt="Avatar" className="avatar rounded-circle mr-2"/>
+                      <img src={ProfilePictureURL ? ProfilePictureURL : require("../../assets/img/default_profile_23456781349501.png")} alt="Avatar" className="avatar rounded-circle mr-2"/>
                     </div>
                     <div className="w-auto px-0 mx-0">
                       <p className="pl-2 p-0 m-0">{this.props.profile.userProfile.username}</p>
