@@ -428,7 +428,7 @@ class Dashboard extends Component {
               </div>
             </div>
           </div>
-          <div className="graph-width card-group shadow mt-3 mr-md-2 mx-md-0 mx-4">
+          <div className="graph-width card-group shadow mt-3 ml-md-2 mx-md-0 mx-4">
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
