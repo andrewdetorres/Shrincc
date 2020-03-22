@@ -7,7 +7,9 @@ import {
   GET_INDIVIDUAL_LINK_FAILED,
 } from "../actions/types";
 
-const initialState = {};
+const initialState = {
+  loading: true,
+};
 
 export default function(state = initialState, action) {
   switch (action.type) {

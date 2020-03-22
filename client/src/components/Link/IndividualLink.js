@@ -10,7 +10,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 // Import Actions
-import { getIndividualLink } from '../../actions/link';
+import { getIndividualLink, deleteLink } from '../../actions/link';
 
 // Import Components
 import CustomBar from '../Graphs/CustomBar';
@@ -46,6 +46,40 @@ class IndividualLink extends Component {
     ev.target.src = require("../../assets/img/default_favicon.png");
   }
 
+  deleteConfirm = () => {
+    swal.fire({
+      title: 'Link Copied!',
+      icon: 'error',
+      showConfirmButton: false,
+      html: (
+        <>
+          <p>Are you sure you wish to delete <span className="text-primary">{"https://shrin.cc/" + this.props.link.currentLink.shortLink}</span></p>
+          <DeleteOkay 
+            linkId={this.props.link.currentLink.shortLink}
+            onClick={this.deleteLink}
+          />
+          <Close/>
+        </>
+      )
+    })
+  }
+
+  deleteLink = (linkId) => {
+    this.props.deleteLink(linkId);
+    swal.fire({
+      title: 'Deleted!',
+      text: 'Your link has been deleted.',
+      icon: 'success',
+      showConfirmButton: false,
+      html: (
+        <Okay />
+      )
+    })
+    .then(() => {
+      this.props.history.push('/');
+    });
+  }
+
   CopyText = () => {
     // Copy text to clipboard
     navigator.clipboard.writeText("https://shrin.cc/" + this.props.link.currentLink.shortLink)
@@ -72,7 +106,8 @@ class IndividualLink extends Component {
 
     let shortLink;
     let linkImage;
-    let linkLocaiton;
+    let linkTitle;
+    let linkDescription;
 
     // Graph data
     let browser = [];
@@ -164,6 +199,10 @@ class IndividualLink extends Component {
         <img className="favicon-image mr-2" src={"https://www.google.com/s2/favicons?domain=" + currentLink.longLink} onError={this.addDefaultSrc} alt="favicon"/>
       )
 
+      linkTitle = this.props.link.currentLink.title ? this.props.link.currentLink.title : "";
+
+      linkDescription = this.props.link.currentLink.description ? this.props.link.currentLink.description : "";
+
       // Get the browser, device and OS data
       currentLink.clicks.forEach(click => {
         browser.push(click);
@@ -218,6 +257,8 @@ class IndividualLink extends Component {
       uniqueVisitors = Object.keys(uniqueVisitorsBuilder).length;
     }
 
+    console.log(this.props.link.currentLink);
+
     return (
       <div className="shrincc-wrapper pb-5">
         {/* Sub header with breadcrumbs */}
@@ -237,7 +278,6 @@ class IndividualLink extends Component {
               <div className="card-body py-4 text-center">
                 <div className="d-flex justify-content-center align-items-center">
                   {linkImage}
-                  <h3 className="m-0 p-0">{linkLocaiton}</h3>
                 </div>
                 <h5 className="m-0 p-0">
                   {shortLink}
@@ -246,6 +286,12 @@ class IndividualLink extends Component {
                     {this.state.copied ? "Copied" : "Copy"}
                   </span>
                 </h5>
+                <p className="text-dark mt-2">
+                  {linkTitle}
+                </p>
+                <p className="text-light mt-2 link-description">
+                  {linkDescription}
+                </p>
               </div>
             </div>
           </div>
@@ -389,6 +435,9 @@ class IndividualLink extends Component {
             </div>
           </div>
         </div>
+        <div className="d-flex justify-content-end px-md-5 px-1 mt-3">
+          <button className="btn btn-danger" onClick={this.deleteConfirm}>Delete Link</button>
+        </div>
       </div>
     )
   }
@@ -400,6 +449,24 @@ export const Okay = () => (
     onClick={() => swal.close()}
   >
     Okay
+  </button>
+)
+
+export const DeleteOkay = ({ linkId, onClick }) => (
+  <button
+    className="btn btn-error my-2"
+    onClick={() => onClick(linkId)}
+  >
+    Delete
+  </button>
+)
+
+export const Close = () => (
+  <button
+    className="btn btn-success my-2"
+    onClick={() => swal.close()}
+  >
+    Close
   </button>
 )
 
@@ -416,4 +483,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { getIndividualLink })(withRouter(IndividualLink))
+export default connect(mapStateToProps, { getIndividualLink, deleteLink })(withRouter(IndividualLink))

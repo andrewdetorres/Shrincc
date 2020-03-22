@@ -7,3 +7,15 @@
     line-height: 28px;
   }
 }
+
+.link-description {
+  width: 100%;
+  margin: 0 auto;
+  @media screen and (min-width: map-get($break-points, 'medium')) {
+    width: 80%;
+    text-align: center;
+  }
+  @media screen and (min-width: map-get($break-points, 'large')) {
+    width: 50%;
+  }
+}
