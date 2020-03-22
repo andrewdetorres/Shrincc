@@ -44,7 +44,7 @@ class App extends Component {
           <Route exact path="/passwordreset/confirm/:resetToken" component={PasswordResetConfirm} />
           <Route path="/Verification" component={Verification} />
           <Route path="/" component={AuthUser} />
-          <Redirect from="*" to="/" />
+          <Redirect exact from="*" to="/" />
         </Switch>
       </BrowserRouter>
     );

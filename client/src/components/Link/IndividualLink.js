@@ -33,6 +33,14 @@ class IndividualLink extends Component {
     this.props.getIndividualLink(this.props.match.params.linkId);
   }
 
+  componentDidUpdate(prevProps) {
+   if(prevProps.link.currentLink !== this.props.link.currentLink) {
+      if (this.props.link.currentLink === "") {
+        this.props.history.push("/");
+      }
+   };
+  }
+
   selectChange = (value, type) => {
     if (type === "visitDays" ) {
       this.setState({visitDays: value});
