@@ -23,7 +23,6 @@ class IndividualLink extends Component {
     super(props);
     this.state = {
       visitDays: 7,
-      sourceDays: 7,
       avgClickDays: 7,
       copied: false,
     };
@@ -44,9 +43,6 @@ class IndividualLink extends Component {
   selectChange = (value, type) => {
     if (type === "visitDays" ) {
       this.setState({visitDays: value});
-    }
-    else if (type === "sourceDays" ) {
-      this.setState({sourceDays: value});
     }
   }
 
@@ -284,9 +280,9 @@ class IndividualLink extends Component {
             {/* Links Created */}
             <div className="card border-0">
               <div className="card-body py-4 text-center">
-                <div className="d-flex justify-content-center align-items-center">
-                  {linkImage}
-                </div>
+                <p className="text-dark mt-2">
+                  {linkImage} {linkTitle}
+                </p>
                 <h5 className="m-0 p-0">
                   {shortLink}
                   &nbsp;|&nbsp;
@@ -294,10 +290,7 @@ class IndividualLink extends Component {
                     {this.state.copied ? "Copied" : "Copy"}
                   </span>
                 </h5>
-                <p className="text-dark mt-2">
-                  {linkTitle}
-                </p>
-                <p className="text-light mt-2 link-description">
+                <p className="text-light mt-3 link-description">
                   {linkDescription}
                 </p>
               </div>
@@ -309,8 +302,8 @@ class IndividualLink extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <h4>{active}</h4>
-                <small className="text-muted text-uppercase font-weight-bold">Active</small>
+                <h4 className={active ? "text-success" : "text-danger"}>{active ? "Active" : "Inactive"}</h4>
+                <small className="text-muted text-uppercase font-weight-bold">Link Status</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
@@ -386,12 +379,11 @@ class IndividualLink extends Component {
             <div className="card border-0">
               <div className="card-body py-4 text-center">
                 <div className="text-left pb-3">
-                  <h4 className="m-0">Traffic Source</h4>
-                  <small className="text-light">Traffic Source since {this.state.sourceDays} days</small>
+                  <h4 className="m-0">Browser Type</h4>
+                  <small className="text-light">Varied browsers based on visits</small>
                 </div>
                 <div >
-                  <CustomBar data={browserData} labels={browserLabels} graphColor={"#00beff"}/>
-                  {/* <CustomBar data={browserData} labels={browserLabels}/> */}
+                  <CustomBar data={browserData} labels={browserLabels}/>
                 </div>
               </div>
             </div>
@@ -438,6 +430,36 @@ class IndividualLink extends Component {
                     }}
                   />
                   <ReactTooltip />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="d-flex flex-md-row flex-column justify-content-center px-md-5 px-1 mt-1">
+          <div className="graph-width card-group shadow mt-3 mr-md-2 mx-md-0 mx-4">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <div className="text-left pb-3">
+                  <h4 className="m-0">Device Type</h4>
+                  <small className="text-light">Varied device types based on visits</small>
+                </div>
+                <div >
+                  <CustomBar data={deviceData} labels={deviceLabels}/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="graph-width card-group shadow mt-3 ml-md-2 mx-md-0 mx-4">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <div className="text-left pb-3">
+                  <h4 className="m-0">Operating System</h4>
+                  <small className="text-light">Varied operating system based on visits</small>
+                </div>
+                <div>
+                  <CustomBar data={osData} labels={osLabels}/>
                 </div>
               </div>
             </div>
