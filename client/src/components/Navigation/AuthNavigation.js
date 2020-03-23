@@ -24,7 +24,7 @@ class MainNavigation extends Component {
       <Fragment>
         <nav className="navbar navbar-expand-lg navbar-dark bg-white">
           <a className="navbar-brand ml-2 logo-font text-dark" href="/">
-            <img src={require("../../assets/img/shrincc_logo.png")} height="40px" alt="Brand logo"/>
+            <img src={require("../../assets/img/shrincc_logo_black.png")} height="40px" alt="Brand logo"/>
           </a>
           <button className="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
