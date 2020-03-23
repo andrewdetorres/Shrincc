@@ -91,9 +91,9 @@ module.exports = app => {
           },
           attachments:[
             {
-              filename : 'shrincc_logo.png',
-              path: path.join(__dirname, 'views/layouts/images/shrincc_logo.png'),
-              cid : 'shrincc_logo@shrincc.com'
+              filename : 'shrincc_logo_black.png',
+              path: path.join(__dirname, 'views/layouts/images/shrincc_logo_black.png'),
+              cid : 'shrincc_logo_black@shrincc.com'
             },
             {
               filename : 'emailheader.png',
@@ -215,9 +215,9 @@ module.exports = app => {
           },
           attachments:[
             {
-              filename : 'shrincc_logo.png',
-              path: path.join(__dirname, 'views/layouts/images/shrincc_logo.png'),
-              cid : 'shrincc_logo@shrincc.com'
+              filename : 'shrincc_logo_black.png',
+              path: path.join(__dirname, 'views/layouts/images/shrincc_logo_black.png'),
+              cid : 'shrincc_logo_black@shrincc.com'
             },
             {
               filename : 'emailheader.png',
@@ -466,9 +466,9 @@ module.exports = app => {
           },
           attachments:[
             {
-              filename : 'shrincc_logo.png',
-              path: path.join(__dirname, 'views/layouts/images/shrincc_logo.png'),
-              cid : 'shrincc_logo@shrincc.com'
+              filename : 'shrincc_logo_black.png',
+              path: path.join(__dirname, 'views/layouts/images/shrincc_logo_black.png'),
+              cid : 'shrincc_logo_black@shrincc.com'
             },
             {
               filename : 'emailheader.png',

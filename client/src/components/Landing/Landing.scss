@@ -1,33 +1,4 @@
 .masthead {
-  padding: 20px 75px 0px 75px;
-  
-  @media screen and (min-width: map-get($break-points, 'medium')) {
-    padding: 40px 75px 0px 75px;
-  }
-  @media screen and (min-width: map-get($break-points, 'large')) {
-    padding: 60px 75px 0px 75px;
-  }
-  @media screen and (min-width: map-get($break-points, 'extra-large')) {
-    padding: 80px 75px 0px 75px;
-  }
-  .landing-background {
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-    height: 400px;
-    width: 100%;
-    @media screen and (min-width: map-get($break-points, 'medium')) {
-      width: 80%;
-      text-align: center;
-    }
-    @media screen and (min-width: map-get($break-points, 'large')) {
-      width: 70%;
-    }
-    @media screen and (min-width: map-get($break-points, 'extra-large')) {
-      width: 50%;
-    }
-  }
-  
   .landing-text {
     width: 100%;
     height: 50%;
@@ -47,6 +18,21 @@
 
 .graph-examples {
   width: 400px;
+}
+.graph-cards {
+  .landing-text {
+    width: 100%;
+    @media screen and (min-width: map-get($break-points, 'medium')) {
+      width: 45%;
+    }
+  }
+}
+
+.strip-content {
+  background-image: url('https://images.pexels.com/photos/268415/pexels-photo-268415.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 .features {

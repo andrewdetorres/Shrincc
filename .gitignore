@@ -6,7 +6,7 @@ uploads
 # dependencies
 server/node_modules
 client/node_modules
-client/src/index
+client/src/index.js
 server/config/dev.js
 server/config/prod.js
 
@@ -18,6 +18,7 @@ server/config/prod.js
 
 # production
 client/build
+client/src/index.js
 
 # misc
 .DS_Store

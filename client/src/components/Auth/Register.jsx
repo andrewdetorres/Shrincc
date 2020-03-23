@@ -68,7 +68,7 @@ class Register extends Component {
               <div className="col-md-6 col-12 text-center">
                 <a href="/">
                   <img
-                  src={require("../../assets/img/shrincc_logo.png")}
+                  src={require("../../assets/img/shrincc_logo_black.png")}
                   width="250px"
                   alt="Brand Logo"
                   />
