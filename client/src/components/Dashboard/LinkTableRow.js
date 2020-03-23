@@ -99,7 +99,7 @@ export default class LinkTableRow extends Component {
             <span className="-status bg-success"></span>
           </div>
         </td>
-        <td>
+        <td className="text-right">
           <div>
             <strong>
               <a
