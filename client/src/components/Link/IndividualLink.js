@@ -256,7 +256,7 @@ class IndividualLink extends Component {
       });
 
       // Get the Top Bar values
-      active = "True";
+      active = true;
       clicksTotal = currentLink.clicks.length;
       uniqueVisitors = Object.keys(uniqueVisitorsBuilder).length;
     }
@@ -269,7 +269,7 @@ class IndividualLink extends Component {
 
         <header className="border-top">
           <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
-            <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li className="breadcrumb-item pl-5"><a href="/">Dashboard</a></li>
             <li className="breadcrumb-item active">Link - {this.props.match.params.linkId}</li>
           </ol>
         </header>

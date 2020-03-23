@@ -20,6 +20,10 @@ const LinkSchema = new Schema({
   description: {
     type: String
   },
+  active: {
+    type: Boolean,
+    default: true
+  },
   clicks : [
     {
       ip: {

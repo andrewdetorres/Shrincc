@@ -21,6 +21,7 @@ import NewLink from "../Link/NewLink";
 import Dashboard from "../Dashboard/Dashboard";
 import MyLinks from "../Link/MyLinks";
 import IndividualLink from "../Link/IndividualLink";
+import Footer from "../Navigation/Footer";
 
 class AuthUser extends Component {
 
@@ -60,12 +61,12 @@ class AuthUser extends Component {
           <Fragment>
             <AuthNavigation />
               <Switch>
-                <Route exact path="/new" component={NewLink} />
-                <Route exact path="/link/:linkId" component={IndividualLink} />
-                <Route exact path="/user/:userId" component={UserProfile} />
-                <Route exact path="/settings" component={Settings}/>
-                <Route exact path="/my-links" component={MyLinks}/>
-                <Route exact path="/" component={Dashboard} />
+                <Route path="/new" component={NewLink} />
+                <Route path="/link/:linkId" component={IndividualLink} />
+                <Route path="/user/:userId" component={UserProfile} />
+                <Route path="/my-links" component={MyLinks}/>
+                <Route path="/settings" component={Settings}/>
+                <Route path="/" component={Dashboard} />
               </Switch>
           </Fragment>
         )

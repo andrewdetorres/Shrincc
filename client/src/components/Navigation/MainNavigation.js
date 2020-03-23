@@ -9,7 +9,7 @@ class MainNavigation extends Component {
   render() {
     return (
       <Fragment>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-transparent py-md-3 p-5">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-transparent py-3 px-md-5 px-4">
           <a className="navbar-brand ml-2 logo-font text-dark" href="/">
             <img src={require("../../assets/img/shrincc_logo_black.png")} height="50px" alt="Brand logo"/>
           </a>
@@ -29,8 +29,8 @@ class MainNavigation extends Component {
               <li className="nav-item my-auto mx-3">
                 <a className="nav-link text-dark" href="/about">About Shrincc</a>
               </li>
-              <li className="nav-item my-auto ml-2 my-auto">
-                <a className="nav-link text-dark pl-4 pr-0" href="/login">
+              <li className="nav-item my-auto ml-md-2 ml-0 mx-2 my-auto">
+                <a className="nav-link text-dark pl-md-4 pl-0 pr-md-0 px-4" href="/login">
                   <button className="btn btn-primary">
                     Login
                   </button>

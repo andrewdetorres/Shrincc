@@ -24,7 +24,7 @@ class Settings extends Component {
         {/* Sub header with breadcrumbs */}
         <header className="border-top">
           <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
-            <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li className="breadcrumb-item pl-5"><a href="/">Dashboard</a></li>
             <li className="breadcrumb-item active">Account Settings</li>
           </ol>
         </header>
