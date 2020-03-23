@@ -10,6 +10,8 @@ import {
   GET_INDIVIDUAL_LINK_FAILED,
   LINK_DELETED,
   LINK_DELETED_FAILED,
+  STATUS_UPDATED,
+  STATUS_UPDATED_FAILED,
   GET_ERRORS
 } from "./types";
 
@@ -65,6 +67,26 @@ export const getIndividualLink = (linkId) => dispatch => {
     .catch(errors => {
       dispatch({
         type: GET_INDIVIDUAL_LINK_FAILED
+      });
+      dispatch({
+        type: GET_ERRORS,
+        payload: errors.response.data
+      });
+    })
+}
+
+export const updateStatus = (linkId) => dispatch => {
+  axios
+    .post(`/api/status/${linkId}`)
+    .then(res => {
+      dispatch({
+        type: GET_INDIVIDUAL_LINK,
+        payload: res.data
+      });
+    })
+    .catch(errors => {
+      dispatch({
+        type: STATUS_UPDATED_FAILED
       });
       dispatch({
         type: GET_ERRORS,

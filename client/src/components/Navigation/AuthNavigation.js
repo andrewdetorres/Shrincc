@@ -22,7 +22,7 @@ class MainNavigation extends Component {
 
     return (
       <Fragment>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-white">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-white px-md-5 px-4">
           <a className="navbar-brand ml-2 logo-font text-dark" href="/">
             <img src={require("../../assets/img/shrincc_logo_black.png")} height="40px" alt="Brand logo"/>
           </a>
@@ -36,15 +36,15 @@ class MainNavigation extends Component {
               <li className="nav-item my-auto mx-3">
                 <a className="nav-link text-dark" href="/">Dashboard</a>
               </li>
-              <li className="nav-item my-auto mx-2 my-auto">
-                <a className="nav-link text-dark px-4" href="/new">
+              <li className="nav-item my-auto mx-2">
+                <a className="nav-link text-dark px-2" href="/new">
                   <button className="btn btn-primary">
                     New Link
                   </button>
                 </a>
               </li>
-              <li className="nav-item my-auto mx-lg-2 py-2 py-lg-0 px-3 px-md-0">
-                <a className="nav-link dropdown-toggle" href="/profile"id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <li className="nav-item ml-lg-2">
+                <a className="nav-link dropdown-toggle px-0" href="/profile"id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img src={ProfilePictureURL ? ProfilePictureURL : require("../../assets/img/default_profile_23456781349501.png")} alt="Avatar" className="avatar rounded-circle"/>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

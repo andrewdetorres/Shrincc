@@ -160,7 +160,7 @@ class Dashboard extends Component {
           clickCount={link.clicks.length}
           avgClickPerDay={avgClickPerDay}
           graphColor={graphColor}
-          active={true}
+          active={link.active}
           key={index}
           />
         )
@@ -244,7 +244,7 @@ class Dashboard extends Component {
         {/* Sub header with breadcrumbs */}
         <header className="border-top">
           <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
-            <li className="breadcrumb-item active">Dashboard</li>
+            <li className="breadcrumb-item active pl-5">Dashboard</li>
           </ol>
         </header>
 
@@ -300,14 +300,14 @@ class Dashboard extends Component {
 
         <div className="px-md-5 px-1 mt-1">
           <div className="card border-0 shadow mx-md-0 mx-4" id="dashboard-table">
-            <div className="card-body py-4">
-              <div className="text-muted text-right mb-4">
-                <table className="table table-responsive-sm table-hover table-outline mb-0">
+            <div className="card-body pb-0">
+              <div className="text-muted text-center">
+                <table className="table table-responsive-sm table-outline mb-0">
                   <thead className="thead-white border-0">
                     <tr>
                       <th>Site</th>
                       <th></th>
-                      <th className="text-center">Active</th>
+                      <th className="text-center">Status</th>
                       <th className="text-center">Usage <small>(Last 7 days)</small></th>
                       <th className="text-center">Avg. Click Per Day <small>(Last 7 days)</small></th>
                       <th>Total visits</th>
@@ -316,13 +316,11 @@ class Dashboard extends Component {
                   </thead>
                   <tbody>
                     {rows}
-                    <tr>
-                      <td colSpan="7" className="text-center">
-                        <p><a href="/my-links">View All Links</a></p>
-                      </td>
-                    </tr>
                   </tbody>
                 </table>
+                <p className="my-2">
+                  <a href="/my-links">View All Links</a>
+                </p>
               </div>
             </div>
           </div>

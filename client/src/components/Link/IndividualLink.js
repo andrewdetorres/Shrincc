@@ -10,7 +10,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 // Import Actions
-import { getIndividualLink, deleteLink } from '../../actions/link';
+import { getIndividualLink, deleteLink, updateStatus } from '../../actions/link';
 
 // Import Components
 import CustomBar from '../Graphs/CustomBar';
@@ -24,6 +24,7 @@ class IndividualLink extends Component {
     this.state = {
       visitDays: 7,
       avgClickDays: 7,
+      linkActive: false,
       copied: false,
     };
   }
@@ -37,6 +38,10 @@ class IndividualLink extends Component {
       if (this.props.link.currentLink === "") {
         this.props.history.push("/");
       }
+
+      this.setState({
+        linkActive: this.props.link.currentLink.active
+      });
    };
   }
 
@@ -44,6 +49,10 @@ class IndividualLink extends Component {
     if (type === "visitDays" ) {
       this.setState({visitDays: value});
     }
+  }
+
+  changeChecked = () => {
+    this.props.updateStatus(this.props.link.currentLink.shortLink);
   }
 
   addDefaultSrc(ev){
@@ -256,12 +265,9 @@ class IndividualLink extends Component {
       });
 
       // Get the Top Bar values
-      active = "True";
       clicksTotal = currentLink.clicks.length;
       uniqueVisitors = Object.keys(uniqueVisitorsBuilder).length;
     }
-
-    console.log(this.props.link.currentLink);
 
     return (
       <div className="shrincc-wrapper pb-5">
@@ -269,7 +275,7 @@ class IndividualLink extends Component {
 
         <header className="border-top">
           <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
-            <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li className="breadcrumb-item pl-5"><a href="/">Dashboard</a></li>
             <li className="breadcrumb-item active">Link - {this.props.match.params.linkId}</li>
           </ol>
         </header>
@@ -302,7 +308,19 @@ class IndividualLink extends Component {
               <div className="card-body py-4">
                 <div className="text-muted text-right mb-4">
                 </div>
-                <h4 className={active ? "text-success" : "text-danger"}>{active ? "Active" : "Inactive"}</h4>
+                <div className="custom-control custom-switch">
+                  <input 
+                    type="checkbox" 
+                    className="custom-control-input" 
+                    id="customSwitch1" 
+                    onChange={this.changeChecked} 
+                    checked={this.state.linkActive ? "checked" : ""}/>
+                  <label className="custom-control-label" htmlFor="customSwitch1">
+                    <h4 className={this.state.linkActive ? "text-success" : "text-danger"}>
+                      {this.state.linkActive ? "Active" : "Inactive"}
+                    </h4>
+                  </label>
+                </div>
                 <small className="text-muted text-uppercase font-weight-bold">Link Status</small>
                 <div className="progress progress-xs mt-3 mb-0">
                   <div className="progress-bar bg-primary w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
@@ -513,4 +531,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { getIndividualLink, deleteLink })(withRouter(IndividualLink))
+export default connect(mapStateToProps, { getIndividualLink, deleteLink, updateStatus })(withRouter(IndividualLink))

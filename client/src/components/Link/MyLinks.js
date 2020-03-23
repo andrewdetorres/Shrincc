@@ -96,7 +96,7 @@ class MyLinks extends Component {
           clickCount={link.clicks.length}
           avgClickPerDay={avgClickPerDay}
           graphColor={graphColor}
-          active={true}
+          active={link.active}
           key={index}
           />
         )
@@ -107,7 +107,7 @@ class MyLinks extends Component {
         {/* Sub header with breadcrumbs */}
         <header className="border-top">
           <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
-            <li className="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li className="breadcrumb-item pl-5"><a href="/">Dashboard</a></li>
             <li className="breadcrumb-item active">My Links</li>
           </ol>
         </header>
@@ -115,14 +115,14 @@ class MyLinks extends Component {
         {/* Links list */}
         <div className="px-md-5 px-1 mt-4">
           <div className="card border-0 shadow mx-md-0 mx-4" id="dashboard-table">
-            <div className="card-body py-4">
-              <div className="text-muted text-right mb-4">
-                <table className="table table-responsive-sm table-hover table-outline mb-0">
+            <div className="card-body">
+              <div className="text-muted text-right">
+                <table className="table table-responsive-sm table-outline mb-0">
                   <thead className="thead-white border-0">
                     <tr>
                       <th>Site</th>
                       <th></th>
-                      <th className="text-center">Active</th>
+                      <th className="text-center">Status</th>
                       <th className="text-center">Usage <small>(Last 7 days)</small></th>
                       <th className="text-center">Avg. Click Per Day <small>(Last 7 days)</small></th>
                       <th>Total visits</th>
