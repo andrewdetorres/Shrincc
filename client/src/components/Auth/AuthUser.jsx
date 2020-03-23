@@ -47,9 +47,12 @@ class AuthUser extends Component {
       User = (
         <Fragment>
           <MainNavigation />
-          <Route exact path="/articles" component={Articles} />
-          <Route exact path="/about" component={About} />
-          <Route exact path="/" component={Landing} />
+          <Switch>
+            <Route exact path="/articles" component={Articles} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/" component={Landing} />
+            <Redirect exact from="*" to="/" />
+          </Switch>
         </Fragment>
       )
     }
@@ -61,12 +64,13 @@ class AuthUser extends Component {
           <Fragment>
             <AuthNavigation />
               <Switch>
-                <Route path="/new" component={NewLink} />
-                <Route path="/link/:linkId" component={IndividualLink} />
-                <Route path="/user/:userId" component={UserProfile} />
-                <Route path="/my-links" component={MyLinks}/>
-                <Route path="/settings" component={Settings}/>
-                <Route path="/" component={Dashboard} />
+                <Route exact path="/new" component={NewLink} />
+                <Route exact path="/link/:linkId" component={IndividualLink} />
+                <Route exact path="/user/:userId" component={UserProfile} />
+                <Route exact path="/my-links" component={MyLinks}/>
+                <Route path="/settings/" component={Settings}/>
+                <Route exact path="/" component={Dashboard} />
+                <Redirect exact from="*" to="/" />
               </Switch>
           </Fragment>
         )
