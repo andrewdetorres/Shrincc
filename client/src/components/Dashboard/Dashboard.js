@@ -160,7 +160,7 @@ class Dashboard extends Component {
           clickCount={link.clicks.length}
           avgClickPerDay={avgClickPerDay}
           graphColor={graphColor}
-          active={true}
+          active={link.active}
           key={index}
           />
         )
@@ -307,7 +307,7 @@ class Dashboard extends Component {
                     <tr>
                       <th>Site</th>
                       <th></th>
-                      <th className="text-center">Active</th>
+                      <th className="text-center">Status</th>
                       <th className="text-center">Usage <small>(Last 7 days)</small></th>
                       <th className="text-center">Avg. Click Per Day <small>(Last 7 days)</small></th>
                       <th>Total visits</th>

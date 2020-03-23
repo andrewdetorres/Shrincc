@@ -115,6 +115,28 @@ module.exports = app => {
   })
 
   //--------------------------------------------------------
+  //@request  : GET
+  //@route    : /api/active/:shortLink
+  //@access   : Private
+  //@desc     : Change the status of a link
+  //--------------------------------------------------------
+  app.post("/api/status/:shortLink", auth, (req, res) => {
+    Link
+      .findOne({
+        user : req.user.id,
+        "shortLink" : req.params.shortLink
+      })
+      .then(result => {
+        result.active = !result.active;
+        result.save();
+        res.send(result);
+      })
+      .catch(error => {
+        res.status(500).send('Server error!');
+      })
+  })
+
+  //--------------------------------------------------------
   //@request  : DELETE
   //@route    : /api/link/:shortLink
   //@access   : Private
