@@ -6,8 +6,10 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import ReactTooltip from 'react-tooltip';
 import _ from 'lodash';
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { VectorMap } from "react-jvectormap";
+import { overwrite, getName } from 'country-list';
 
 // Import Actions
 import { getIndividualLink, deleteLink, updateStatus } from '../../actions/link';
@@ -116,6 +118,10 @@ class IndividualLink extends Component {
   }
 
   render() {
+
+    // World map
+    const mapData = {};
+    let countryStats;
 
     let shortLink;
     let linkImage;
@@ -228,6 +234,22 @@ class IndividualLink extends Component {
       let deviceGraphBuilder = _.groupBy(device, "deviceType");
       let osGraphBuilder = _.groupBy(os, "os");
       let uniqueVisitorsBuilder = _.groupBy(ip, "ip");
+      let country = _.groupBy(device, "country");
+
+      Object.keys(country).forEach(value => {
+        mapData[value] = country[value].length;
+
+        console.log("NAME", getName(value));
+      })
+      
+      countryStats = Object.keys(country).map(value => {
+        return (
+          <div className="col-lg-3 col-md-4 col-sm-4 col-12">
+            <p className="text-center">{getName(value)} - {country[value].length}</p>
+          </div>
+        )
+      })
+
 
       Object.keys(browserGraphBuilder).forEach(key => {
         browserLabels.push(key);
@@ -485,6 +507,54 @@ class IndividualLink extends Component {
         </div>
         <div className="d-flex justify-content-end px-md-5 px-1 mt-3">
           <button className="btn btn-danger" onClick={this.deleteConfirm}>Delete Link</button>
+        </div>
+
+        <div className="px-md-5 px-4 mt-1 mt-4">
+          <div className="card border-0 shadow">
+            <div className="card-body">
+            <VectorMap
+              map={"world_mill"}
+              backgroundColor="transparent" //change it to ocean blue: #0077be
+              zoomOnScroll={false}
+              containerStyle={{
+                width: "100%",
+                height: "520px"
+              }}
+              // onRegionClick={handleClick} //gets the country code
+              containerClassName="map"
+              regionStyle={{
+                initial: {
+                  fill: "#e4e4e4",
+                  "fill-opacity": 0.9,
+                  stroke: "none",
+                  "stroke-width": 0,
+                  "stroke-opacity": 0
+                },
+                hover: {
+                  "fill-opacity": 0.8,
+                  cursor: "pointer"
+                },
+                selected: {
+                  fill: "#2938bc" //color for the clicked country
+                },
+                selectedHover: {}
+              }}
+              regionsSelectable={true}
+              series={{
+                regions: [
+                  {
+                    values: mapData, //this is your data
+                    scale: ["#7fdfff", "#004156"], //your color game's here
+                    normalizeFunction: "polynomial"
+                  }
+                ]
+              }}
+            />
+            </div>
+            <div className="row">
+              {countryStats}
+            </div>
+          </div>
         </div>
       </div>
     )
