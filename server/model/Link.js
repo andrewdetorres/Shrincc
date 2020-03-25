@@ -45,6 +45,9 @@ const LinkSchema = new Schema({
       deviceType: {
         type: String
       },
+      country: {
+        type: String
+      },
       date: {
         type: Date,
         required: true,
