@@ -505,56 +505,60 @@ class IndividualLink extends Component {
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-end px-md-5 px-1 mt-3">
-          <button className="btn btn-danger" onClick={this.deleteConfirm}>Delete Link</button>
-        </div>
-
+        {/* World Map Heat Map */}
         <div className="px-md-5 px-4 mt-1 mt-4">
           <div className="card border-0 shadow">
             <div className="card-body">
-            <VectorMap
-              map={"world_mill"}
-              backgroundColor="transparent" //change it to ocean blue: #0077be
-              zoomOnScroll={false}
-              containerStyle={{
-                width: "100%",
-                height: "520px"
-              }}
-              // onRegionClick={handleClick} //gets the country code
-              containerClassName="map"
-              regionStyle={{
-                initial: {
-                  fill: "#e4e4e4",
-                  "fill-opacity": 0.9,
-                  stroke: "none",
-                  "stroke-width": 0,
-                  "stroke-opacity": 0
-                },
-                hover: {
-                  "fill-opacity": 0.8,
-                  cursor: "pointer"
-                },
-                selected: {
-                  fill: "#2938bc" //color for the clicked country
-                },
-                selectedHover: {}
-              }}
-              regionsSelectable={true}
-              series={{
-                regions: [
-                  {
-                    values: mapData, //this is your data
-                    scale: ["#7fdfff", "#004156"], //your color game's here
-                    normalizeFunction: "polynomial"
-                  }
-                ]
-              }}
-            />
+              <div className="text-left pb-3">
+                <h4 className="m-0">World Heat Map</h4>
+                <small className="text-light">Based on clicks per location of visit</small>
+              </div>
+              <VectorMap
+                map={"world_mill"}
+                backgroundColor="transparent" //change it to ocean blue: #0077be
+                zoomOnScroll={false}
+                containerStyle={{
+                  width: "100%",
+                  height: "520px"
+                }}
+                // onRegionClick={handleClick} //gets the country code
+                containerClassName="map"
+                regionStyle={{
+                  initial: {
+                    fill: "#e4e4e4",
+                    "fill-opacity": 0.9,
+                    stroke: "none",
+                    "stroke-width": 0,
+                    "stroke-opacity": 0
+                  },
+                  hover: {
+                    "fill-opacity": 0.8,
+                    cursor: "pointer"
+                  },
+                  selected: {
+                    fill: "#2938bc" //color for the clicked country
+                  },
+                  selectedHover: {}
+                }}
+                regionsSelectable={true}
+                series={{
+                  regions: [
+                    {
+                      values: mapData, //this is your data
+                      scale: ["#7fdfff", "#004156"], //your color game's here
+                      normalizeFunction: "polynomial"
+                    }
+                  ]
+                }}
+              />
             </div>
             <div className="row">
               {countryStats}
             </div>
           </div>
+        </div>
+        <div className="d-flex justify-content-end px-md-5 px-1 mt-3">
+          <button className="btn btn-danger" onClick={this.deleteConfirm}>Delete Link</button>
         </div>
       </div>
     )
