@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import CalendarHeatmap from 'react-calendar-heatmap';
 import ReactTooltip from 'react-tooltip';
+import { VectorMap } from "react-jvectormap"
+import { overwrite, getName } from 'country-list';
+ 
 import 'react-calendar-heatmap/dist/styles.css';
 
 import _ from 'lodash';
@@ -15,6 +18,11 @@ import LinkTableRow from './LinkTableRow';
 import { getAllLinks } from '../../actions/link';
 import CustomBar from '../Graphs/CustomBar';
 import CustomLine from '../Graphs/CustomLine';
+
+overwrite([{
+  code: 'GB',
+  name: 'UK'
+}])
 
 class Dashboard extends Component {
   constructor(props) {
@@ -29,7 +37,6 @@ class Dashboard extends Component {
     this.props.getAllLinks();
   }
 
-
   selectChange = (value, type) => {
     if (type === "visitDays" ) {
       this.setState({visitDays: value});
@@ -40,8 +47,9 @@ class Dashboard extends Component {
   }
 
   render() {
-
     // Heatmap data
+    const mapData = {};
+    let countryStats;
     var heatData = [];
 
     // Graph data
@@ -166,12 +174,24 @@ class Dashboard extends Component {
         )
       });
 
-      console.log(Object.values(clickDataToSend));
-      console.log(clickLabelsToSend);
-
       let browserGraphBuilder = _.groupBy(browser, "clientName");
       let deviceGraphBuilder = _.groupBy(device, "deviceType");
       let osGraphBuilder = _.groupBy(os, "os");
+      let country = _.groupBy(device, "country");
+
+      Object.keys(country).forEach(value => {
+        mapData[value] = country[value].length;
+
+        console.log("NAME", getName(value));
+      })
+      
+      countryStats = Object.keys(country).map(value => {
+        return (
+          <div className="col-lg-3 col-md-4 col-sm-4 col-12">
+            <p className="text-center">{getName(value)} - {country[value].length}</p>
+          </div>
+        )
+      })
 
       Object.keys(browserGraphBuilder).forEach(key => {
         browserLabels.push(key);
@@ -360,7 +380,7 @@ class Dashboard extends Component {
         </div>
 
         {/* Daily Heatmap */}
-        <div className="px-5 mt-1 mt-4">
+        <div className="px-md-5 px-4 mt-1 mt-4">
           <div className="card border-0 shadow">
             <div className="card-body">
               <div className="c-chart-wrapper">
@@ -441,6 +461,56 @@ class Dashboard extends Component {
             </div>
           </div>
         </div>
+        
+        <div className="px-md-5 px-4 mt-1 mt-4">
+          <div className="card border-0 shadow">
+            <div className="card-body">
+            <VectorMap
+              map={"world_mill"}
+              backgroundColor="transparent" //change it to ocean blue: #0077be
+              zoomOnScroll={false}
+              containerStyle={{
+                width: "100%",
+                height: "520px"
+              }}
+              // onRegionClick={handleClick} //gets the country code
+              containerClassName="map"
+              regionStyle={{
+                initial: {
+                  fill: "#e4e4e4",
+                  "fill-opacity": 0.9,
+                  stroke: "none",
+                  "stroke-width": 0,
+                  "stroke-opacity": 0
+                },
+                hover: {
+                  "fill-opacity": 0.8,
+                  cursor: "pointer"
+                },
+                selected: {
+                  fill: "#2938bc" //color for the clicked country
+                },
+                selectedHover: {}
+              }}
+              regionsSelectable={true}
+              series={{
+                regions: [
+                  {
+                    values: mapData, //this is your data
+                    scale: ["#7fdfff", "#004156"], //your color game's here
+                    normalizeFunction: "polynomial"
+                  }
+                ]
+              }}
+            />
+            </div>
+            <div className="row">
+              {countryStats}
+            </div>
+          </div>
+        </div>
+        
+
       </div>
     )
   }
