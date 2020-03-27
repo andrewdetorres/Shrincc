@@ -19,7 +19,7 @@ class Footer extends Component {
           <div className="d-flex flex-md-row flex-column justify-content-center footer-copyright text-center pb-1 text-dark">
             <small className="px-3"><a href="/about" className="text-dark">About</a></small>
             <small className="px-3"><a href="/cookies" className="text-dark">Cookies</a></small>
-            <small className="px-3"><a href="https://www.iubenda.com/privacy-policy/37473827" class="text-dark" title="Privacy Policy " target="_blank" rel="noopener noreferrer">Privacy Policy</a></small>
+            <small className="px-3"><a href="https://www.iubenda.com/privacy-policy/37473827" className="text-dark" title="Privacy Policy " target="_blank" rel="noopener noreferrer">Privacy Policy</a></small>
             {/* <small className="px-3"><a href="/privacy" className="text-dark">Privacy &amp; Usage</a></small> */}
             <small className="px-3"><a href="/contact" className="text-dark">Contact</a></small>
           </div>
