@@ -12,9 +12,6 @@ class Articles extends Component {
             <a href="/register" className="btn btn-primary text-white mt-2">Register to Shrincc</a>
           </div>
         </div>
-
-        {/* Footer */}
-        <Footer />
       </>
     )
   }

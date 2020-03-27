@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import ReactGA from 'react-ga';
 
 // Import Fontawesome
 import { library }  from '@fortawesome/fontawesome-svg-core';
@@ -23,6 +24,11 @@ import PasswordReset from "./components/Auth/PasswordReset";
 import PasswordResetConfirm from "./components/Auth/PasswordResetConfirm";
 import Verification from "./components/Verification/Verification";
 import AuthUser from "./components/Auth/AuthUser";
+
+const ANALYTICS_KEY = process.env.GOOOGLE_ANALYTICS_TRACKING_CODE;
+
+ReactGA.initialize(ANALYTICS_KEY);
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);

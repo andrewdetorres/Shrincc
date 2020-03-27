@@ -6,9 +6,9 @@ uploads
 # dependencies
 server/node_modules
 client/node_modules
-client/src/index.js
 server/config/dev.js
 server/config/prod.js
+.env
 
 /.pnp
 .pnp.js
