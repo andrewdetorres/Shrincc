@@ -185,9 +185,9 @@ class Dashboard extends Component {
         console.log("NAME", getName(value));
       })
       
-      countryStats = Object.keys(country).map(value => {
+      countryStats = Object.keys(country).map((value, key) => {
         return (
-          <div className="col-lg-3 col-md-4 col-sm-4 col-12">
+          <div className="col-lg-3 col-md-4 col-sm-4 col-12" key={key} >
             <p className="text-center">{getName(value)} - {country[value].length}</p>
           </div>
         )
