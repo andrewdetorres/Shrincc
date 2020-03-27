@@ -15,8 +15,15 @@ class Footer extends Component {
     return (
       <Fragment>
         {/* Footer */}
-        <footer className="page-footer font-small mt-5">
-          <div className="footer-copyright text-center py-3 text-dark">
+        <footer className="page-footer font-small mt-3">
+          <div className="d-flex flex-md-row flex-column justify-content-center footer-copyright text-center pb-1 text-dark">
+            <small className="px-3"><a href="/about" className="text-dark">About</a></small>
+            <small className="px-3"><a href="/cookies" className="text-dark">Cookies</a></small>
+            <small className="px-3"><a href="https://www.iubenda.com/privacy-policy/37473827" class="text-dark" title="Privacy Policy " target="_blank" rel="noopener noreferrer">Privacy Policy</a></small>
+            {/* <small className="px-3"><a href="/privacy" className="text-dark">Privacy &amp; Usage</a></small> */}
+            <small className="px-3"><a href="/contact" className="text-dark">Contact</a></small>
+          </div>
+          <div className="footer-copyright text-center pb-3 text-dark">
             <small>
               © {copyrightDate} Copyright - 
               <a href="https://shrincc.com/" className="text-dark"> Shrincc.com</a>
