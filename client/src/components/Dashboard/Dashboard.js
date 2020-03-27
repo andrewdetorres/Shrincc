@@ -346,38 +346,6 @@ class Dashboard extends Component {
           </div>
         </div>
 
-        <div className="d-flex flex-md-row flex-column justify-content-center px-md-5 px-1 mt-1">
-          <div className="graph-width card-group shadow mt-3 mr-md-2 mx-md-0 mx-4">
-            {/* Links Created */}
-            <div className="card border-0">
-              <div className="card-body py-4 text-center">
-                <div className="d-flex justify-content-between pb-3">
-                  <div className="text-left">
-                    <h4 className="m-0">Visits</h4>
-                    <small className="text-light">Visits made in the past {this.state.visitDays} days</small>
-                  </div>
-                </div>
-                <div>
-                  <CustomLine data={Object.values(clickDataToSend)} labels={Object.keys(clickDataToSend)} graphColor={"#00beff"}/>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="graph-width card-group shadow mt-3 ml-md-2 mx-md-0 mx-4">
-            {/* Links Created */}
-            <div className="card border-0">
-              <div className="card-body py-4 text-center">
-                <div className="text-left pb-3">
-                  <h4 className="m-0">Browser Type</h4>
-                  <small className="text-light">Varied browsers based on visits</small>
-                </div>
-                <div>
-                  <CustomBar data={browserData} labels={browserLabels}/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Daily Heatmap */}
         <div className="px-md-5 px-4 mt-1 mt-4">
@@ -429,7 +397,38 @@ class Dashboard extends Component {
             </div>
           </div>
         </div>
-
+        <div className="d-flex flex-md-row flex-column justify-content-center px-md-5 px-1 mt-1">
+          <div className="graph-width card-group shadow mt-3 mr-md-2 mx-md-0 mx-4">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <div className="d-flex justify-content-between pb-3">
+                  <div className="text-left">
+                    <h4 className="m-0">Visits</h4>
+                    <small className="text-light">Visits made in the past {this.state.visitDays} days</small>
+                  </div>
+                </div>
+                <div>
+                  <CustomLine data={Object.values(clickDataToSend)} labels={Object.keys(clickDataToSend)} graphColor={"#00beff"}/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="graph-width card-group shadow mt-3 ml-md-2 mx-md-0 mx-4">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <div className="text-left pb-3">
+                  <h4 className="m-0">Browser Type</h4>
+                  <small className="text-light">Varied browsers based on visits</small>
+                </div>
+                <div>
+                  <CustomBar data={browserData} labels={browserLabels}/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         
         <div className="d-flex flex-md-row flex-column justify-content-center px-md-5 px-1 mt-1">
           <div className="graph-width card-group shadow mt-3 mr-md-2 mx-md-0 mx-4">

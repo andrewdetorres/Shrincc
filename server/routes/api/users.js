@@ -340,30 +340,30 @@ module.exports = app => {
 
                 User.findOneAndUpdate(
                   { email: req.body.email }, // Find token
-                  { passwordBlock : '0' } // Update value
-                );
-                
-                // Create payload
-                const payload = {
-                  id: user.id,
-                  email: user.email,
-                  isAdmin: user.isAdmin,
-                  activated: user.activated,
-                  date: user.date
-                };
+                  { passwordBlock : 0 } // Update value
+                ).then(result => {
+                  // Create payload
+                  const payload = {
+                    id: user.id,
+                    email: user.email,
+                    isAdmin: user.isAdmin,
+                    activated: user.activated,
+                    date: user.date
+                  };
 
-                //Sign in token, expires in is in seconds
-                jwt.sign(
-                  payload,
-                  keys.secretKey,
-                  { expiresIn: 3600 },
-                  (error, token) => {
-                    if(error) {
-                      throw error;
+                  //Sign in token, expires in is in seconds
+                  jwt.sign(
+                    payload,
+                    keys.secretKey,
+                    { expiresIn: 3600 },
+                    (error, token) => {
+                      if(error) {
+                        throw error;
+                      }
+                      res.json({ token });
                     }
-                    res.json({ token });
-                  }
-                );
+                  );
+                });
               }
               else {
                 // If a user is not found, increment the password block

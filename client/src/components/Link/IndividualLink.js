@@ -387,48 +387,7 @@ class IndividualLink extends Component {
             </div>
           </div>
         </div>
-        <div className="d-flex flex-md-row flex-column justify-content-center px-md-5 px-1">
-          <div className="graph-width card-group shadow mt-3 mr-md-2 mx-md-0 mx-4">
-            {/* Links Created */}
-            <div className="card border-0">
-              <div className="card-body py-4 text-center">
-                <div className="d-flex justify-content-between pb-3">
-                <div className="text-left">
-                  <h4 className="m-0">Visits</h4>
-                  <small className="text-light">Visits made in the past {this.state.visitDays} days</small>
-                </div>
-                  <li className="list-unstyled my-auto mx-lg-2 py-2 py-lg-0 px-3 px-md-0">
-                    <p className="nav-link dropdown-toggle cursor-pointer" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {this.state.visitDays} days
-                    </p>
-                    <div className="dropdown-menu dropdown-menu-right border-top-0 rounded-0 p-0" aria-labelledby="navbarDropdown">
-                      <p onClick={() => this.selectChange(7, "visitDays")} className="dropdown-item m-0" href="/">7 Days</p>
-                      <p onClick={() => this.selectChange(14, "visitDays")} className="dropdown-item m-0" href="/">14 Days</p>
-                      <p onClick={() => this.selectChange(30, "visitDays")} className="dropdown-item m-0" href="/">30 Days</p>
-                    </div>
-                  </li>
-                </div>
-                <div>
-                  <CustomLine data={dataToSend} labels={labelsToSend} graphColor={"#00beff"}/>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="graph-width card-group shadow mt-3 ml-md-2 mx-md-0 mx-4">
-            {/* Links Created */}
-            <div className="card border-0">
-              <div className="card-body py-4 text-center">
-                <div className="text-left pb-3">
-                  <h4 className="m-0">Browser Type</h4>
-                  <small className="text-light">Varied browsers based on visits</small>
-                </div>
-                <div >
-                  <CustomBar data={browserData} labels={browserLabels}/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <div className="px-5 mt-3">
           <div className="card border-0 shadow">
             <div className="card-body">
@@ -470,6 +429,49 @@ class IndividualLink extends Component {
                     }}
                   />
                   <ReactTooltip />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="d-flex flex-md-row flex-column justify-content-center px-md-5 px-1">
+          <div className="graph-width card-group shadow mt-3 mr-md-2 mx-md-0 mx-4">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <div className="d-flex justify-content-between pb-3">
+                <div className="text-left">
+                  <h4 className="m-0">Visits</h4>
+                  <small className="text-light">Visits made in the past {this.state.visitDays} days</small>
+                </div>
+                  <li className="list-unstyled my-auto mx-lg-2 py-2 py-lg-0 px-3 px-md-0">
+                    <p className="nav-link dropdown-toggle cursor-pointer" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {this.state.visitDays} days
+                    </p>
+                    <div className="dropdown-menu dropdown-menu-right border-top-0 rounded-0 p-0" aria-labelledby="navbarDropdown">
+                      <p onClick={() => this.selectChange(7, "visitDays")} className="dropdown-item m-0" href="/">7 Days</p>
+                      <p onClick={() => this.selectChange(14, "visitDays")} className="dropdown-item m-0" href="/">14 Days</p>
+                      <p onClick={() => this.selectChange(30, "visitDays")} className="dropdown-item m-0" href="/">30 Days</p>
+                    </div>
+                  </li>
+                </div>
+                <div>
+                  <CustomLine data={dataToSend} labels={labelsToSend} graphColor={"#00beff"}/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="graph-width card-group shadow mt-3 ml-md-2 mx-md-0 mx-4">
+            {/* Links Created */}
+            <div className="card border-0">
+              <div className="card-body py-4 text-center">
+                <div className="text-left pb-3">
+                  <h4 className="m-0">Browser Type</h4>
+                  <small className="text-light">Varied browsers based on visits</small>
+                </div>
+                <div >
+                  <CustomBar data={browserData} labels={browserLabels}/>
                 </div>
               </div>
             </div>

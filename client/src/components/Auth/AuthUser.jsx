@@ -18,6 +18,7 @@ import Landing from "../Landing/Landing";
 import Articles from "../Landing/Articles";
 import About from "../Landing/About";
 import Cookies from "../Landing/Cookies";
+import Privacy from "../Landing/Privacy";
 import NewLink from "../Link/NewLink";
 import Dashboard from "../Dashboard/Dashboard";
 import MyLinks from "../Link/MyLinks";
@@ -52,6 +53,7 @@ class AuthUser extends Component {
             <Route exact path="/articles" component={Articles} />
             <Route exact path="/about" component={About} />
             <Route exact path="/cookies" component={Cookies} />
+            <Route exact path="/privacy" component={Privacy} />
             <Route exact path="/" component={Landing} />
             <Redirect exact from="*" to="/" />
           </Switch>
@@ -75,6 +77,7 @@ class AuthUser extends Component {
                 <Route exact path="/articles" component={Articles} />
                 <Route exact path="/about" component={About} />
                 <Route exact path="/cookies" component={Cookies} />
+                <Route exact path="/privacy" component={Privacy} />
                 <Route exact path="/" component={Dashboard} />
                 <Redirect exact from="*" to="/" />
               </Switch>

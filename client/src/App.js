@@ -27,6 +27,7 @@ import AuthUser from "./components/Auth/AuthUser";
 
 const ANALYTICS_KEY = process.env.REACT_APP_GOOOGLE_ANALYTICS_TRACKING_CODE;
 
+console.log(ANALYTICS_KEY);
 ReactGA.initialize(ANALYTICS_KEY);
 ReactGA.pageview(window.location.pathname + window.location.search);
 

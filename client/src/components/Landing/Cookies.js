@@ -92,7 +92,7 @@ class Cookies extends Component {
 
             <h3 className="bold">PRIVACY POLICY</h3>
 
-            <p>For more information about how we use information collected by cookies and other tracking technologies, please refer to our Privacy Policy [CLICK HERE]/posted on the Site. This Cookie Policy is part of and is incorporated into our Privacy Policy. By using the Site, you agree to be bound by this Cookie Policy and our Privacy Policy.</p>
+            <p>For more information about how we use information collected by cookies and other tracking technologies, please refer to our <a href="/privacy">Privacy Policy</a>. This Cookie Policy is part of and is incorporated into our Privacy Policy. By using the Site, you agree to be bound by this Cookie Policy and our Privacy Policy.</p>
 
             <h3 className="bold">CONTACT US</h3>
 
