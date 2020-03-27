@@ -100,7 +100,7 @@ class NewLink extends Component {
         </header>
         <div className="content" id="MyLink">
           <div className="container-fluid">
-            <div className="row h-100 justify-content-center align-items-center">
+            <div className="row h-50 justify-content-center align-items-center">
               <div className="col-md-6 col-12 text-center">
                 <h5 className="text-dark mt-4">Shrincc your link and track your stats.</h5>
                 <form onSubmit={this.onSubmit}>
