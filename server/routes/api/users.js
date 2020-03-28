@@ -10,6 +10,8 @@ const path = require('path');
 
 // Require models
 const User = require("../../model/User");
+const Profile = require("../../model/Profile");
+const Link = require("../../model/Link");
 
 // Require the validation of login and sign up
 const validateRegisterInput = require("../../validation/registrationValidation");
@@ -529,7 +531,43 @@ module.exports = app => {
 
   });
 
-   //--------------------------------------------------------
+  //--------------------------------------------------------
+  //@request  : get
+  //@route    : /auth/activated
+  //@access   : Public
+  //@isAdmin  : False
+  //@desc     : This route is for to see if a user account is activated
+  //--------------------------------------------------------
+  app.delete("/auth/delete", auth, (req, res) => {
+
+
+    User
+      .findOneAndRemove({ _id: req.user.id })
+      .catch(error => {
+        console.log(error);
+        res.status(500).send('Server error');
+      });
+
+
+    Profile
+      .findOneAndRemove({ user: req.user.id })
+      .catch(error => {
+        console.log(error);
+        res.status(500).send('Server error');
+      });
+
+
+    Link.deleteMany({ user: req.user.id })
+      .catch(error => {
+        console.log(error);
+        res.status(500).send('Server error');
+      });
+
+    res.json({ msg: 'User deleted' });
+
+  });
+
+  //--------------------------------------------------------
   //@request  : get
   //@route    : /auth/activated
   //@access   : Public

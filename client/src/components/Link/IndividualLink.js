@@ -238,8 +238,6 @@ class IndividualLink extends Component {
 
       Object.keys(country).forEach(value => {
         mapData[value] = country[value].length;
-
-        console.log("NAME", getName(value));
       })
       
       countryStats = Object.keys(country).map(value => {

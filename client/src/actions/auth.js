@@ -11,6 +11,8 @@ import {
   EMAIL_RESET_SUCCESSFUL,
   IS_ACTIVATED_SUCCESSFUL,
   RESET_FAILED,
+  ACCOUNT_DELETED,
+  ACCOUNT_DELETED_FAILED,
   GET_ERRORS,
   USER_LOADED,
   AUTH_ERROR,
@@ -153,6 +155,20 @@ export const emailReset = (userData) => dispatch => {
         payload: res.data
       });
     })
+    .catch(errors => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: errors.response.data
+      });
+    });
+};
+
+
+// Send reset token to user
+export const deleteAccount = (history) => dispatch => {
+  axios
+    .delete("/auth/delete")
+    .then()
     .catch(errors => {
       dispatch({
         type: GET_ERRORS,

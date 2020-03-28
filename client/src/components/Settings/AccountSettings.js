@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 // Import Actions
-import { passwordReset, emailReset } from '../../actions/auth';
+import { passwordReset, emailReset, deleteAccount, logoutUser } from '../../actions/auth';
+
+const swal = withReactContent(Swal);
 
 class AccountSettings extends Component {
   constructor(props) {
@@ -53,6 +57,42 @@ class AccountSettings extends Component {
       this.toggleClass();
     }
   };
+
+  deleteConfirm = () => {
+    swal.fire({
+      title: 'Link Copied!',
+      icon: 'error',
+      showConfirmButton: false,
+      html: (
+        <>
+          <p>Are you sure you wish to delete you account and all associated information?</p>
+          <p>This action can not be reversed?</p>
+          <DeleteOkay 
+            onClick={this.deleteAccount}
+          />
+          <Close/>
+        </>
+      )
+    })
+  }
+
+  deleteAccount = () => {
+    this.props.deleteAccount();
+    this.props.logoutUser(this.props.history);
+    this.props.history.push('/login');
+    swal.fire({
+      title: 'Deleted!',
+      text: 'Your account has been deleted.',
+      icon: 'success',
+      showConfirmButton: false,
+      html: (
+        <Okay />
+      )
+    })
+    .then(() => {
+    });
+  }
+
 
   render() {
 
@@ -122,24 +162,44 @@ class AccountSettings extends Component {
             </form>
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="mb-0">Deactivate Profile</label>
-            <p className="my-2">
-              <small>By selecting this button you will deactivate your account. You will be able to log in to your profile which will reactivate the account. If the account is not accessed within 30 days. The account will be deleted.</small>
-            </p>
-            <button className="btn btn-outline-primary">Deactivate Profile</button>
-          </div>
-          <div className="mb-4">
             <label htmlFor="email" className="mb-0">Delete Account</label>
             <p className="my-2">
               <small>By selecting this you agree to permenently delete your account. This action can not be reversed.</small>
             </p>
-            <button className="btn btn-outline-primary">Permenently Delete Account</button>
+            <button className="btn btn-outline-primary" onClick={this.deleteConfirm}>Permenently Delete Account</button>
           </div>
         </div>
       </div>
     )
   }
 }
+
+export const Okay = () => (
+  <button
+    className="btn btn-success my-2"
+    onClick={() => swal.close()}
+  >
+    Okay
+  </button>
+)
+
+export const DeleteOkay = ({ onClick }) => (
+  <button
+    className="btn btn-error my-2"
+    onClick={() => onClick()}
+  >
+    Delete
+  </button>
+)
+
+export const Close = () => (
+  <button
+    className="btn btn-success my-2"
+    onClick={() => swal.close()}
+  >
+    Close
+  </button>
+)
 
 AccountSettings.propTypes = {
   passwordReset: PropTypes.func.isRequired,
@@ -151,4 +211,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { passwordReset, emailReset })(withRouter(AccountSettings));
+export default connect(mapStateToProps, { passwordReset, emailReset, deleteAccount, logoutUser })(withRouter(AccountSettings));
