@@ -33,12 +33,13 @@ class AuthUser extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(prevProps.auth.user == this.props.auth.user);
-    if (prevProps.auth.user.id !== this.props.auth.user.id) {
-      this.props.getCurrentUserProfile();
-    }
-    if (prevProps.auth.user.activated !== this.props.auth.user.activated) {
-      this.props.isActivated();
+    if (this.props.auth.user.id) {
+      if (prevProps.auth.user.id !== this.props.auth.user.id) {
+        this.props.getCurrentUserProfile();
+      }
+      if (prevProps.auth.user.activated !== this.props.auth.user.activated) {
+        this.props.isActivated();
+      }
     }
   }
 

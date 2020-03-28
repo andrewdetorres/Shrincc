@@ -173,7 +173,6 @@ const generateUniqueURLKey = async function() {
   return Link
     .find({shortLink: result})
     .then(link => {
-      // console.log(link);
       if (link.length > 0) {
         if(link[0].shortLink === result) {
           // Return a recursive function
