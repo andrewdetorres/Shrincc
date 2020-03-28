@@ -15,6 +15,7 @@
   .togglePassword,
   .forgotPassword {
     cursor: pointer;
+    color: map-get($theme-colors, "dark");
     text-decoration: none;
     &:hover {
       color: map-get($theme-colors, "primary");

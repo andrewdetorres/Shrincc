@@ -48,6 +48,7 @@ class NewLink extends Component {
       this.props.createLink({longLink: this.state.link});
       // Change copied text
       this.setState({
+        link: "",
         copied: false,
         errors: {}
       });

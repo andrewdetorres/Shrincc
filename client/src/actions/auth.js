@@ -64,7 +64,7 @@ export const loginUser = (userData, history) => dispatch => {
 };
 
 // Send reset token to user
-export const passwordReset = (userData, history) => dispatch => {
+export const passwordReset = (userData) => dispatch => {
   axios
     .post("/auth/reset", userData)
     .then(res => {
@@ -92,6 +92,7 @@ export const passwordResetConfirm = (userData, history) => dispatch => {
       dispatch({
         type: RESET_SUCCESSFUL
       });
+      history.push("/login");
     })
     .catch(errors => {
       dispatch({
