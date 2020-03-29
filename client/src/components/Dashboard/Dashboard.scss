@@ -26,9 +26,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  float: right;
 }
-
+.table-minimum {
+  min-width: 120px;
+}
 .heatmap-container {
   overflow-x: scroll;
 }

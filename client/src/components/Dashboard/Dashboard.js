@@ -6,19 +6,20 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 import ReactTooltip from 'react-tooltip';
 import { VectorMap } from "react-jvectormap"
 import { overwrite, getName } from 'country-list';
- 
-import 'react-calendar-heatmap/dist/styles.css';
-
 import _ from 'lodash';
-
-// Import Components
-import LinkTableRow from './LinkTableRow';
 
 // Import Actions
 import { getAllLinks } from '../../actions/link';
+
+// Import Components
+import LinkTableRow from './LinkTableRow';
 import CustomBar from '../Graphs/CustomBar';
 import CustomLine from '../Graphs/CustomLine';
 
+// Import third-party stylesheets
+import 'react-calendar-heatmap/dist/styles.css';
+
+// Overwrite name returned from country list
 overwrite([{
   code: 'GB',
   name: 'UK'
@@ -37,15 +38,6 @@ class Dashboard extends Component {
     this.props.getAllLinks();
   }
 
-  selectChange = (value, type) => {
-    if (type === "visitDays" ) {
-      this.setState({visitDays: value});
-    }
-    else if (type === "sourceDays" ) {
-      this.setState({sourceDays: value});
-    }
-  }
-
   render() {
     // Heatmap data
     const mapData = {};
@@ -53,13 +45,9 @@ class Dashboard extends Component {
     var heatData = [];
 
     // Graph data
-    let clickLabelsToSend = [];
     let clickDataToSend = [];
-    let browserLabels = [];
     let browserData = [];
-    let deviceLabels = [];
     let deviceData = [];
-    let osLabels = [];
     let osData = [];
 
     // Create Table
@@ -79,36 +67,27 @@ class Dashboard extends Component {
 
     if (this.props.link.AllLinks && this.props.link.loading === false) {
 
-      let browser = [];
-      let device = [];
-      let os = [];
-      let ip = [];
+      let stats = [];
 
       rows = this.props.link.AllLinks.map((link, index) => {
-
-        link.clicks.forEach(click => {
-          browser.push(click);
-          device.push(click);
-          os.push(click);
-          ip.push(click);
-        });
 
         let clickThisWeek = [];
 
         // Get all the clicks within the last week
         link.clicks.forEach(click => {
-          if(oneWeekAgo <= click.date) {
+          // Push click to stats array
+          stats.push(click);
+
+          if(click.date >= oneWeekAgo) {
             clickThisWeek.push({"date": click.date.substring(0, 10)});
           }
         })
 
-        let avgClickPerDay = (clickThisWeek.length / 7).toFixed(2);
-
         // Create graph data for each row
+        let dataToSend = [];
         let graphData = _.groupBy(clickThisWeek, "date");
 
-        let dataToSend = [];
-
+        // Build graph data for the past 7 days
         for (let i = 6; i >= 0; i--) {
           let date = new Date();
           date.setDate(date.getDate() - i);
@@ -134,7 +113,10 @@ class Dashboard extends Component {
           graphColor = "#F9B112";
         }
 
+        // Build the overall visits of all links
         for (let i = this.state.visitDays - 1; i >= 0; i--) {
+
+          // Create a new date value
           let date = new Date();
           date.setDate(date.getDate() - i);
           var dateCheck2 = new Date(date).toISOString();
@@ -155,34 +137,45 @@ class Dashboard extends Component {
               clickDataToSend[dateCheck2.substring(0, 10)] = clickDataToSend[dateCheck2.substring(0, 10)] + 0;
             }
           }
-          
         }
 
         // Return the link table row with its content
         return (
-        <LinkTableRow
-          shortLink={link.shortLink}
-          longLink={link.longLink}
-          data={dataToSend}
-          date={link.date}
-          clickCount={link.clicks.length}
-          avgClickPerDay={avgClickPerDay}
-          graphColor={graphColor}
-          active={link.active}
-          key={index}
-          />
+          <LinkTableRow
+            shortLink={link.shortLink}
+            longLink={link.longLink}
+            data={dataToSend}
+            date={link.date}
+            clickCount={link.clicks.length}
+            graphColor={graphColor}
+            active={link.active}
+            key={index}
+            />
         )
       });
 
-      let browserGraphBuilder = _.groupBy(browser, "clientName");
-      let deviceGraphBuilder = _.groupBy(device, "deviceType");
-      let osGraphBuilder = _.groupBy(os, "os");
-      let country = _.groupBy(device, "country");
+      let country = _.groupBy(stats, "country");
 
-      Object.keys(country).forEach(value => {
+      // Map the country data to a new object
+      Object.keys(_.groupBy(stats, "country")).forEach(value => {
         mapData[value] = country[value].length;
-      })
-      
+      });
+
+      // Map the browser data to an associative array
+      Object.keys(_.groupBy(stats, "clientName")).forEach(key => {
+        browserData[key] = _.groupBy(stats, "clientName")[key].length;
+      });
+
+      // Map the device data to an associative array
+      Object.keys(_.groupBy(stats, "deviceType")).forEach(key => {
+        deviceData[key] = _.groupBy(stats, "deviceType")[key].length;
+      });
+
+      // Map the operating system data to an associative array
+      Object.keys(_.groupBy(stats, "os")).forEach(key => {
+        osData[key] = _.groupBy(stats, "os")[key].length;
+      });
+
       countryStats = Object.keys(country).map((value, key) => {
         return (
           <div className="col-lg-3 col-md-4 col-sm-4 col-12" key={key} >
@@ -191,24 +184,7 @@ class Dashboard extends Component {
         )
       })
 
-      Object.keys(browserGraphBuilder).forEach(key => {
-        browserLabels.push(key);
-        browserData.push(browserGraphBuilder[key].length);
-      })
-
-      Object.keys(deviceGraphBuilder).forEach(key => {
-        deviceLabels.push(key);
-        deviceData.push(deviceGraphBuilder[key].length);
-      })
-
-      Object.keys(osGraphBuilder).forEach(key => {
-        osLabels.push(key);
-        osData.push(osGraphBuilder[key].length);
-      })
-
-
-      let uniqueVisitorsBuilder = _.groupBy(ip, "ip");
-      uniqueVisitors = Object.keys(uniqueVisitorsBuilder).length;
+      uniqueVisitors = Object.keys(_.groupBy(stats, "ip")).length;
 
       // Return a new link prompt if now links created
       if (rows.length < 1) {
@@ -327,9 +303,9 @@ class Dashboard extends Component {
                       <th></th>
                       <th className="text-center">Status</th>
                       <th className="text-center">Usage <small>(Last 7 days)</small></th>
-                      <th className="text-center">Avg. Click Per Day <small>(Last 7 days)</small></th>
-                      <th>Total visits</th>
-                      <th>View Link</th>
+                      {/* <th className="text-center">Avg. Click Per Day <small>(Last 7 days)</small></th> */}
+                      <th className="text-center table-minimum">Total visits</th>
+                      <th className="text-center table-minimum">View Link</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -407,7 +383,7 @@ class Dashboard extends Component {
                   </div>
                 </div>
                 <div>
-                  <CustomLine data={Object.values(clickDataToSend)} labels={Object.keys(clickDataToSend)} graphColor={"#00beff"}/>
+                  <CustomLine data={Object.values(clickDataToSend)} labels={Object.keys(clickDataToSend)}/>
                 </div>
               </div>
             </div>
@@ -421,7 +397,7 @@ class Dashboard extends Component {
                   <small className="text-light">Varied browsers based on visits</small>
                 </div>
                 <div>
-                  <CustomBar data={browserData} labels={browserLabels}/>
+                  <CustomBar data={Object.values(browserData)} labels={Object.keys(browserData)}/>
                 </div>
               </div>
             </div>
@@ -438,7 +414,7 @@ class Dashboard extends Component {
                   <small className="text-light">Varied device types based on visits</small>
                 </div>
                 <div >
-                  <CustomBar data={deviceData} labels={deviceLabels}/>
+                  <CustomBar data={Object.values(deviceData)} labels={Object.keys(deviceData)}/>
                 </div>
               </div>
             </div>
@@ -452,7 +428,7 @@ class Dashboard extends Component {
                   <small className="text-light">Varied operating system based on visits</small>
                 </div>
                 <div>
-                  <CustomBar data={osData} labels={osLabels}/>
+                  <CustomBar data={Object.values(osData)} labels={Object.keys(osData)}/>
                 </div>
               </div>
             </div>

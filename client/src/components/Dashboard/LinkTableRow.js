@@ -95,11 +95,15 @@ export default class LinkTableRow extends Component {
       <tr>
         <td className="text-center">
           <div>
-            <img className="favicon-image" src={"https://www.google.com/s2/favicons?domain=" + this.props.longLink} onError={this.addDefaultSrc} alt="Website Icon" />
+            <img 
+              className="favicon-image" 
+              src={"https://www.google.com/s2/favicons?domain=" + this.props.longLink} 
+              onError={this.addDefaultSrc} alt="Website Icon" 
+              />
             <span className="-status bg-success"></span>
           </div>
         </td>
-        <td className="text-right">
+        <td className="text-left">
           <div>
             <strong>
               <a
@@ -131,9 +135,9 @@ export default class LinkTableRow extends Component {
             <Line data={data} options={options} height={50}/>
           </div>
         </td>
-        <td className="text-center">
+        {/* <td className="text-center">
           <strong>{this.props.avgClickPerDay}</strong>
-        </td>
+        </td> */}
         <td className="text-center">
           <strong>{this.props.clickCount}</strong>
         </td>

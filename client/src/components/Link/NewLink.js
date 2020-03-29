@@ -109,12 +109,12 @@ class NewLink extends Component {
                     <input
                       type="text"
                       name="link"
-                      placeholder="https://example.com/"
-                      className="w-75 px-3 mb-3"
+                      placeholder="https://example.com"
+                      className="w-100 px-3 mb-3"
                       value={this.state.link}
                       onChange={this.onChange}
                       required/>
-                      <button className="btn btn-primary w-25 mb-3" type="submit">Shrincc My Link</button>
+                      <button className="btn btn-primary w-50 mb-3" type="submit">Shrincc My Link</button>
                       {copy}
                   </div>
                   {this.state.errors.URL ? <span className="text-danger">{this.state.errors.URL}</span> : ""}
