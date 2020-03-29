@@ -3,9 +3,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+// Import Actions
 import { passwordReset } from '../../actions/auth';
 
-// @todo - import new action
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -26,12 +26,7 @@ class Login extends Component {
       email: this.state.email.toLowerCase()
     };
 
-    // @todo - Change
-    this.props.passwordReset(user, this.props.history);
-
-    if (this.errors) {
-      this.toggleClass();
-    }
+    this.props.passwordReset(user);
   };
 
   render() {
@@ -40,11 +35,13 @@ class Login extends Component {
         <div className="container-fluid">
           <div className="row h-100 justify-content-center align-items-center">
             <div className="col-md-6 col-12 text-center">
-              <img
+              <a href="/">
+                <img
                 src={require("../../assets/img/shrincc_logo_black.png")}
                 width="250px"
                 alt="Brand Logo"
                 />
+              </a>
               <h5 className="text-dark mt-4">
                 Enter your email to reset your password.
               </h5>
@@ -88,7 +85,6 @@ class Login extends Component {
   }
 }
 
-// @todo - import new action
 Login.propTypes = {
   passwordReset: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,

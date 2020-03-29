@@ -51,8 +51,8 @@ class MainNavigation extends Component {
                   <a className="dropdown-item" href="/">Dashboard</a>
                   <a className="dropdown-item" href="/my-links">My Links</a>
                   <div className="dropdown-divider"></div>
-                  <a className="dropdown-item" href="/help">Help</a>
-                  <a className="dropdown-item" href="/terms-and-conditions">Terms &amp; Conditions</a>
+                  <a className="dropdown-item" href="/privacy">Pivacy Policy</a>
+                  <a className="dropdown-item" href="/cookies">Cookie Policy</a>
                   <div className="dropdown-divider"></div>
                   <a className="dropdown-item" href="/settings">Account Settings</a>
                   <a className="dropdown-item" href="/api/logout" onClick={this.props.logoutUser}>Logout</a>

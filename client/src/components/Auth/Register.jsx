@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Import Actions
 import { registerNewUser } from '../../actions/auth'
@@ -53,10 +53,6 @@ class Register extends Component {
     };
 
     this.props.registerNewUser(newUser, this.props.history);
-
-    if (this.errors) {
-      this.toggleClass();
-    }
   };
 
   render() {

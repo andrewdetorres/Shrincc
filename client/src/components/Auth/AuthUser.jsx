@@ -11,7 +11,6 @@ import MainNavigation from '../Navigation/MainNavigation'
 import AuthNavigation from '../Navigation/AuthNavigation'
 import Loading from '../Common/Loading'
 import Settings from '../Settings/Settings'
-import UserProfile from "../UserProfile/UserProfile";
 import CreateProfilePrompt from "../UserProfile/CreateProfilePrompt";
 import ApproveEmail from "../UserProfile/ApproveEmail";
 import Landing from "../Landing/Landing";
@@ -44,10 +43,12 @@ class AuthUser extends Component {
   }
 
   render() {
-    var User;
-    // Anon User
+
+    var userView;
+
     if (this.props.auth.isAuthenticated === false && this.props.auth.loading === false) {
-      User = (
+      // The userView created when a user is annonymous
+      userView = (
         <Fragment>
           <MainNavigation />
           <Switch>
@@ -62,17 +63,16 @@ class AuthUser extends Component {
         </Fragment>
       )
     }
-
-    // Authenticated User
     else if (this.props.auth.isAuthenticated === true && this.props.auth.loading === false) {
-      if (this.props.profile.userProfile && this.props.profile.loading === false && this.props.auth.user.activated == true) {
-        User = (
+      // The userView created when a user is an authenticated user
+      if (this.props.profile.userProfile && this.props.profile.loading === false && this.props.auth.user.activated === true) {
+        // Allow full access when the user has approved email and created a profile
+        userView = (
           <Fragment>
             <AuthNavigation />
               <Switch>
                 <Route exact path="/new" component={NewLink} />
                 <Route exact path="/link/:linkId" component={IndividualLink} />
-                <Route exact path="/user/:userId" component={UserProfile} />
                 <Route exact path="/my-links" component={MyLinks}/>
                 <Route path="/settings/" component={Settings}/>
                 <Route exact path="/articles" component={Articles} />
@@ -87,15 +87,17 @@ class AuthUser extends Component {
         )
       }
       else if (!this.props.profile.userProfile && this.props.profile.loading === false) {
-        User = (
+        // Force user to create a profile
+        userView = (
           <Fragment>
             <AuthNavigation />
             <Route path="/" component={CreateProfilePrompt} />
           </Fragment>
         )
       }
-      else if (this.props.auth.user.activated == false && this.props.profile.loading === false) {
-        User = (
+      else if (this.props.auth.user.activated === false && this.props.profile.loading === false) {
+        // Force user to approve email
+        userView = (
           <Fragment>
             <AuthNavigation />
             <Route path="/" component={ApproveEmail} />
@@ -106,14 +108,12 @@ class AuthUser extends Component {
 
     // Loading
     else {
-
-      // @todo - Auth routes loading
-      User = <Loading/>
+      userView = <Loading/>
     }
 
     return (
       <Fragment>
-        {User}
+        {userView}
       </Fragment>
     )
   }

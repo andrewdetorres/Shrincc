@@ -3,9 +3,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+// Import Actions
 import { passwordResetConfirm } from '../../actions/auth';
 
-// @todo - import new action
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -23,13 +23,13 @@ class Login extends Component {
       this.setState({
         passwordInput: "text",
         passwordShow: "Hide Password"
-      })
+      });
     }
     else {
       this.setState({
         passwordInput: "password",
         passwordShow: "Show Password"
-      })
+      });
     }
   }
 
@@ -40,27 +40,13 @@ class Login extends Component {
   onSubmit = event => {
     event.preventDefault();
 
-    if (this.state.password === this.state.repeatPassword) {
-      const userData = {
-        password: this.state.password,
-        repeatPassword: this.state.repeatPassword,
-        token: this.props.match.params.resetToken
-      };
-
-      this.props.passwordResetConfirm(userData, this.props.history);
-      this.props.history.push("/login");
-
-      if (this.errors) {
-        this.toggleClass();
-      }
-    }
-    else {
-      this.setState({
-        errors : {
-          password : "Passwords do not match"
-        }
-      })
-    }
+    const userData = {
+      password: this.state.password,
+      repeatPassword: this.state.repeatPassword,
+      token: this.props.match.params.resetToken
+    };
+      
+    this.props.passwordResetConfirm(userData, this.props.history);
   };
 
   render() {
@@ -69,11 +55,13 @@ class Login extends Component {
         <div className="container-fluid">
           <div className="row h-100 justify-content-center align-items-center">
             <div className="col-md-6 col-12 text-center">
-              <img
+              <a href="/">
+                <img
                 src={require("../../assets/img/shrincc_logo_black.png")}
                 width="250px"
                 alt="Brand Logo"
                 />
+              </a>
               <h5 className="text-dark mt-4">
                 Enter your new password.
               </h5>
@@ -98,13 +86,13 @@ class Login extends Component {
                     onChange={this.onChange}
                     required/>
                 </div>
-                {this.props.errors.password && (
+                {this.props.errors.password ? (
                   <div className="text-danger">
                     <small>
                       {this.props.errors.password}
                     </small>
                   </div>
-                )}
+                ) : null}
                 <div className="row w-75 mx-auto">
                   <div className="col-6 p-0 text-left">
                     <a href="/passwordreset" className="forgotPassword">
@@ -121,7 +109,9 @@ class Login extends Component {
                     </p>
                   </div>
                 </div>
-                <button className="btn btn-primary my-4" type="submit" name="login">Set my new password</button>
+                <button className="btn btn-primary my-4" type="submit" name="login">
+                  Set my new password
+                </button>
               </form>
               <p>
                 <a href="login" className="login-button">Log In </a>
@@ -136,7 +126,6 @@ class Login extends Component {
   }
 }
 
-// @todo - import new action
 Login.propTypes = {
   passwordResetConfirm: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,

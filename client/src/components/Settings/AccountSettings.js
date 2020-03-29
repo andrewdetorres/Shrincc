@@ -60,7 +60,7 @@ class AccountSettings extends Component {
 
   deleteConfirm = () => {
     swal.fire({
-      title: 'Link Copied!',
+      title: 'Delete Account!',
       icon: 'error',
       showConfirmButton: false,
       html: (

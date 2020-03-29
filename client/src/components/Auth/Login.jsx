@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Import Actions
 import { loginUser } from '../../actions/auth';
+
+// Import third-party stylesheets
 import 'heatmap-calendar-react/build/style.css';
 
 class Login extends Component {
@@ -31,13 +33,13 @@ class Login extends Component {
       this.setState({
         passwordInput: "text",
         passwordShow: "Hide Password"
-      })
+      });
     }
     else {
       this.setState({
         passwordInput: "password",
         passwordShow: "Show Password"
-      })
+      });
     }
   }
 
@@ -54,10 +56,6 @@ class Login extends Component {
     };
 
     this.props.loginUser(user, this.props.history);
-
-    if (this.errors) {
-      this.toggleClass();
-    }
   };
 
   render() {
