@@ -55,7 +55,7 @@ export default function (state = initialState, action) {
     case RESET_SUCCESSFUL:
       return {
         ...state,
-        errors: action.payload
+        successMessage: action.payload
       }
     case IS_ACTIVATED_SUCCESSFUL:
       return {

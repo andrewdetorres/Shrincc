@@ -161,81 +161,91 @@ module.exports = app => {
   //@desc     : This route is for a user to reset their password
   //--------------------------------------------------------
   app.post("/auth/reset", (req, res) => {
-    User.findOne({ email: req.body.email })
-    .then((user) => {
-      if (user) {
-        // Generate a user verfification token
-        const verificationToken = jwt.sign({
-          data: req.body.email
-        }, keys.secretKey, { expiresIn: '1h' });
 
-        // @todo - handle then & catch
-        User.findOneAndUpdate(
-          { email: req.body.email }, // Find token
-          { 'resetToken': verificationToken }, // Update value
-        ).then(user => {
-          res.send(user);
-        })
-        .catch(error => {
-          res.status(400).json(error);
-        })
+    console.log("CALLED auth/reset");
+
+    User
+      .findOne({ email: req.body.email })
+      .then((user) => {
+        if (user) {
+          // Generate a user verfification token
+          const verificationToken = jwt.sign({
+            data: req.body.email
+          }, keys.secretKey, { expiresIn: '1h' });
+
+          // @todo - handle then & catch
+          User.findOneAndUpdate(
+            { email: req.body.email }, // Find token
+            { 'resetToken': verificationToken }, // Update value
+          ).then(user => {
+            res.send(user);
+          })
+          .catch(error => {
+            res.status(400).json(error);
+          })
 
 
-        // Set up nodemail
-        let mailer = nodemailer.createTransport({
-          host: "smtp.gmail.com",
-          port: 465,
-          secure: true,
-          auth: {
-            user: keys.emailUser,
-            pass: keys.emailPass
-          }
-        });
-
-        let options = {
-          viewEngine: {
-            extname: '.html', // handlebars extension
-            layoutsDir: path.join(__dirname, './views/layouts'), // location of handlebars templates
-            defaultLayout: 'passwordReset',
-            viewPath: path.join(__dirname, './views/layouts'),
-            partialsDir: path.join(__dirname, './views/layouts')
-          },
-          viewPath: path.join(__dirname, './views/layouts'),
-          extName: '.html'
-        }
-
-        mailer.use('compile', hbs(options));
-
-        // Send Email verification
-        mailer.sendMail({
-          from: keys.emailUser, // sender address
-          to: req.body.email, // list of receivers
-          subject: 'Reset Password - shrincc',
-          template: 'passwordReset',
-          context: {
-            verificationToken : "https://shrincc.com/passwordreset/confirm/" + verificationToken
-          },
-          attachments:[
-            {
-              filename : 'shrincc_logo_black.png',
-              path: path.join(__dirname, 'views/layouts/images/shrincc_logo_black.png'),
-              cid : 'shrincc_logo_black@shrincc.com'
-            },
-            {
-              filename : 'emailheader.png',
-              path: path.join(__dirname, 'views/layouts/images/emailheader.png'),
-              cid : 'emailheader@shrincc.com'
+          // Set up nodemail
+          let mailer = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+              user: keys.emailUser,
+              pass: keys.emailPass
             }
-          ]
-        })
-        .catch(error => {
+          });
+
+          let options = {
+            viewEngine: {
+              extname: '.html', // handlebars extension
+              layoutsDir: path.join(__dirname, './views/layouts'), // location of handlebars templates
+              defaultLayout: 'passwordReset',
+              viewPath: path.join(__dirname, './views/layouts'),
+              partialsDir: path.join(__dirname, './views/layouts')
+            },
+            viewPath: path.join(__dirname, './views/layouts'),
+            extName: '.html'
+          }
+
+          mailer.use('compile', hbs(options));
+
+          // Send Email verification
+          mailer.sendMail({
+            from: keys.emailUser, // sender address
+            to: req.body.email, // list of receivers
+            subject: 'Reset Password - shrincc',
+            template: 'passwordReset',
+            context: {
+              verificationToken : "https://shrincc.com/passwordreset/confirm/" + verificationToken
+            },
+            attachments:[
+              {
+                filename : 'shrincc_logo_black.png',
+                path: path.join(__dirname, 'views/layouts/images/shrincc_logo_black.png'),
+                cid : 'shrincc_logo_black@shrincc.com'
+              },
+              {
+                filename : 'emailheader.png',
+                path: path.join(__dirname, 'views/layouts/images/emailheader.png'),
+                cid : 'emailheader@shrincc.com'
+              }
+            ]
+          })
+          .catch(error => {
+            console.log(error);
+            res.status(400).json(errors);
+          });
+        } else {
+          // Failed to find a result
           console.log(error);
-        });
-      } else {
-        // Failed to find a result
-        res.status(400);
-      }
-    });
+          res.status(400);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(400).json(errors);
+      });
   });
 
   //--------------------------------------------------------

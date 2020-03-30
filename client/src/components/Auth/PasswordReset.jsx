@@ -11,6 +11,8 @@ class Login extends Component {
     super(props);
     this.state = {
       email: "",
+      emailSubmit: "",
+      result: false,
       errors: {}
     };
   }
@@ -27,9 +29,23 @@ class Login extends Component {
     };
 
     this.props.passwordReset(user);
+
+    this.setState({
+      email: "",
+      emailSubmit: this.state.email.toLowerCase(),
+      result: true
+    })
   };
 
   render() {
+
+    const sentResult = (
+      <p className="text-center">
+        Reset link has been sent to the following email <strong><i>{this.state.emailSubmit}</i></strong>.
+        <br/>
+        If the email was entered incorrectly, please try again.
+      </p>
+    )
     return (
       <div className="content" id="passwordreset">
         <div className="container-fluid">
@@ -72,6 +88,12 @@ class Login extends Component {
                 )}
                 <button className="btn btn-primary my-4" type="submit" name="login">Send my password reset link</button>
               </form>
+              <p>
+                {this.state.result 
+                ? sentResult 
+                  : ""
+                }
+              </p>
               <p>
                 <a href="login" className="login-button">Log In </a>
                   or
