@@ -63,7 +63,7 @@ class IndividualLink extends Component {
 
   deleteConfirm = () => {
     swal.fire({
-      title: 'Link Copied!',
+      title: 'Delete Link!',
       icon: 'error',
       showConfirmButton: false,
       html: (
