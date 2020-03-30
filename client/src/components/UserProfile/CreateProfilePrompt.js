@@ -135,11 +135,12 @@ class Username extends Component {
 
   update = (e) => {
     this.props.update(e.target.name, e.target.value.toLowerCase());
+    console.log("SPACES", this.props.form.username.replace(/\s/g, "").length < this.props.form.username.length);
     if (this.props.form.usernameErrors){
       this.setState({
         ...this.state.form,
         validated: false,
-        string: true,
+        string: false,
       });
     }
     else if (this.props.form.username) {

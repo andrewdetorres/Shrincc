@@ -3,14 +3,16 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+// Import Actions
 import { passwordReset } from '../../actions/auth';
 
-// @todo - import new action
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
+      emailSubmit: "",
+      result: false,
       errors: {}
     };
   }
@@ -26,25 +28,36 @@ class Login extends Component {
       email: this.state.email.toLowerCase()
     };
 
-    // @todo - Change
-    this.props.passwordReset(user, this.props.history);
+    this.props.passwordReset(user);
 
-    if (this.errors) {
-      this.toggleClass();
-    }
+    this.setState({
+      email: "",
+      emailSubmit: this.state.email.toLowerCase(),
+      result: true
+    })
   };
 
   render() {
+
+    const sentResult = (
+      <p className="text-center">
+        Reset link has been sent to the following email <strong><i>{this.state.emailSubmit}</i></strong>.
+        <br/>
+        If the email was entered incorrectly, please try again.
+      </p>
+    )
     return (
       <div className="content" id="passwordreset">
         <div className="container-fluid">
           <div className="row h-100 justify-content-center align-items-center">
             <div className="col-md-6 col-12 text-center">
-              <img
+              <a href="/">
+                <img
                 src={require("../../assets/img/shrincc_logo_black.png")}
                 width="250px"
                 alt="Brand Logo"
                 />
+              </a>
               <h5 className="text-dark mt-4">
                 Enter your email to reset your password.
               </h5>
@@ -76,6 +89,12 @@ class Login extends Component {
                 <button className="btn btn-primary my-4" type="submit" name="login">Send my password reset link</button>
               </form>
               <p>
+                {this.state.result 
+                ? sentResult 
+                  : ""
+                }
+              </p>
+              <p>
                 <a href="login" className="login-button">Log In </a>
                   or
                 <a href="login" className="login-button"> Sign Up!</a>
@@ -88,7 +107,6 @@ class Login extends Component {
   }
 }
 
-// @todo - import new action
 Login.propTypes = {
   passwordReset: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,

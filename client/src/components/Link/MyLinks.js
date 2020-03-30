@@ -54,8 +54,6 @@ class MyLinks extends Component {
           }
         });
 
-        let avgClickPerDay = (clickThisWeek.length / 7).toFixed(2);
-
         // Create graph data for each row
         let graphData = _.groupBy(clickThisWeek, "date");
 
@@ -94,7 +92,6 @@ class MyLinks extends Component {
           data={dataToSend}
           date={link.date}
           clickCount={link.clicks.length}
-          avgClickPerDay={avgClickPerDay}
           graphColor={graphColor}
           active={link.active}
           key={index}
@@ -124,9 +121,8 @@ class MyLinks extends Component {
                       <th></th>
                       <th className="text-center">Status</th>
                       <th className="text-center">Usage <small>(Last 7 days)</small></th>
-                      <th className="text-center">Avg. Click Per Day <small>(Last 7 days)</small></th>
-                      <th>Total visits</th>
-                      <th>View Link</th>
+                      <th className="text-center table-minimum">Total visits</th>
+                      <th className="text-center table-minimum">View Link</th>
                     </tr>
                   </thead>
                   <tbody>
