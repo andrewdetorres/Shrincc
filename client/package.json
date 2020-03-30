@@ -24,6 +24,7 @@
     "node-sass": "^4.13.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
+    "react-adsense": "^0.1.0",
     "react-calendar-heatmap": "^1.8.1",
     "react-chartist": "^0.14.3",
     "react-chartjs-2": "^2.9.0",
