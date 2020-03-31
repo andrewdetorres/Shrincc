@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import ReCAPTCHA from "react-google-recaptcha";
+import Recaptcha from 'react-google-invisible-recaptcha';
 
 // Import Actions
 import { contactForm } from '../../actions/auth';
+
+const recaptchaRef = React.createRef();
 
 class Contact extends Component {
   constructor(props) {
@@ -21,10 +23,10 @@ class Contact extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  onSubmit = event => {
+  onSubmit = (event) => {
     event.preventDefault();
-
-    this.recaptchaRef.current.execute();
+    
+    this.recaptcha.execute();
     
     const submit = {
       email: this.state.email.toLowerCase(),
@@ -42,6 +44,7 @@ class Contact extends Component {
       emailSubmit: this.state.email.toLowerCase(),
       result: true
     })
+    this.recaptcha.reset();
   };
 
   render() {
@@ -62,11 +65,10 @@ class Contact extends Component {
             <h1>Contact</h1>
             <hr />
             <form onSubmit={this.onSubmit}>
-              <ReCAPTCHA
-                ref={this.recaptchaRef}
-                size="invisible"
+              <Recaptcha
+                ref={ ref => this.recaptcha = ref }
                 sitekey={process.env.REACT_APP_GOOGLE_CAPTCHA_KEY}
-              />
+                onResolved={ () => console.log( 'Human detected.' ) } />
               <div className="input-group justify-content-center">
                 <p>Please ensure form is filled in correctly before submitting.</p>
                 <input
@@ -99,12 +101,10 @@ class Contact extends Component {
                   autoComplete="off"
                   required/>
               </div>
-              <p>
-                {this.state.result 
-                ? sentResult 
-                  : ""
-                }
-              </p>
+              {this.state.result 
+              ? sentResult 
+                : ""
+              }
               <button className="btn btn-primary my-4" type="submit" name="login">Submit</button>
             </form>
           </div>
