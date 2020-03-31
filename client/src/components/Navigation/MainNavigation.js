@@ -32,7 +32,7 @@ class MainNavigation extends Component {
               <li className="nav-item my-auto mx-3">
                 <a className="nav-link text-dark" href="/contact">Contact</a>
               </li>
-              <li className="nav-item my-auto ml-md-2 ml-0 mx-2 my-auto">
+              <li className="nav-item my-auto mx-0 mx-md-2">
                 <a className="nav-link text-dark pl-md-4 pl-0 pr-md-0 px-4" href="/login">
                   <button className="btn btn-primary">
                     Login

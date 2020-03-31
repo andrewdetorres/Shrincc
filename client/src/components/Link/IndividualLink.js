@@ -17,6 +17,7 @@ import { getIndividualLink, deleteLink, updateStatus } from '../../actions/link'
 // Import Components
 import CustomBar from '../Graphs/CustomBar';
 import CustomLine from '../Graphs/CustomLine';
+import ClickTableRow from './ClickTableRow';
 
 const swal = withReactContent(Swal);
 
@@ -141,7 +142,7 @@ class IndividualLink extends Component {
     let osData = [];
 
     // Top Bar Values
-    let active;
+    let rows;
     let clicksTotal;
     let uniqueVisitors;
     let dataToSend = [];
@@ -243,7 +244,7 @@ class IndividualLink extends Component {
       countryStats = Object.keys(country).map(value => {
         return (
           <div className="col-lg-3 col-md-4 col-sm-4 col-12">
-            <p className="text-center">{getName(value)} - {country[value].length}</p>
+            <p className="text-center">{value != "Unknown" ? getName(value) : "Unknown"} - {country[value].length}</p>
           </div>
         )
       })
@@ -287,6 +288,22 @@ class IndividualLink extends Component {
       // Get the Top Bar values
       clicksTotal = currentLink.clicks.length;
       uniqueVisitors = Object.keys(uniqueVisitorsBuilder).length;
+
+      // Individual Click Table
+      rows = currentLink.clicks.map((click, key) => {
+        return (
+          <ClickTableRow
+            countryCode={click.country}
+            countryName={getName(click.country)}
+            date={click.date}
+            time={click.date}
+            browser={click.clientName}
+            os={click.os}
+            device={click.deviceType}
+            key={key}            
+            />
+        )
+      })
     }
 
     return (
@@ -428,6 +445,33 @@ class IndividualLink extends Component {
                   />
                   <ReactTooltip />
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="px-md-5 px-1 mt-3">
+          <div className="card border-0 shadow mx-md-0 mx-4" id="dashboard-table">
+            <div className="card-body pb-0">
+              <div className="text-muted text-center">
+                <table className="table table-responsive-sm table-outline mb-0">
+                  <thead className="thead-white border-0">
+                    <tr>
+                      <th className="text-center">Country</th>
+                      <th className="text-center">Date</th>
+                      <th className="text-center">Time</th>
+                      <th className="text-center">Browser</th>
+                      <th className="text-center">Operating System</th>
+                      <th className="text-center">Device</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows}
+                  </tbody>
+                </table>
+                <p className="my-2">
+                  <a href="/my-links">View All Links</a>
+                </p>
               </div>
             </div>
           </div>
