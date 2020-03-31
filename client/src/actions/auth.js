@@ -178,6 +178,17 @@ export const deleteAccount = (history) => dispatch => {
     });
 };
 
+export const contactForm = (submission) => dispatch => {
+  axios
+    .post("/auth/contactform", submission)
+    .catch(errors => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: errors.response.data
+      });
+    });
+}
+
 export const logoutUser = (history) => dispatch => {
   // Remove token from localStorage
   localStorage.removeItem('token');

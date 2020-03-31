@@ -40,12 +40,13 @@ class Login extends Component {
   render() {
 
     const sentResult = (
-      <p className="text-center">
+      <p className="text-center mt-3">
         Reset link has been sent to the following email <strong><i>{this.state.emailSubmit}</i></strong>.
         <br/>
         If the email was entered incorrectly, please try again.
       </p>
     )
+
     return (
       <div className="content" id="passwordreset">
         <div className="container-fluid">

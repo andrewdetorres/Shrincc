@@ -162,8 +162,6 @@ module.exports = app => {
   //--------------------------------------------------------
   app.post("/auth/reset", (req, res) => {
 
-    console.log("CALLED auth/reset");
-
     User
       .findOne({ email: req.body.email })
       .then((user) => {
@@ -594,6 +592,73 @@ module.exports = app => {
         console.log(error);
         res.status(500).send('Server error');
       });
+  });
+
+   //--------------------------------------------------------
+  //@request  : post
+  //@route    : /auth/contactform
+  //@access   : Public
+  //@isAdmin  : False
+  //@desc     : This route is for a annon users to contact
+  //--------------------------------------------------------
+  app.post("/auth/contactform", (req, res) => {
+
+    console.log("CONTACT FORM", req.body);
+
+    // Set up nodemail
+    let mailer = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: keys.emailUser,
+        pass: keys.emailPass
+      }
+    });
+
+    let options = {
+      viewEngine: {
+        extname: '.html', // handlebars extension
+        layoutsDir: path.join(__dirname, './views/layouts'), // location of handlebars templates
+        defaultLayout: 'contactform',
+        viewPath: path.join(__dirname, './views/layouts'),
+        partialsDir: path.join(__dirname, './views/layouts')
+      },
+      viewPath: path.join(__dirname, './views/layouts'),
+      extName: '.html'
+    }
+
+    mailer.use('compile', hbs(options));
+
+    // Send Email verification
+    mailer.sendMail({
+      from: keys.emailUser, // sender address
+      to: keys.emailUser, // list of receivers
+      subject: 'Shrincc - Contact Form',
+      template: 'contactform',
+      context: {
+        sentEmail: req.body.email,
+        sentName: req.body.name,
+        sentMessage: req.body.message,
+        sentDate: req.body.date,
+      },
+      attachments:[
+        {
+          filename : 'shrincc_logo_black.png',
+          path: path.join(__dirname, 'views/layouts/images/shrincc_logo_black.png'),
+          cid : 'shrincc_logo_black@shrincc.com'
+        },
+        {
+          filename : 'emailheader.png',
+          path: path.join(__dirname, 'views/layouts/images/emailheader.png'),
+          cid : 'emailheader@shrincc.com'
+        }
+      ]
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(400).json(errors);
+    });
   });
 }
 
