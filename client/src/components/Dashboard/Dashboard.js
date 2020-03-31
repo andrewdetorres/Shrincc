@@ -6,7 +6,6 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 import ReactTooltip from 'react-tooltip';
 import { VectorMap } from "react-jvectormap"
 import { overwrite, getName } from 'country-list';
-import AdSense from 'react-adsense';
 import _ from 'lodash';
 
 // Import Actions
@@ -244,15 +243,6 @@ class Dashboard extends Component {
             <li className="breadcrumb-item active pl-5">Dashboard</li>
           </ol>
         </header>
-
-        <div className="px-md-5 px-1 mt-4 text-center">
-          <AdSense.Google
-            client={caPub}
-            slot='7806394673'
-            style={{ width: "100%", height: 50 }}
-            format=''
-          />
-        </div>
 
         {/* First row of cards */}
         <div className="px-md-5 px-1 mt-4">
