@@ -9,7 +9,7 @@ import _ from 'lodash';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { VectorMap } from "react-jvectormap";
-import { overwrite, getName } from 'country-list';
+import { getName } from 'country-list';
 
 // Import Actions
 import { getIndividualLink, deleteLink, updateStatus } from '../../actions/link';
@@ -172,7 +172,7 @@ class IndividualLink extends Component {
       // Get all the clicks based on visit days
       currentLink.clicks.forEach(click => {
         if(daysAgo <= click.date) {
-          clicksCalc.push({"date": click.date.substring(0, 10)});
+          clicksCalc.push({"date": new Date(click.date).toLocaleString('en-GB').substring(0, 10)});
         }
       })
 
@@ -184,7 +184,7 @@ class IndividualLink extends Component {
       // Get all the clicks based on visit days
       currentLink.clicks.forEach(click => {
         if(daysAgoAvg <= click.date) {
-          avgClickCalc.push({"date": click.date.substring(0, 10)});
+          avgClickCalc.push({"date": new Date(click.date).toLocaleString('en-GB').substring(0, 10)});
         }
       })
 
@@ -193,7 +193,7 @@ class IndividualLink extends Component {
       for (let i = this.state.visitDays - 1; i >= 0; i--) {
         let date = new Date();
         date.setDate(date.getDate() - i);
-        var dateCheck = new Date(date).toISOString();
+        var dateCheck = new Date(date).toLocaleString('en-GB');
 
         if (graphData[dateCheck.substring(0, 10)]) {
           dataToSend.push(graphData[dateCheck.substring(0, 10)].length);
@@ -201,7 +201,7 @@ class IndividualLink extends Component {
         else {
           dataToSend.push(0);
         }
-        labelsToSend.push(dateCheck.substring(5, 10));
+        labelsToSend.push(dateCheck.substring(0, 5));
       }
 
       // Set the short link value
@@ -241,9 +241,9 @@ class IndividualLink extends Component {
         mapData[value] = country[value].length;
       })
       
-      countryStats = Object.keys(country).map(value => {
+      countryStats = Object.keys(country).map((value, key) => {
         return (
-          <div className="col-lg-3 col-md-4 col-sm-4 col-12">
+          <div className="col-lg-3 col-md-4 col-sm-4 col-12" key={key}>
             <p className="text-center">{value != "Unknown" ? getName(value) : "Unknown"} - {country[value].length}</p>
           </div>
         )
@@ -268,16 +268,18 @@ class IndividualLink extends Component {
       // Collect Heatmap data
       // Push the date of each link click to array
       currentLink.clicks.forEach(click => {
-        heatData.push({date: click.date.substring(0, 10)})
+        heatData.push({date: new Date(click.date).toLocaleString('en-GB',).substring(0, 10)})
       });
 
       // Group results by date
       let nextHeatData = _.groupBy(heatData, "date");
-
+      
       // Iterate through array and build data structure for heatmap
       Object.keys(nextHeatData).forEach(click => {
+        console.log(click.substring(6, 10)  + "-" + click.substring(3, 5) + "-" + click.substring(0, 2));
         obj = {
-          "date": click, "count": nextHeatData[click].length
+          "date": click.substring(6, 10)  + "-" + click.substring(3, 5) + "-" + click.substring(0, 2),
+          "count": nextHeatData[click].length
         }
         if(nextHeatData[click].length > higgestClickCount) {
           higgestClickCount = nextHeatData[click].length;
@@ -454,6 +456,10 @@ class IndividualLink extends Component {
           <div className="card border-0 shadow mx-md-0 mx-4" id="dashboard-table">
             <div className="card-body pb-0">
               <div className="text-muted text-center">
+                <div className="text-center">
+                  <h4 className="m-0">Advanced Click Stats - {shortLink}</h4>
+                  <small className="text-light">Individual Click Stats</small>
+                </div>
                 <table className="table table-responsive-sm table-outline mb-0">
                   <thead className="thead-white border-0">
                     <tr>
