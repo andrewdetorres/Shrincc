@@ -273,7 +273,7 @@ class IndividualLink extends Component {
 
       // Group results by date
       let nextHeatData = _.groupBy(heatData, "date");
-      
+
       // Iterate through array and build data structure for heatmap
       Object.keys(nextHeatData).forEach(click => {
         console.log(click.substring(6, 10)  + "-" + click.substring(3, 5) + "-" + click.substring(0, 2));
@@ -453,14 +453,14 @@ class IndividualLink extends Component {
         </div>
 
         <div className="px-md-5 px-1 mt-3">
-          <div className="card border-0 shadow mx-md-0 mx-4" id="dashboard-table">
+          <div className="card border-0 shadow mx-md-0 mx-4">
             <div className="card-body pb-0">
-              <div className="text-muted text-center">
-                <div className="text-center">
-                  <h4 className="m-0">Advanced Click Stats - {shortLink}</h4>
-                  <small className="text-light">Individual Click Stats</small>
-                </div>
-                <table className="table table-responsive-sm table-outline mb-0">
+              <div className="text-center py-2">
+                <h4 className="m-0">Advanced Click Stats</h4>
+                <small className="text-light">Idividual click insights for each visit to the link</small>
+              </div>
+              <div className="text-muted text-center click-table">
+                <table className="table table-responsive-sm table-outline mb-0 ">
                   <thead className="thead-white border-0">
                     <tr>
                       <th className="text-center">Country</th>
