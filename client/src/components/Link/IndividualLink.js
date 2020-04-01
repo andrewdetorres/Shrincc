@@ -128,6 +128,7 @@ class IndividualLink extends Component {
     let linkImage;
     let linkTitle;
     let linkDescription;
+    let linkCreated;
 
     // Graph data
     let browser = [];
@@ -290,6 +291,7 @@ class IndividualLink extends Component {
       // Get the Top Bar values
       clicksTotal = currentLink.clicks.length;
       uniqueVisitors = Object.keys(uniqueVisitorsBuilder).length;
+      linkCreated = new Date(currentLink.date).toLocaleString('en-GB').substring(0,10);
 
       // Individual Click Table
       rows = currentLink.clicks.map((click, key) => {
@@ -305,7 +307,19 @@ class IndividualLink extends Component {
             key={key}            
             />
         )
-      })
+      });
+
+      // Return a new link prompt if now links created
+      if (rows.length < 1) {
+        rows = (
+          <tr>
+            <td colSpan="7" className="text-center">
+              <p>No visits have been recorded yet</p>
+              <p>Create a new link <a href="/new">here</a></p>
+            </td>
+          </tr>
+        )
+      }
     }
 
     return (
@@ -324,18 +338,21 @@ class IndividualLink extends Component {
           <div className="card-group shadow mb-4 mx-md-0 mx-4 bg-white">
             {/* Links Created */}
             <div className="card border-0">
-              <div className="card-body py-4 text-center">
-                <p className="text-dark mt-2">
+              <div className="card-body pt-4 text-center">
+                <p className="text-dark m-0">
                   {linkImage} {linkTitle}
                 </p>
-                <h5 className="m-0 p-0">
+                <h5 className="m-0 py-2">
                   {shortLink}
                   &nbsp;|&nbsp;
                   <span className="cursor-pointer" onClick={this.CopyText}>
                     {this.state.copied ? "Copied" : "Copy"}
                   </span>
                 </h5>
-                <p className="text-light mt-3 link-description">
+                <small className="text-dark mb-0 link-description">
+                  Link Created : {linkCreated}
+                </small>
+                <p className="text-light mt-0 link-description">
                   {linkDescription}
                 </p>
               </div>
