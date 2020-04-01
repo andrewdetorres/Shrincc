@@ -7,8 +7,6 @@ import Recaptcha from 'react-google-invisible-recaptcha';
 // Import Actions
 import { contactForm } from '../../actions/auth';
 
-const recaptchaRef = React.createRef();
-
 class Contact extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +38,7 @@ class Contact extends Component {
     this.setState({
       email: "",
       message: "",
-      mail: "",
+      name: "",
       emailSubmit: this.state.email.toLowerCase(),
       result: true
     })

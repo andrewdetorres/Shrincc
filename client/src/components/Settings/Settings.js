@@ -7,10 +7,14 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import EditProfile from './EditProfile';
 import AccountSettings from "./AccountSettings";
 import SocialMedia from "./SocialMedia";
-import PrivacySecurity from "./PrivacySecurity";
 
 class Settings extends Component {
 
+  logoutUser = () => {
+    this.props.logoutUser(this.props.history);
+    this.props.history.push('/login');
+  }
+  
   render() {
 
     let ProfilePictureURL = null;
@@ -61,12 +65,18 @@ class Settings extends Component {
                     </a>
                   </div>
                   <div className="item-icons my-4">
-                    <a href="/settings/privacy-security" className="py-2">
+                    <a href="/privacy" className="py-2">
                       <FontAwesomeIcon icon={['fas', 'user-secret']} className="mr-2 my-auto"/>
-                        Privacy and Security
+                        Privacy Policy
                     </a>
                   </div>
-                  <a href="/logout" onClick={this.logoutUser} className="btn btn-primary">Logout</a>
+                  <div className="item-icons my-4">
+                    <a href="/cookies" className="py-2">
+                      <FontAwesomeIcon icon={['fas', 'cookie-bite']} className="mr-2 my-auto"/>
+                        Cookies
+                    </a>
+                  </div>
+                  <a href="/api/logout" onClick={this.logoutUser} className="btn btn-primary">Logout</a>
                 </div>
               </div>
             </div>
@@ -75,7 +85,6 @@ class Settings extends Component {
                 <Route path="/settings/account-settings" component={AccountSettings} />
                 <Route path="/settings/edit-profile" component={EditProfile} />
                 <Route path="/settings/social-media" component={SocialMedia} />
-                <Route path="/settings/privacy-security" component={PrivacySecurity} />
                 <Redirect from="/settings" to="/settings/account-settings" />
                 <Redirect from="/settings/*" to="/settings/account-settings" />
               </Switch>
