@@ -18,7 +18,16 @@
 
 .wizard-item {
   .wizard-item-form {
-    width: 400px;
+    width: 250px;
     margin: 0 auto;
+    @media screen and (min-width: map-get($break-points, 'small')) {
+      width: 350px;
+    }
+    @media screen and (min-width: map-get($break-points, 'medium')) {
+      width: 400px;
+    }
+    @media screen and (min-width: map-get($break-points, 'large')) {
+      width: 500px;
+    }
   }
 }
