@@ -6,7 +6,7 @@ export default class ClickTableRow extends Component {
   render() {
     return (
       <tr>
-        <td className="text-center">
+        <td className="text-left">
           <div>
           {(this.props.countryCode != "Unknown" ? countryFlagEmoji.get(this.props.countryCode).emoji : "Unknown")} {this.props.countryName}
           </div>

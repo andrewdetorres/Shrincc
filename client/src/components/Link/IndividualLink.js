@@ -463,7 +463,7 @@ class IndividualLink extends Component {
                 <table className="table table-responsive-sm table-outline mb-0 ">
                   <thead className="thead-white border-0">
                     <tr>
-                      <th className="text-center">Country</th>
+                      <th className="text-left">Country</th>
                       <th className="text-center">Date</th>
                       <th className="text-center">Time</th>
                       <th className="text-center">Browser</th>
@@ -475,9 +475,6 @@ class IndividualLink extends Component {
                     {rows}
                   </tbody>
                 </table>
-                <p className="my-2">
-                  <a href="/my-links">View All Links</a>
-                </p>
               </div>
             </div>
           </div>
