@@ -33,18 +33,18 @@ class MainNavigation extends Component {
             <ul className="navbar-nav mr-auto">
             </ul>
             <ul className="navbar-nav navbar-right mr-2">
+              <li className="nav-item my-auto mx-3">
+                <a className="nav-link text-dark" href="/">Dashboard</a>
+              </li>
+              <li className="nav-item my-auto mx-3">
+                <a className="nav-link text-dark" href="/contact">Contact</a>
+              </li>
               <li className="nav-item my-auto mx-2">
                 <a className="nav-link text-dark px-2" href="/new">
                   <button className="btn btn-primary">
                     New Link
                   </button>
                 </a>
-              </li>
-              <li className="nav-item my-auto mx-3">
-                <a className="nav-link text-dark" href="/">Dashboard</a>
-              </li>
-              <li className="nav-item my-auto mx-3">
-                <a className="nav-link text-dark" href="/contact">Contact</a>
               </li>
               <li className="nav-item ml-lg-2">
                 <a className="nav-link dropdown-toggle px-0" href="/profile"id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

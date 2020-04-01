@@ -6,7 +6,6 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 import ReactTooltip from 'react-tooltip';
 import { VectorMap } from "react-jvectormap"
 import { overwrite, getName } from 'country-list';
-import AdSense from 'react-adsense';
 import _ from 'lodash';
 
 // Import Actions
@@ -80,19 +79,22 @@ class Dashboard extends Component {
           stats.push(click);
 
           if(click.date >= oneWeekAgo) {
-            clickThisWeek.push({"date": click.date.substring(0, 10)});
+            clickThisWeek.push({"date": new Date(click.date).toLocaleString('en-GB').substring(0, 10)});
           }
         })
 
         // Create graph data for each row
         let dataToSend = [];
         let graphData = _.groupBy(clickThisWeek, "date");
+        
+        console.log("clickThisWeek", clickThisWeek);
+        console.log("GRAPH", graphData);
 
         // Build graph data for the past 7 days
         for (let i = 6; i >= 0; i--) {
           let date = new Date();
           date.setDate(date.getDate() - i);
-          var dateCheck = new Date(date).toISOString();
+          var dateCheck = new Date(date).toLocaleString('en-GB');
 
           if (graphData[dateCheck.substring(0, 10)]) {
             dataToSend.push(graphData[dateCheck.substring(0, 10)].length);
@@ -101,6 +103,8 @@ class Dashboard extends Component {
             dataToSend.push(0);
           }
         }
+
+        console.log("DATA", dataToSend);
 
         // Set the graph color based on if the data has improved
         let graphColor;
@@ -120,7 +124,7 @@ class Dashboard extends Component {
           // Create a new date value
           let date = new Date();
           date.setDate(date.getDate() - i);
-          var dateCheck2 = new Date(date).toISOString();
+          var dateCheck2 = new Date(date).toLocaleString('en-GB');
   
           if (graphData[dateCheck2.substring(0, 10)]) {
             if (!clickDataToSend[dateCheck2.substring(0, 10)]) {
@@ -180,7 +184,7 @@ class Dashboard extends Component {
       countryStats = Object.keys(country).map((value, key) => {
         return (
           <div className="col-lg-3 col-md-4 col-sm-4 col-12" key={key} >
-            <p className="text-center">{getName(value)} - {country[value].length}</p>
+          <p className="text-center">{value != "Unknown" ? getName(value) : "Unknown"} - {country[value].length}</p>
           </div>
         )
       })
@@ -202,17 +206,19 @@ class Dashboard extends Component {
       // Push the date of each link click to array
       this.props.link.AllLinks.forEach(link => {
         link.clicks.forEach(click => {
-          heatData.push({date: click.date.substring(0, 10)})
+          heatData.push({date: new Date(click.date).toLocaleString('en-GB',).substring(0, 10)})
         });
       });
 
       // Group results by date
       let nextHeatData = _.groupBy(heatData, "date");
-
+      
       // Iterate through array and build data structure for heatmap
       Object.keys(nextHeatData).forEach(click => {
+        console.log(click.substring(6, 10)  + "-" + click.substring(3, 5) + "-" + click.substring(0, 2));
         obj = {
-          "date": click, "count": nextHeatData[click].length
+          "date": click.substring(6, 10)  + "-" + click.substring(3, 5) + "-" + click.substring(0, 2),
+          "count": nextHeatData[click].length
         }
         if(nextHeatData[click].length > higgestClickCount) {
           higgestClickCount = nextHeatData[click].length;
@@ -233,8 +239,6 @@ class Dashboard extends Component {
 
     }
 
-    let caPub = process.env.REACT_APP_GOOGLE_ADSENSE;
-
     return (
 
       <div className="shrincc-wrapper pb-5">
@@ -244,15 +248,6 @@ class Dashboard extends Component {
             <li className="breadcrumb-item active pl-5">Dashboard</li>
           </ol>
         </header>
-
-        <div className="px-md-5 px-1 mt-4 text-center">
-          <AdSense.Google
-            client={caPub}
-            slot='7806394673'
-            style={{ width: "100%", height: 50 }}
-            format=''
-          />
-        </div>
 
         {/* First row of cards */}
         <div className="px-md-5 px-1 mt-4">
@@ -344,8 +339,8 @@ class Dashboard extends Component {
                 </div>
                 <div className="px-5 py-3 heatmap-container">
                   <CalendarHeatmap
-                    startDate={new Date('2020-01-01')}
-                    endDate={new Date('2020-12-31')}
+                    startDate={new Date('2020/01/01')}
+                    endDate={new Date('2020/12/31')}
                     showOutOfRangeDays={true}
                     values={heatDataFinal}
                     classForValue={(value) => {
