@@ -34,6 +34,15 @@
   }
 }
 
+
+#login,
+#register {
+  background: white;
+  @media screen and (min-width: map-get($break-points, 'medium')) {
+    background: url('../../assets/img/features-background.png') center center no-repeat;
+    background-size: cover; 
+  }
+}
 .logo {
   max-width: 200px;
 }

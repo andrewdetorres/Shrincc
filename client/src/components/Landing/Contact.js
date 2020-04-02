@@ -58,55 +58,58 @@ class Contact extends Component {
     return (
       <>
         {/* Masthead */}
-        <div className="masthead container-fluid d-flex justify-content-center align-items-center pb-5" id="contact">
-          <div className="landing-text text-dark text-center">
-            <h1>Contact</h1>
-            <hr />
-            <form onSubmit={this.onSubmit}>
-              <Recaptcha
-                ref={ ref => this.recaptcha = ref }
-                sitekey={process.env.REACT_APP_GOOGLE_CAPTCHA_KEY}
-                onResolved={ () => console.log( 'Human detected.' ) } />
-              <div className="input-group justify-content-center">
-                <p>Please ensure form is filled in correctly before submitting.</p>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email Address"
-                  className="w-75 mt-4 px-3"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  autoComplete="off"
-                  required/>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  className="w-75 mt-4 px-3"
-                  value={this.state.name}
-                  onChange={this.onChange}
-                  autoComplete="off"
-                  required/>
-                <textarea
-                  type="text"
-                  name="message"
-                  placeholder="Message"
-                  className="w-75 mt-4 px-3"
-                  rows="7" 
-                  cols="50"
-                  value={this.state.message}
-                  onChange={this.onChange}
-                  autoComplete="off"
-                  required/>
-              </div>
-              {this.state.result 
-              ? sentResult 
-                : ""
-              }
-              <button className="btn btn-primary my-4" type="submit" name="login">Submit</button>
-            </form>
+
+        <header id="header" className="header">
+          <div className="masthead container-fluid d-flex justify-content-center align-items-center py-5" id="contact">
+            <div className="landing-text text-dark text-center">
+              <h1 className="pt-5">Contact Form</h1>
+              <hr />
+              <form onSubmit={this.onSubmit}>
+                <Recaptcha
+                  ref={ ref => this.recaptcha = ref }
+                  sitekey={process.env.REACT_APP_GOOGLE_CAPTCHA_KEY}
+                  onResolved={ () => console.log( 'Human detected.' ) } />
+                <div className="input-group justify-content-center">
+                  <p>Please ensure form is filled in correctly before submitting.</p>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email Address"
+                    className="w-75 mt-4 px-3"
+                    value={this.state.email}
+                    onChange={this.onChange}
+                    autoComplete="off"
+                    required/>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    className="w-75 mt-4 px-3"
+                    value={this.state.name}
+                    onChange={this.onChange}
+                    autoComplete="off"
+                    required/>
+                  <textarea
+                    type="text"
+                    name="message"
+                    placeholder="Message"
+                    className="w-75 mt-4 px-3"
+                    rows="7" 
+                    cols="50"
+                    value={this.state.message}
+                    onChange={this.onChange}
+                    autoComplete="off"
+                    required/>
+                </div>
+                {this.state.result 
+                ? sentResult 
+                  : ""
+                }
+                <button className="btn btn-primary my-4" type="submit" name="login">Submit</button>
+              </form>
+            </div>
           </div>
-        </div>
+        </header>
       </>
     )
   }
