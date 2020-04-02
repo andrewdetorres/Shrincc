@@ -114,7 +114,7 @@ class Landing extends Component {
 
         <div id="pricing" className="cards-2">
           <div className="d-flex">
-            <div className="text-center mx-auto col-6 pb-3">
+            <div className="text-center mx-auto col-md-6 pb-3">
               <h2><span className="text-primary"><strong>Multiple Pricing Options</strong></span></h2>
               <p className="p-heading p-large">
                 Currently our free option is available to all users. 
@@ -123,7 +123,7 @@ class Landing extends Component {
             </div>
           </div> 
           <div className="d-flex container-fluid flex-md-row flex-column justify-content-around align-items-center align-items-md-stretch mb-3">
-            <div className="card mx-3">
+            <div className="card mx-3 mb-md-0 mb-3">
               <div className="card-body">
                 <div className="card-title">Basic</div>
                 <div className="card-subtitle">Just to see what can be achieved</div>
@@ -166,7 +166,7 @@ class Landing extends Component {
               </div>
             </div> 
 
-            <div className="card mx-3">
+            <div className="card mx-3 mb-md-0 mb-3">
               <div className="label">
                 <p className="best-value">Coming Soon</p>
               </div>
@@ -211,7 +211,7 @@ class Landing extends Component {
                 </ul>
               </div>
             </div>
-            <div className="card mx-3">
+            <div className="card mx-3 mb-md-0 mb-3">
               <div className="label">
                 <p className="best-value">Coming Soon</p>
               </div>
