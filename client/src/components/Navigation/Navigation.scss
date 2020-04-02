@@ -32,8 +32,22 @@
   }
 }
 
-.navbar-collapse{
+.navbar {    
+  z-index: 999;
+  background: white !important;
+  @media screen and (min-width: 992px) {
+    background: transparent !important;
+  }
+}
+
+.navbar-collapse {
   text-align: center;
+  .nav-link {
+    color: black !important;
+    @media screen and (min-width: 992px) {
+      color: white !important;
+    }
+  }
 }
 
 .dropdown-toggle::after {

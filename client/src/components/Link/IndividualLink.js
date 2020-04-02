@@ -519,7 +519,7 @@ class IndividualLink extends Component {
                   </li>
                 </div>
                 <div>
-                  <CustomLine data={dataToSend} labels={labelsToSend} graphColor={"#00beff"}/>
+                  <CustomLine data={dataToSend} labels={labelsToSend} graphColor={"#01BFD9"}/>
                 </div>
               </div>
             </div>

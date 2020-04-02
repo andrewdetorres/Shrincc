@@ -12,12 +12,12 @@
   stroke-width: 4px;
 }
 .ct-series-a .ct-bar {
-  stroke: #00beff;
+  stroke: #01BFD9;
   stroke-width: 20px;
 }
 
 .ct-series-a .ct-bar {
-  stroke: #00beff !important;
+  stroke: #01BFD9 !important;
   stroke-width: 20px;
 }
 
@@ -28,7 +28,7 @@
   &:hover{
     fill: #fff;
     stroke-width: 10;
-    stroke: #00beff;
+    stroke: #01BFD9;
   }
 }
 
@@ -49,5 +49,5 @@
 // Heatmap
 .react-calendar-heatmap text.react-calendar-heatmap-month-label {
   font-size: 6px;
-  fill: #00beff;
+  fill: #01BFD9;
 }

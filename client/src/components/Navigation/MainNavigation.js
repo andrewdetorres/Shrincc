@@ -9,7 +9,7 @@ class MainNavigation extends Component {
   render() {
     return (
       <Fragment>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-transparent py-3 px-md-5 px-4">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-transparent py-3 px-md-5 px-4" id="main-navabar">
           <a className="navbar-brand ml-2 logo-font text-dark" href="/">
             <img src={require("../../assets/img/shrincc_logo_black.png")} height="50px" alt="Brand logo"/>
           </a>
@@ -20,21 +20,21 @@ class MainNavigation extends Component {
             <ul className="navbar-nav mr-auto">
             </ul>
             <ul className="navbar-nav navbar-right mr-2">
-              <li className="nav-item my-auto mx-3">
-                <a className="nav-link text-dark" href="/">Home</a>
+              <li className="nav-item my-auto mx-2">
+                <a className="nav-link" href="/">Home</a>
               </li>
-              <li className="nav-item my-auto mx-3">
-                <a className="nav-link text-dark" href="/articles">Articles</a>
+              <li className="nav-item my-auto mx-2">
+                <a className="nav-link" href="#features">Features</a>
               </li>
-              <li className="nav-item my-auto mx-3">
-                <a className="nav-link text-dark" href="/about">About Shrincc</a>
+              <li className="nav-item my-auto mx-2">
+                <a className="nav-link" href="#pricing">Pricing</a>
               </li>
-              <li className="nav-item my-auto mx-3">
-                <a className="nav-link text-dark" href="/contact">Contact</a>
+              <li className="nav-item my-auto mx-2">
+                <a className="nav-link" href="/contact">Contact</a>
               </li>
               <li className="nav-item my-auto mx-0 mx-md-2">
-                <a className="nav-link text-dark pl-md-4 pl-0 pr-md-0 px-4" href="/login">
-                  <button className="btn btn-primary">
+                <a className="nav-link px-3" href="/login">
+                  <button className="btn btn-white text-dark">
                     Login
                   </button>
                 </a>
