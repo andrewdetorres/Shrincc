@@ -8,7 +8,7 @@ class Cookies extends Component {
         {/* Masthead */}
         <div className="masthead container-fluid d-flex justify-content-center align-items-center pb-5">
           <div className="landing-text text-dark text-left">
-            <h1>Shrincc Cookies Policy</h1>
+            <h1>Welcome To Our Cookies Policy</h1>
             <hr />
             <p>Last updated 26th March, 2020</p>
 
