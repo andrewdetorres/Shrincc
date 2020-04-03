@@ -27,12 +27,42 @@ module.exports = app => {
           generateUniqueURLKey()
             .then(uniqueURLKey => {
 
+              // Create new link object
+              const newLink = {
+                longLink: req.body.longLink,
+                shortLink: uniqueURLKey,
+                title: metadata.general.title,
+                description: metadata.general.description,
+                user: req.user.id
+              }
+
+              // Create new link in DB
+              new Link(newLink)
+                .save()
+                .then(link => {
+                  res.send(link);
+                })
+                .catch(error => {
+                  // Handle error if looged in user not found
+                  res.status(500).send('Server error');
+                  console.log(error);
+                });
+          })
+          .catch(error => {
+            // Handle error if looged in user not found
+            res.status(500).send('Server error');
+            console.log(error);
+          });
+      })
+      .catch(error => {
+        // If meta data scrape fails, create link without meta data.
+        generateUniqueURLKey()
+          .then(uniqueURLKey => {
+
             // Create new link object
             const newLink = {
               longLink: req.body.longLink,
               shortLink: uniqueURLKey,
-              title: metadata.general.title,
-              description: metadata.general.description,
               user: req.user.id
             }
 
@@ -47,32 +77,12 @@ module.exports = app => {
                 res.status(500).send('Server error');
                 console.log(error);
               });
-          })
-          .catch(error => {
-            // Handle error if looged in user not found
-            res.status(500).send('Server error');
-            console.log(error);
-          });
-      })
-      .catch(error => {
-        // If meta data scrape fails, create link without meta data.
-        const newLink = {
-          longLink: req.body.longLink,
-          shortLink: generateUniqueURLKey(),
-          user: req.user.id
-        }
-
-        // Create new link in DB
-        new Link(newLink)
-          .save()
-          .then(link => {
-            res.send(link);
-          })
-          .catch(error => {
-            // Handle error if looged in user not found
-            res.status(500).send('Server error');
-            console.log(error);
-          });
+        })
+        .catch(error => {
+          // Handle error if looged in user not found
+          res.status(500).send('Server error');
+          console.log(error);
+        });
       });
   })
 
