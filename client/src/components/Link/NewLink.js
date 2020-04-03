@@ -18,8 +18,17 @@ class NewLink extends Component {
     this.state = {
       link: "",
       copied: false,
+      loading: false,
       errors: {}
     };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.link.shortLink !== this.props.link.shortLink) {
+      this.setState({
+        loading: false
+      });
+    }
   }
 
   CopyText = () => {
@@ -43,6 +52,10 @@ class NewLink extends Component {
   }
   onSubmit = (event) => {
     event.preventDefault();
+
+    this.setState({
+      loading: true
+    });
 
     if (isUrl(this.state.link)) {
       this.props.createLink({longLink: this.state.link});
@@ -118,6 +131,11 @@ class NewLink extends Component {
                       {copy}
                   </div>
                   {this.state.errors.URL ? <span className="text-danger">{this.state.errors.URL}</span> : ""}
+                  {this.state.loading &&
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  }
                 </form>
               </div>
             </div>
