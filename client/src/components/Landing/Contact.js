@@ -58,7 +58,6 @@ class Contact extends Component {
     return (
       <>
         {/* Masthead */}
-
         <header id="header" className="header">
           <div className="masthead container-fluid d-flex justify-content-center align-items-center py-5" id="contact">
             <div className="landing-text text-dark text-center">

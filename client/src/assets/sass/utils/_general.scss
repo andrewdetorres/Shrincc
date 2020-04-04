@@ -16,3 +16,7 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+svg {
+  pointer-events: none;
+}

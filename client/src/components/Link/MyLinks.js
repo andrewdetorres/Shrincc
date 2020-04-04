@@ -104,7 +104,7 @@ class MyLinks extends Component {
         {/* Sub header with breadcrumbs */}
         <header className="border-top">
           <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
-            <li className="breadcrumb-item pl-5"><a href="/">Dashboard</a></li>
+            <li className="breadcrumb-item pl-md-5 pl-3"><a href="/">Dashboard</a></li>
             <li className="breadcrumb-item active">My Links</li>
           </ol>
         </header>
