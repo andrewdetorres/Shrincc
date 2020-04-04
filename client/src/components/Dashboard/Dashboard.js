@@ -245,7 +245,7 @@ class Dashboard extends Component {
         {/* Sub header with breadcrumbs */}
         <header className="border-top">
           <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
-            <li className="breadcrumb-item active pl-5">Dashboard</li>
+            <li className="breadcrumb-item active pl-md-5 pl-3">Dashboard</li>
           </ol>
         </header>
 

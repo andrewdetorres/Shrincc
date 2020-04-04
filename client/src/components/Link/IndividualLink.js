@@ -328,7 +328,7 @@ class IndividualLink extends Component {
 
         <header className="border-top">
           <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
-            <li className="breadcrumb-item pl-5"><a href="/">Dashboard</a></li>
+            <li className="breadcrumb-item pl-md-5 pl-3"><a href="/">Dashboard</a></li>
             <li className="breadcrumb-item active">Link - {this.props.match.params.linkId}</li>
           </ol>
         </header>
@@ -422,8 +422,8 @@ class IndividualLink extends Component {
           </div>
         </div>
 
-        <div className="px-5 mt-3">
-          <div className="card border-0 shadow">
+        <div className="px-md-5 px-1 mt-1">
+          <div className="card border-0 shadow mx-md-0 mx-4">
             <div className="card-body">
               <div className="c-chart-wrapper">
                 <h4>Daily Click Heatmap</h4>
@@ -621,7 +621,7 @@ class IndividualLink extends Component {
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-end px-md-5 px-1 mt-3">
+        <div className="d-flex justify-content-end px-md-5 px-4 mt-3">
           <button className="btn btn-danger" onClick={this.deleteConfirm}>Delete Link</button>
         </div>
       </div>

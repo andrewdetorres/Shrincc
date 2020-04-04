@@ -196,5 +196,4 @@ export const logoutUser = (history) => dispatch => {
   setAuthToken(false);
   // Push to logout
   history.push("/api/logout");
-
 };

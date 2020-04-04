@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
+// Import Actions
+import { logoutUser } from '../../actions/auth';
+
 // Import Components
 import EditProfile from './EditProfile';
 import AccountSettings from "./AccountSettings";
@@ -28,7 +31,7 @@ class Settings extends Component {
         {/* Sub header with breadcrumbs */}
         <header className="border-top">
           <ol className="breadcrumb bg-white border-0 rounded-0 m-0">
-            <li className="breadcrumb-item pl-5"><a href="/">Dashboard</a></li>
+            <li className="breadcrumb-item pl-md-5 pl-3"><a href="/">Dashboard</a></li>
             <li className="breadcrumb-item active">Account Settings</li>
           </ol>
         </header>
@@ -95,9 +98,10 @@ class Settings extends Component {
     )
   }
 }
+
 const mapStateToProps = state => ({
   auth: state.auth,
   profile: state.profile
 });
 
-export default connect(mapStateToProps, {})(withRouter(Settings));
+export default connect(mapStateToProps, { logoutUser })(withRouter(Settings));
