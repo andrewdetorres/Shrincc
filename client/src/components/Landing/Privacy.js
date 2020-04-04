@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Footer from '../Navigation/Footer';
 
 class Privacy extends Component {
   render() {
@@ -51,15 +50,10 @@ class Privacy extends Component {
             
             
             <h2>Privacy Policy Changes</h2>
-            <p>Although most changes are likely to be minor, Shrincc may change its Privacy Policy from time to time, and in Shrincc's sole discretion. Shrincc encourages visitors to frequently check this page for any changes to its Privacy Policy. Your continued use of this site after any change in this Privacy Policy will constitute your acceptance of such change.</p>
-            
-            
-                    
-            <h2></h2>			  
-            <p></p>			
+            <p>Although most changes are likely to be minor, Shrincc may change its Privacy Policy from time to time, and in Shrincc's sole discretion. Shrincc encourages visitors to frequently check this page for any changes to its Privacy Policy. Your continued use of this site after any change in this Privacy Policy will constitute your acceptance of such change.</p>		
             
             <h2>Credit & Contact Information</h2>
-            <p>This privacy policy was created at <a href="https://termsandconditionstemplate.com/privacy-policy-generator/" title="Privacy policy template generator" target="_blank">termsandconditionstemplate.com</a>. If you have any questions about this Privacy Policy, please contact us via <a href="mailto:noreplyshrincc@gmail.com">email</a></p>
+            <p>This privacy policy was created at <a href="https://termsandconditionstemplate.com/privacy-policy-generator/" title="Privacy policy template generator" target="_blank" rel="noopener noreferrer">termsandconditionstemplate.com</a>. If you have any questions about this Privacy Policy, please contact us via <a href="mailto:noreplyshrincc@gmail.com">email</a></p>
 					
             <h3 className="bold">CONTACT US</h3>
 

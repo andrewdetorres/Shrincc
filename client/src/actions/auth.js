@@ -12,7 +12,6 @@ import {
   IS_ACTIVATED_SUCCESSFUL,
   RESET_FAILED,
   ACCOUNT_DELETED,
-  ACCOUNT_DELETED_FAILED,
   GET_ERRORS,
   USER_LOADED,
   AUTH_ERROR,
@@ -169,7 +168,11 @@ export const emailReset = (userData) => dispatch => {
 export const deleteAccount = (history) => dispatch => {
   axios
     .delete("/auth/delete")
-    .then()
+    .then(
+      dispatch({
+        type: ACCOUNT_DELETED,
+      })
+    )
     .catch(errors => {
       dispatch({
         type: GET_ERRORS,

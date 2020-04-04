@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Footer from '../Navigation/Footer';
 
 class Cookies extends Component {
   render() {

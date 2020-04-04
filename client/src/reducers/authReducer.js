@@ -6,7 +6,6 @@ import {
   RESET_SUCCESSFUL,
   EMAIL_RESET_SUCCESSFUL,
   IS_ACTIVATED_SUCCESSFUL,
-  ACCOUNT_DELETED,
   RESET_FAILED,
   USER_LOADED,
   AUTH_ERROR
@@ -64,13 +63,6 @@ export default function (state = initialState, action) {
           ...state.user,
           activated: action.payload
         }
-      }
-    case ACCOUNT_DELETED:
-      return  {
-        ...state,
-        token: null,
-        isAuthenticated: false,
-        loading: false,
       }
     default:
       return state;
