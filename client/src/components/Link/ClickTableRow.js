@@ -8,7 +8,7 @@ export default class ClickTableRow extends Component {
       <tr>
         <td className="text-left" style={{"min-width":"200px"}}>
           <div>
-          {(this.props.countryCode != "Unknown" ? countryFlagEmoji.get(this.props.countryCode).emoji : "Unknown")} {this.props.countryName}
+          {(this.props.countryCode !== "Unknown" ? countryFlagEmoji.get(this.props.countryCode).emoji : "Unknown")} {this.props.countryName}
           </div>
         </td>
         <td className="text-center" style={{"min-width":"150px"}}>

@@ -245,7 +245,7 @@ class IndividualLink extends Component {
       countryStats = Object.keys(country).map((value, key) => {
         return (
           <div className="col-lg-3 col-md-4 col-sm-4 col-12" key={key}>
-            <p className="text-center">{value != "Unknown" ? getName(value) : "Unknown"} - {country[value].length}</p>
+            <p className="text-center">{value !== "Unknown" ? getName(value) : "Unknown"} - {country[value].length}</p>
           </div>
         )
       })
@@ -277,7 +277,6 @@ class IndividualLink extends Component {
 
       // Iterate through array and build data structure for heatmap
       Object.keys(nextHeatData).forEach(click => {
-        console.log(click.substring(6, 10)  + "-" + click.substring(3, 5) + "-" + click.substring(0, 2));
         obj = {
           "date": click.substring(6, 10)  + "-" + click.substring(3, 5) + "-" + click.substring(0, 2),
           "count": nextHeatData[click].length
@@ -458,9 +457,6 @@ class IndividualLink extends Component {
                         "data-tip": `${(value.date ? "Date : " + value.date + " | ": "") + (value.count ? "Clicks : " + value.count : "")}`
                       };
                     }}
-                    onClick={(value) => {
-                      console.log(value);
-                    }}
                   />
                   <ReactTooltip />
                 </div>
@@ -622,7 +618,7 @@ class IndividualLink extends Component {
           </div>
         </div>
         <div className="d-flex justify-content-end px-md-5 px-4 mt-3">
-          <button className="btn btn-danger" onClick={this.deleteConfirm}>Delete Link</button>
+s          <button className="btn btn-danger" onClick={this.deleteConfirm}>Delete Link</button>
         </div>
       </div>
     )

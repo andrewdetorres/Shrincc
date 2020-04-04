@@ -67,7 +67,7 @@ class Contact extends Component {
                 <Recaptcha
                   ref={ ref => this.recaptcha = ref }
                   sitekey={process.env.REACT_APP_GOOGLE_CAPTCHA_KEY}
-                  onResolved={ () => console.log( 'Human detected.' ) } />
+                  onResolved={ () => console.log( 'Captcha Success.' ) } />
                 <div className="input-group justify-content-center">
                   <p>Please ensure form is filled in correctly before submitting.</p>
                   <input
