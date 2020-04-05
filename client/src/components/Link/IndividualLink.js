@@ -618,7 +618,7 @@ class IndividualLink extends Component {
           </div>
         </div>
         <div className="d-flex justify-content-end px-md-5 px-4 mt-3">
-s          <button className="btn btn-danger" onClick={this.deleteConfirm}>Delete Link</button>
+          <button className="btn btn-danger" onClick={this.deleteConfirm}>Delete Link</button>
         </div>
       </div>
     )
