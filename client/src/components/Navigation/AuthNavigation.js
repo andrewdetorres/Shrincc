@@ -55,7 +55,7 @@ class MainNavigation extends Component {
                   <a className="dropdown-item" href="/my-links">My Links</a>
                   <a className="dropdown-item" href="/contact">Contact</a>
                   <div className="dropdown-divider"></div>
-                  <a className="dropdown-item" href="/privacy">Pivacy Policy</a>
+                  <a className="dropdown-item" href="/privacy">Privacy Policy</a>
                   <a className="dropdown-item" href="/cookies">Cookie Policy</a>
                   <a className="dropdown-item" href="/contact">Report a Bug</a>
                   <div className="dropdown-divider"></div>
